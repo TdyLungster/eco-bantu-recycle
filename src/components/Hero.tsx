@@ -1,33 +1,10 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Text3D, Float } from '@react-three/drei';
 import { gsap } from 'gsap';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
 import { Recycle, Zap, Globe, Users } from 'lucide-react';
-
-const ParticleSystem = () => {
-  return (
-    <Canvas className="absolute inset-0 pointer-events-none">
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Text3D
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.5}
-          height={0.1}
-          position={[-2, 0, 0]}
-        >
-          ECO
-          <meshStandardMaterial color="#1B7A3E" />
-        </Text3D>
-      </Float>
-      <OrbitControls enableZoom={false} enablePan={false} />
-    </Canvas>
-  );
-};
 
 const AnimatedCounter = ({ end, label, icon: Icon }: { end: number; label: string; icon: any }) => {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
@@ -51,7 +28,6 @@ const AnimatedCounter = ({ end, label, icon: Icon }: { end: number; label: strin
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -93,9 +69,27 @@ const Hero = () => {
 
   return (
     <div ref={heroRef} className="relative min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-blue-900 overflow-hidden">
-      {/* Animated Background */}
+      {/* Animated Background Particles */}
       <div className="absolute inset-0 opacity-30">
-        <ParticleSystem />
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-green-400 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 1, 0.3],
+            }}
+            transition={{
+              duration: 2 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
       </div>
       
       {/* Gradient Overlay */}
@@ -107,7 +101,6 @@ const Hero = () => {
           {/* Left Content */}
           <div className="text-white space-y-8">
             <motion.div
-              ref={titleRef}
               className="space-y-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

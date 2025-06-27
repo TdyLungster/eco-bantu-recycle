@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
 
 interface Message {
@@ -47,12 +46,14 @@ const AIChat = () => {
     setIsLoading(true);
 
     try {
-      // Simulate AI response (replace with actual OpenAI API call)
+      // Simulate AI response with contextual e-waste responses
       const responses = [
         "Great question! Our e-waste recycling process is designed to maximize environmental impact while ensuring data security.",
         "We handle all types of electronic devices including computers, phones, tablets, and more. Would you like to schedule a pickup?",
         "Our corporate packages include monthly pickups, impact reporting, and data destruction certificates. Shall I tell you more?",
-        "Data destruction is included with all our services. We provide certified destruction reports for compliance."
+        "Data destruction is included with all our services. We provide certified destruction reports for compliance.",
+        "We recycle over 500 tons of e-waste annually, saving 1200kg of CO₂ emissions. Your devices can make a real difference!",
+        "Our pickup service is completely free within Johannesburg. We'll come to your location at your convenience."
       ];
       
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
@@ -65,7 +66,7 @@ const AIChat = () => {
         };
         setMessages(prev => [...prev, assistantMessage]);
         setIsLoading(false);
-      }, 1000);
+      }, 1000 + Math.random() * 1000);
 
     } catch (error) {
       console.error('Error sending message:', error);

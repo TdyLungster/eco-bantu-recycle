@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CreditCard, Shield, CheckCircle, AlertCircle } from 'lucide-react';
+import { CreditCard, Shield, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
 
@@ -61,64 +61,18 @@ const PaymentIntegration = ({ amount, description, onSuccess }: {
 
       if (error) throw error;
 
-      // Simulate payment processing based on method
-      switch (selectedMethod) {
-        case 'payfast':
-          await processPayFast(transaction.id, amount, description);
-          break;
-        case 'stripe':
-          await processStripe(transaction.id, amount, description);
-          break;
-        case 'crypto':
-          await processCrypto(transaction.id, amount, description);
-          break;
-      }
-
-      toast.success('Payment initiated successfully!');
-      onSuccess();
+      // Simulate payment processing
+      setTimeout(() => {
+        toast.success(`${selectedMethod} payment completed successfully!`);
+        onSuccess();
+        setIsProcessing(false);
+      }, 2000);
       
     } catch (error) {
       console.error('Payment error:', error);
       toast.error('Payment failed. Please try again.');
-    } finally {
       setIsProcessing(false);
     }
-  };
-
-  const processPayFast = async (transactionId: string, amount: number, description: string) => {
-    // PayFast integration logic
-    console.log('Processing PayFast payment:', { transactionId, amount, description });
-    
-    // Simulate PayFast redirect
-    const payFastUrl = `https://sandbox.payfast.co.za/eng/process?merchant_id=10000100&merchant_key=46f0cd694581a&amount=${amount}&item_name=${encodeURIComponent(description)}&return_url=${window.location.origin}/payment-success&cancel_url=${window.location.origin}/payment-cancelled`;
-    
-    // In production, you would redirect to PayFast
-    // window.location.href = payFastUrl;
-    
-    // For demo, simulate success after delay
-    setTimeout(() => {
-      toast.success('PayFast payment completed!');
-    }, 2000);
-  };
-
-  const processStripe = async (transactionId: string, amount: number, description: string) => {
-    // Stripe integration logic
-    console.log('Processing Stripe payment:', { transactionId, amount, description });
-    
-    // For demo, simulate success
-    setTimeout(() => {
-      toast.success('Stripe payment completed!');
-    }, 2000);
-  };
-
-  const processCrypto = async (transactionId: string, amount: number, description: string) => {
-    // Crypto payment logic
-    console.log('Processing Crypto payment:', { transactionId, amount, description });
-    
-    // For demo, simulate success
-    setTimeout(() => {
-      toast.success('Crypto payment completed!');
-    }, 2000);
   };
 
   return (

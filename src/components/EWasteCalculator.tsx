@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { Float, Text3D } from '@react-three/drei';
 import { Calculator, Leaf, DollarSign, Recycle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'react-hot-toast';
 
 interface Device {
   type: string;
@@ -12,26 +11,6 @@ interface Device {
   unitValue: number;
   co2Saving: number;
 }
-
-const Device3D = ({ deviceType }: { deviceType: string }) => {
-  return (
-    <Canvas className="w-full h-32">
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Text3D
-          font="/fonts/helvetiker_regular.typeface.json"
-          size={0.3}
-          height={0.05}
-          position={[-1, 0, 0]}
-        >
-          {deviceType.toUpperCase()}
-          <meshStandardMaterial color="#22c55e" />
-        </Text3D>
-      </Float>
-    </Canvas>
-  );
-};
 
 const EWasteCalculator = () => {
   const [devices, setDevices] = useState<Device[]>([
@@ -67,27 +46,28 @@ const EWasteCalculator = () => {
 
   const handleGetQuote = async () => {
     try {
-      // Save calculation to database
+      const devicesData = devices.reduce((acc, device) => {
+        if (device.quantity > 0) {
+          acc[device.type.toLowerCase()] = device.quantity;
+        }
+        return acc;
+      }, {} as Record<string, number>);
+
       const { error } = await supabase
         .from('pickups')
         .insert({
-          devices: devices.reduce((acc, device) => {
-            if (device.quantity > 0) {
-              acc[device.type.toLowerCase()] = device.quantity;
-            }
-            return acc;
-          }, {} as Record<string, number>),
+          devices: devicesData,
           estimated_value: totalValue,
-          pickup_address: 'TBD', // Will be filled in booking form
+          pickup_address: 'TBD',
           status: 'pending'
         });
 
       if (error) throw error;
       
-      // Trigger email or redirect to booking form
-      alert(`Quote generated! Total value: R${totalValue}, CO₂ saved: ${totalCO2}kg`);
+      toast.success(`Quote generated! Total value: R${totalValue}, CO₂ saved: ${totalCO2}kg`);
     } catch (error) {
       console.error('Error saving quote:', error);
+      toast.error('Failed to generate quote. Please try again.');
     }
   };
 
@@ -134,9 +114,6 @@ const EWasteCalculator = () => {
                       <p className="text-sm text-gray-600">
                         R{device.unitValue} each • {device.co2Saving}kg CO₂/unit
                       </p>
-                    </div>
-                    <div className="w-16 h-16">
-                      <Device3D deviceType={device.type} />
                     </div>
                   </div>
 
