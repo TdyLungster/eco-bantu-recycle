@@ -1,6 +1,6 @@
 
 import Navigation from '@/components/Navigation';
-import Hero from '@/components/Hero';
+import ImmersiveHero from '@/components/ImmersiveHero';
 import Services from '@/components/Services';
 import EWasteCalculator from '@/components/EWasteCalculator';
 import GoogleMapsIntegration from '@/components/GoogleMapsIntegration';
@@ -16,12 +16,15 @@ import { Toaster } from 'react-hot-toast';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-900">
       <EnhancedAnimations />
       <Navigation />
+      
+      {/* Immersive Hero Section */}
       <section id="home">
-        <Hero />
+        <ImmersiveHero />
       </section>
+      
       <div className="animate-stagger">
         <ImageShowcase />
         <section id="calculator" className="animate-reveal">
