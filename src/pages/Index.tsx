@@ -11,28 +11,38 @@ import Impact from '@/components/Impact';
 import Footer from '@/components/Footer';
 import AIChat from '@/components/AIChat';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
+import EnhancedAnimations from '@/components/EnhancedAnimations';
 import { Toaster } from 'react-hot-toast';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <EnhancedAnimations />
       <Navigation />
       <section id="home">
         <Hero />
       </section>
-      <ImageShowcase />
-      <section id="calculator">
-        <EWasteCalculator />
-      </section>
-      <section id="services">
-        <Services />
-      </section>
-      <GoogleMapsIntegration />
-      <PayFastPricingPlans />
-      <section id="impact">
-        <Impact />
-      </section>
-      <DonationForm />
+      <div className="animate-stagger">
+        <ImageShowcase />
+        <section id="calculator" className="animate-reveal">
+          <EWasteCalculator />
+        </section>
+        <section id="services" className="animate-slide-left">
+          <Services />
+        </section>
+        <div className="animate-slide-right">
+          <GoogleMapsIntegration />
+        </div>
+        <div className="animate-reveal">
+          <PayFastPricingPlans />
+        </div>
+        <section id="impact" className="animate-slide-left">
+          <Impact />
+        </section>
+        <div className="animate-slide-right">
+          <DonationForm />
+        </div>
+      </div>
       <Footer />
       <AIChat />
       <WhatsAppWidget />
