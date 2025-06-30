@@ -1,6 +1,19 @@
 
 import { useEffect } from 'react';
 
+// Extend Window interface to include gtag and trackEvent
+declare global {
+  interface Window {
+    gtag: (
+      command: 'config' | 'event' | 'js',
+      targetId: string | Date,
+      config?: any
+    ) => void;
+    dataLayer: any[];
+    trackEvent: (eventName: string, parameters: any) => void;
+  }
+}
+
 const GoogleAnalytics = () => {
   useEffect(() => {
     // Google Analytics 4 tracking
@@ -20,8 +33,8 @@ const GoogleAnalytics = () => {
 
     // Track page views
     const trackPageView = () => {
-      if (typeof gtag !== 'undefined') {
-        gtag('config', 'GA_MEASUREMENT_ID', {
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('config', 'GA_MEASUREMENT_ID', {
           page_path: window.location.pathname,
         });
       }
@@ -29,16 +42,20 @@ const GoogleAnalytics = () => {
 
     // Track custom events
     window.trackEvent = (eventName: string, parameters: any) => {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', eventName, parameters);
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', eventName, parameters);
       }
     };
 
     trackPageView();
 
     return () => {
-      document.head.removeChild(script1);
-      document.head.removeChild(script2);
+      if (document.head.contains(script1)) {
+        document.head.removeChild(script1);
+      }
+      if (document.head.contains(script2)) {
+        document.head.removeChild(script2);
+      }
     };
   }, []);
 

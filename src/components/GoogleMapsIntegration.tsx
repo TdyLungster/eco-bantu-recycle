@@ -3,9 +3,37 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Phone } from 'lucide-react';
 
+// Extend Window interface to include Google Maps API
+declare global {
+  interface Window {
+    google: typeof google;
+    initMap: () => void;
+  }
+}
+
+// Google Maps API type definitions
+declare namespace google {
+  namespace maps {
+    class Map {
+      constructor(element: HTMLElement, options: any);
+    }
+    class Marker {
+      constructor(options: any);
+      addListener(event: string, handler: () => void): void;
+    }
+    class InfoWindow {
+      constructor(options: any);
+      open(map: Map, marker: Marker): void;
+    }
+    class Size {
+      constructor(width: number, height: number);
+    }
+  }
+}
+
 const GoogleMapsIntegration = () => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState<any>(null);
 
   const locations = [
     {
@@ -43,7 +71,7 @@ const GoogleMapsIntegration = () => {
   useEffect(() => {
     // Initialize Google Maps
     const initMap = () => {
-      if (!mapRef.current) return;
+      if (!mapRef.current || !window.google) return;
 
       const map = new window.google.maps.Map(mapRef.current, {
         center: { lat: -26.1076, lng: 28.0567 },
