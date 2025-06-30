@@ -45,7 +45,8 @@ const DocumentsPage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data, error } = await supabase
+      // Use type assertion to work around the TypeScript issue
+      const { data, error } = await (supabase as any)
         .from('company_documents')
         .select('*')
         .order('created_at', { ascending: false });
@@ -89,11 +90,12 @@ const DocumentsPage = () => {
         .from('company-documents')
         .getPublicUrl(filePath);
 
-      // Save document record
-      const { error: insertError } = await supabase
+      // Save document record using type assertion
+      const { error: insertError } = await (supabase as any)
         .from('company_documents')
         .insert([
           {
+            user_id: user.id,
             document_type: documentType,
             document_name: file.name,
             file_url: publicUrl,

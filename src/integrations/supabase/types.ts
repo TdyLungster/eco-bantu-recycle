@@ -91,6 +91,54 @@ export type Database = {
           },
         ]
       }
+      company_documents: {
+        Row: {
+          created_at: string | null
+          document_name: string
+          document_type: string
+          expiry_date: string | null
+          file_size: number | null
+          file_url: string
+          id: string
+          is_required: boolean | null
+          mime_type: string | null
+          upload_date: string | null
+          user_id: string | null
+          verification_notes: string | null
+          verification_status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_name: string
+          document_type: string
+          expiry_date?: string | null
+          file_size?: number | null
+          file_url: string
+          id?: string
+          is_required?: boolean | null
+          mime_type?: string | null
+          upload_date?: string | null
+          user_id?: string | null
+          verification_notes?: string | null
+          verification_status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_name?: string
+          document_type?: string
+          expiry_date?: string | null
+          file_size?: number | null
+          file_url?: string
+          id?: string
+          is_required?: boolean | null
+          mime_type?: string | null
+          upload_date?: string | null
+          user_id?: string | null
+          verification_notes?: string | null
+          verification_status?: string | null
+        }
+        Relationships: []
+      }
       "data collection": {
         Row: {
           created_at: string
