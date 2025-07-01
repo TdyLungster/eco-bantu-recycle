@@ -7,7 +7,7 @@ import EnhancedGoogleMaps from '@/components/EnhancedGoogleMaps';
 import PayFastPricingPlans from '@/components/PayFastPricingPlans';
 import ImageShowcase from '@/components/ImageShowcase';
 import DonationForm from '@/components/DonationForm';
-import ImpactDashboard from '@/components/ImpactDashboard';
+import ImpactStory from '@/components/ImpactStory';
 import Footer from '@/components/Footer';
 import AIChat from '@/components/AIChat';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
@@ -42,9 +42,9 @@ const Index = () => {
           <Services />
         </section>
         
-        {/* Enhanced Impact Section */}
+        {/* New Impact Story Section */}
         <section id="impact" className="relative">
-          <ImpactDashboard />
+          <ImpactStory />
         </section>
         
         {/* Enhanced Maps Integration */}

@@ -2,158 +2,142 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  MapPin, Phone, Clock, Navigation, Star, Award, 
-  Truck, Recycle, Shield, Users, Calendar, ArrowRight
+  MapPin, Phone, Clock, Mail, Navigation, Car, Building, 
+  CheckCircle, Star, Users, Truck, ArrowRight, Globe
 } from 'lucide-react';
 
 const EnhancedGoogleMaps = () => {
   const [selectedLocation, setSelectedLocation] = useState(0);
-  const [showScheduler, setShowScheduler] = useState(false);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const locations = [
     {
       id: 1,
-      name: "Johannesburg Hub",
-      address: "123 Recycling Street, Sandton, Johannesburg",
+      name: "Johannesburg Head Office",
+      address: "123 Recycling Street, Sandton, Johannesburg, 2196",
       phone: "+27 11 123 4567",
-      hours: "Mon-Fri: 8AM-5PM, Sat: 9AM-2PM",
-      services: ["Corporate Pickup", "Data Destruction", "Bulk Recycling"],
-      rating: 4.9,
-      coordinates: { lat: -26.1043, lng: 28.0436 },
-      image: "/lovable-uploads/116647c6-0b22-4ba1-9ef3-49ea15b9193a.png"
+      email: "joburg@ewasterecycling.co.za",
+      hours: "Mon-Fri: 8AM-5PM, Sat: 8AM-12PM",
+      coordinates: { lat: -26.1076, lng: 28.0567 },
+      features: ["Corporate Pickups", "Data Destruction", "24/7 Security"],
+      capacity: "5000 devices/month",
+      certifications: ["ISO 14001", "R2 Certified", "SANS 10462"]
     },
     {
       id: 2,
-      name: "Cape Town Center",
-      address: "456 Green Tech Avenue, Century City, Cape Town",
+      name: "Cape Town Branch",
+      address: "456 Green Tech Avenue, Century City, Cape Town, 7441",
       phone: "+27 21 987 6543",
-      hours: "Mon-Fri: 8AM-5PM, Sat: 9AM-2PM",
-      services: ["Individual Drop-off", "Corporate Pickup", "Certified Destruction"],
-      rating: 4.8,
+      email: "capetown@ewasterecycling.co.za",
+      hours: "Mon-Fri: 8AM-5PM, Sat: 9AM-1PM",
       coordinates: { lat: -33.9249, lng: 18.4241 },
-      image: "/lovable-uploads/1d597c1b-c8b7-4bea-a6c4-25070f1172ab.png"
+      features: ["Consumer Drop-off", "Corporate Partnerships", "Educational Tours"],
+      capacity: "3500 devices/month",
+      certifications: ["ISO 14001", "WEEE Compliant", "SABS Approved"]
     },
     {
       id: 3,
-      name: "Durban Facility",
-      address: "789 Eco Park Road, Umhlanga, Durban",
+      name: "Durban Service Center",
+      address: "789 Ocean Recycling Hub, Umhlanga, Durban, 4319",
       phone: "+27 31 456 7890",
-      hours: "Mon-Fri: 8AM-5PM, Sat: 9AM-1PM",
-      services: ["Marine Electronics", "Industrial Equipment", "Data Centers"],
-      rating: 4.7,
+      email: "durban@ewasterecycling.co.za",
+      hours: "Mon-Fri: 8AM-4:30PM, Sat: 8AM-12PM",
       coordinates: { lat: -29.8587, lng: 31.0218 },
-      image: "/lovable-uploads/269a5861-5dc9-43bf-9d22-c739472e118b.png"
+      features: ["Mobile Collection", "Schools Program", "SME Support"],
+      capacity: "2800 devices/month",
+      certifications: ["ISO 14001", "Local Authority Approved"]
     }
   ];
 
-  const stats = [
-    { icon: Truck, label: "Free Pickups", value: "2,847" },
-    { icon: Users, label: "Happy Clients", value: "1,200+" },
-    { icon: Award, label: "Industry Awards", value: "15" },
-    { icon: Shield, label: "Security Rating", value: "100%" }
+  const serviceAreas = [
+    { province: "Gauteng", coverage: "100%", cities: ["Johannesburg", "Pretoria", "Germiston", "Benoni"] },
+    { province: "Western Cape", coverage: "95%", cities: ["Cape Town", "Stellenbosch", "Paarl", "George"] },
+    { province: "KwaZulu-Natal", coverage: "85%", cities: ["Durban", "Pietermaritzburg", "Newcastle"] },
+    { province: "Eastern Cape", coverage: "70%", cities: ["Port Elizabeth", "East London", "Grahamstown"] }
   ];
 
+  useEffect(() => {
+    // Simulate map loading
+    const timer = setTimeout(() => setIsMapLoaded(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        
         {/* Header */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-gray-900">
-            Find Us <span className="bg-gradient-to-r from-eco-primary to-eco-blue bg-clip-text text-transparent">Anywhere</span>
+          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <Globe className="w-4 h-4" />
+            Find Us Near You
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            Nationwide <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Coverage</span>
           </h2>
-          <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            With strategically located facilities across South Africa, we're always close by 
-            to provide world-class e-waste recycling services.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            From major cities to remote locations, we're expanding our reach to serve every corner of South Africa with world-class e-waste recycling services.
           </p>
         </motion.div>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-2xl p-6 shadow-lg text-center border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-            >
-              <stat.icon className="w-10 h-10 text-eco-primary mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
-              <div className="text-sm font-semibold text-gray-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Interactive Map Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+          
           {/* Location Cards */}
-          <div className="lg:col-span-1 space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Locations</h3>
+          <div className="lg:col-span-1 space-y-4">
             {locations.map((location, index) => (
               <motion.div
                 key={location.id}
-                className={`bg-white rounded-2xl p-6 shadow-lg border-2 cursor-pointer transition-all ${
+                className={`bg-white rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
                   selectedLocation === index 
-                    ? 'border-eco-primary shadow-xl scale-105' 
-                    : 'border-gray-100 hover:border-gray-200'
+                    ? 'ring-2 ring-blue-500 shadow-xl scale-102' 
+                    : 'shadow-lg hover:shadow-xl hover:scale-101'
                 }`}
-                onClick={() => setSelectedLocation(index)}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
+                onClick={() => setSelectedLocation(index)}
               >
-                <div className="flex items-start gap-4">
-                  <img 
-                    src={location.image} 
-                    alt={location.name}
-                    className="w-16 h-16 rounded-xl object-cover"
-                  />
-                  <div className="flex-1">
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">{location.name}</h4>
-                    <div className="flex items-center gap-1 mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`w-4 h-4 ${i < Math.floor(location.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                        />
-                      ))}
-                      <span className="ml-2 text-sm font-semibold text-gray-700">{location.rating}</span>
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="font-bold text-lg text-gray-800 mb-1">{location.name}</h3>
+                    <div className="flex items-center gap-2 text-blue-600 text-sm">
+                      <MapPin className="w-4 h-4" />
+                      <span>View on Map</span>
                     </div>
                   </div>
+                  <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                    Active
+                  </div>
                 </div>
-                
-                <div className="mt-4 space-y-2 text-sm text-gray-600">
+
+                <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-eco-primary mt-0.5 flex-shrink-0" />
+                    <Building className="w-4 h-4 mt-0.5 flex-shrink-0" />
                     <span>{location.address}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-eco-primary" />
-                    <span className="font-semibold">{location.phone}</span>
+                    <Phone className="w-4 h-4 flex-shrink-0" />
+                    <span>{location.phone}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-eco-primary" />
+                    <Clock className="w-4 h-4 flex-shrink-0" />
                     <span>{location.hours}</span>
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <div className="text-sm font-semibold text-gray-700 mb-2">Services:</div>
-                  <div className="flex flex-wrap gap-2">
-                    {location.services.map((service, idx) => (
-                      <span 
-                        key={idx}
-                        className="px-3 py-1 bg-eco-primary/10 text-eco-primary text-xs font-semibold rounded-full"
-                      >
-                        {service}
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="text-xs text-gray-500 mb-2">Monthly Capacity: {location.capacity}</div>
+                  <div className="flex flex-wrap gap-1">
+                    {location.certifications.map((cert, idx) => (
+                      <span key={idx} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                        {cert}
                       </span>
                     ))}
                   </div>
@@ -162,164 +146,120 @@ const EnhancedGoogleMaps = () => {
             ))}
           </div>
 
-          {/* Map and Details */}
+          {/* Map Display */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-              {/* Interactive Map Placeholder */}
-              <div className="h-80 bg-gradient-to-br from-green-100 to-blue-100 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div 
+              className="bg-white rounded-2xl shadow-xl overflow-hidden h-96 lg:h-full min-h-[500px]"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              {!isMapLoaded ? (
+                <div className="h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50">
                   <div className="text-center">
-                    <Navigation className="w-16 h-16 text-eco-primary mx-auto mb-4" />
-                    <h4 className="text-2xl font-bold text-gray-800 mb-2">
-                      {locations[selectedLocation].name}
-                    </h4>
-                    <p className="text-gray-600 max-w-md">
-                      Interactive map integration available. Click "Get Directions" for live navigation.
-                    </p>
+                    <div className="animate-spin w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading interactive map...</p>
                   </div>
                 </div>
-                
-                {/* Map overlay with location marker */}
-                <div className="absolute top-4 right-4 bg-white rounded-full p-3 shadow-lg">
-                  <MapPin className="w-6 h-6 text-eco-primary" />
-                </div>
-              </div>
+              ) : (
+                <div className="h-full relative">
+                  {/* Map Placeholder with Location Details */}
+                  <div className="h-full bg-gradient-to-br from-blue-100 via-green-50 to-blue-50 p-8 flex flex-col justify-center">
+                    <div className="bg-white rounded-xl p-6 shadow-lg max-w-md mx-auto">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <h4 className="font-bold text-lg">{locations[selectedLocation].name}</h4>
+                      </div>
+                      
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <MapPin className="w-4 h-4 text-blue-500" />
+                          <span>{locations[selectedLocation].address}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <Users className="w-4 h-4 text-green-500" />
+                          <span>Capacity: {locations[selectedLocation].capacity}</span>
+                        </div>
+                      </div>
 
-              {/* Location Details */}
-              <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h4>
-                    <div className="space-y-3">
-                      <motion.button 
-                        className="w-full bg-eco-primary text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-eco-primary/90 transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => window.open(`https://maps.google.com/?q=${locations[selectedLocation].coordinates.lat},${locations[selectedLocation].coordinates.lng}`, '_blank')}
-                      >
-                        <Navigation className="w-5 h-5" />
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <h5 className="font-semibold text-sm mb-2">Services Available:</h5>
+                        <div className="flex flex-wrap gap-1">
+                          {locations[selectedLocation].features.map((feature, idx) => (
+                            <span key={idx} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button className="w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
                         Get Directions
-                      </motion.button>
-                      <motion.button 
-                        className="w-full border-2 border-eco-primary text-eco-primary py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-eco-primary hover:text-white transition-all"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => window.location.href = `tel:${locations[selectedLocation].phone}`}
-                      >
-                        <Phone className="w-5 h-5" />
-                        Call Now
-                      </motion.button>
-                      <motion.button 
-                        className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setShowScheduler(true)}
-                      >
-                        <Calendar className="w-5 h-5" />
-                        Schedule Pickup
-                      </motion.button>
+                      </button>
                     </div>
                   </div>
-
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">Why Choose This Location?</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <Recycle className="w-5 h-5 text-eco-primary" />
-                        <span className="text-sm text-gray-700">State-of-the-art recycling facility</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Shield className="w-5 h-5 text-eco-primary" />
-                        <span className="text-sm text-gray-700">Certified data destruction services</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Truck className="w-5 h-5 text-eco-primary" />
-                        <span className="text-sm text-gray-700">Free pickup for bulk items</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Award className="w-5 h-5 text-eco-primary" />
-                        <span className="text-sm text-gray-700">ISO 14001 & R2 certified processes</span>
-                      </div>
-                    </div>
+                  
+                  {/* Quick Action Buttons */}
+                  <div className="absolute top-4 right-4 space-y-2">
+                    <button className="bg-white shadow-lg rounded-lg p-3 hover:shadow-xl transition-shadow">
+                      <Navigation className="w-5 h-5 text-blue-600" />
+                    </button>
+                    <button className="bg-white shadow-lg rounded-lg p-3 hover:shadow-xl transition-shadow">
+                      <Car className="w-5 h-5 text-green-600" />
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
+              )}
+            </motion.div>
           </div>
         </div>
 
-        {/* Pickup Scheduler Modal */}
-        {showScheduler && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <motion.div
-              className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Schedule Free Pickup</h3>
-              <div className="space-y-4">
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-eco-primary outline-none"
-                />
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-eco-primary outline-none"
-                />
-                <input 
-                  type="tel" 
-                  placeholder="Phone Number" 
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-eco-primary outline-none"
-                />
-                <textarea 
-                  placeholder="Describe your e-waste items..."
-                  rows={3}
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-eco-primary outline-none resize-none"
-                />
-                <div className="flex gap-3">
-                  <button 
-                    onClick={() => setShowScheduler(false)}
-                    className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={() => {
-                      setShowScheduler(false);
-                      alert('Pickup scheduled! We\'ll contact you within 24 hours.');
-                    }}
-                    className="flex-1 bg-eco-primary text-white py-3 rounded-xl font-semibold hover:bg-eco-primary/90 transition-colors"
-                  >
-                    Schedule
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-
-        {/* Call to Action */}
+        {/* Service Coverage Areas */}
         <motion.div 
-          className="text-center mt-16 bg-gradient-to-r from-eco-primary to-eco-blue rounded-3xl p-8 text-white"
+          className="bg-white rounded-3xl shadow-xl p-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-3xl font-bold mb-4">Need a Custom Solution?</h3>
-          <p className="text-xl mb-6 opacity-90">
-            We provide tailored e-waste management for enterprises, data centers, and large organizations.
-          </p>
-          <motion.button 
-            className="bg-white text-eco-primary px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 mx-auto hover:shadow-lg transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = '#contact'}
-          >
-            Contact Enterprise Team <ArrowRight className="w-5 h-5" />
-          </motion.button>
+          <h3 className="text-2xl font-bold text-center mb-8">Service Coverage Areas</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {serviceAreas.map((area, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-6 mb-4">
+                  <div className="text-3xl font-bold text-blue-600 mb-2">{area.coverage}</div>
+                  <h4 className="font-semibold text-gray-800">{area.province}</h4>
+                </div>
+                
+                <div className="space-y-1">
+                  {area.cities.map((city, idx) => (
+                    <div key={idx} className="flex items-center justify-center gap-2 text-sm text-gray-600">
+                      <CheckCircle className="w-3 h-3 text-green-500" />
+                      <span>{city}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <motion.button 
+              className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.href = '#contact'}
+            >
+              Schedule Pickup <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </div>
         </motion.div>
       </div>
     </section>
