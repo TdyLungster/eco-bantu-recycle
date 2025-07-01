@@ -1,86 +1,123 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Recycle, Zap, Calculator, BookOpen, Wrench } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Services', href: '#services' },
-    { name: 'Calculator', href: '#calculator' },
-    { name: 'Impact', href: '#impact' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/', icon: Recycle },
+    { name: 'Services', href: '#services', icon: Zap },
+    { name: 'Calculator', href: '#calculator', icon: Calculator },
+    { name: 'Impact', href: '#impact', icon: Recycle },
+    { name: 'Tools', href: '/tools', icon: Wrench },
+    { name: 'Blog', href: '/blog', icon: BookOpen },
+    { name: 'Contact', href: '#contact', icon: Phone },
   ];
+
+  const isActive = (href: string) => {
+    if (href === '/') return location.pathname === '/';
+    if (href.startsWith('#')) return false; // Handle scroll links differently
+    return location.pathname === href;
+  };
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-green-800 text-white py-2 px-4">
+      {/* Top Contact Bar */}
+      <div className="bg-eco-primary text-white py-2 px-4 hidden md:block">
         <div className="container mx-auto flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4" />
-              <span>+27 XX XXX XXXX</span>
+              <span>+27 11 234 5678</span>
             </div>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-2">
               <Mail className="w-4 h-4" />
               <span>info@bantuthepeople.co.za</span>
             </div>
+            <div className="flex items-center space-x-2">
+              <MapPin className="w-4 h-4" />
+              <span>Johannesburg, South Africa</span>
+            </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <a href="https://wa.me/27XXXXXXXXX" target="_blank" rel="noopener noreferrer" 
-               className="hover:text-green-300 transition-colors">
-              📱 WhatsApp
-            </a>
-            <a href="#" className="hover:text-green-300 transition-colors">📘 Facebook</a>
-            <a href="#" className="hover:text-green-300 transition-colors">📸 Instagram</a>
-            <a href="#" className="hover:text-green-300 transition-colors">🐦 Twitter</a>
+          <div className="flex items-center space-x-4">
+            <span className="text-eco-light">🏆 ISO 14001 Certified</span>
+            <span className="text-eco-light">♻️ 536+ Tonnes Recycled</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200' 
+          : 'bg-white shadow-md'
+      }`}>
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-3">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <img 
-                src="/lovable-uploads/5669cbba-ee2f-4fbb-9d50-e0722c45e5bd.png" 
-                alt="Bantu The People Logo" 
-                className="h-12 w-12"
-              />
-              <div>
-                <h1 className="text-2xl font-bold text-green-800">BANTU THE PEOPLE</h1>
-                <p className="text-sm text-blue-600">E-WASTE RECYCLING</p>
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="relative">
+                <img 
+                  src="/lovable-uploads/5669cbba-ee2f-4fbb-9d50-e0722c45e5bd.png" 
+                  alt="Bantu The People Logo" 
+                  className="h-10 w-10 transition-transform group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-eco-primary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
               </div>
-            </div>
+              <div>
+                <h1 className="text-xl font-bold text-eco-primary">BANTU THE PEOPLE</h1>
+                <p className="text-xs text-eco-blue font-medium">E-WASTE RECYCLING EXPERTS</p>
+              </div>
+            </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                  to={item.href}
+                  className={`group flex items-center space-x-1 px-3 py-2 rounded-lg transition-all ${
+                    isActive(item.href)
+                      ? 'text-eco-primary bg-eco-primary/10 font-semibold'
+                      : 'text-gray-700 hover:text-eco-primary hover:bg-eco-primary/5'
+                  }`}
                 >
-                  {item.name}
-                </a>
+                  <item.icon className="w-4 h-4" />
+                  <span className="font-medium">{item.name}</span>
+                  <div className={`h-0.5 w-0 bg-eco-primary transition-all group-hover:w-full ${
+                    isActive(item.href) ? 'w-full' : ''
+                  }`}></div>
+                </Link>
               ))}
+              
               <motion.button
-                className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-shadow"
+                className="bg-eco-gradient text-white px-6 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Book Pickup
+                <div className="flex items-center space-x-2">
+                  <Recycle className="w-4 h-4" />
+                  <span>Book Pickup</span>
+                </div>
               </motion.button>
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-gray-700"
+              className="lg:hidden text-gray-700 hover:text-eco-primary transition-colors"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -93,21 +130,33 @@ const Navigation = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden py-4 border-t"
+              className="lg:hidden py-4 border-t bg-white"
             >
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block py-2 text-gray-700 hover:text-green-600 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <button className="w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 text-white py-2 rounded-full font-semibold">
-                Book Pickup
-              </button>
+              <div className="space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                      isActive(item.href)
+                        ? 'text-eco-primary bg-eco-primary/10 font-semibold'
+                        : 'text-gray-700 hover:text-eco-primary hover:bg-eco-primary/5'
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+                <div className="px-4 pt-4">
+                  <button className="w-full bg-eco-gradient text-white py-3 rounded-full font-semibold shadow-lg">
+                    <div className="flex items-center justify-center space-x-2">
+                      <Recycle className="w-4 h-4" />
+                      <span>Book Pickup</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
             </motion.div>
           )}
         </div>

@@ -16,36 +16,53 @@ import { Toaster } from 'react-hot-toast';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <EnhancedAnimations />
       <Navigation />
       
       {/* Immersive Hero Section */}
-      <section id="home">
+      <section id="home" className="relative">
         <ImmersiveHero />
       </section>
       
-      <div className="animate-stagger">
-        <ImageShowcase />
-        <section id="calculator" className="animate-reveal">
+      {/* Main Content Sections */}
+      <div className="space-y-0">
+        {/* Showcase Section */}
+        <section className="relative bg-white">
+          <ImageShowcase />
+        </section>
+        
+        {/* Calculator Section */}
+        <section id="calculator" className="relative bg-gray-50 py-16 lg:py-24">
           <EWasteCalculator />
         </section>
-        <section id="services" className="animate-slide-left">
+        
+        {/* Services Section */}
+        <section id="services" className="relative bg-white py-16 lg:py-24">
           <Services />
         </section>
-        <div className="animate-slide-right">
-          <GoogleMapsIntegration />
-        </div>
-        <div className="animate-reveal">
-          <PayFastPricingPlans />
-        </div>
-        <section id="impact" className="animate-slide-left">
+        
+        {/* Impact Section */}
+        <section id="impact" className="relative bg-gray-50 py-16 lg:py-24">
           <Impact />
         </section>
-        <div className="animate-slide-right">
+        
+        {/* Maps Integration */}
+        <section className="relative bg-white">
+          <GoogleMapsIntegration />
+        </section>
+        
+        {/* Pricing Plans */}
+        <section className="relative bg-gray-50 py-16 lg:py-24">
+          <PayFastPricingPlans />
+        </section>
+        
+        {/* Donation Form */}
+        <section id="contact" className="relative bg-white py-16 lg:py-24">
           <DonationForm />
-        </div>
+        </section>
       </div>
+      
       <Footer />
       <AIChat />
       <WhatsAppWidget />
@@ -56,6 +73,21 @@ const Index = () => {
           style: {
             background: '#1B7A3E',
             color: '#fff',
+            borderRadius: '12px',
+            padding: '16px',
+            fontSize: '14px',
+            fontWeight: '500',
+          },
+          success: {
+            iconTheme: {
+              primary: '#fff',
+              secondary: '#1B7A3E',
+            },
+          },
+          error: {
+            style: {
+              background: '#EF4444',
+            },
           },
         }}
       />
