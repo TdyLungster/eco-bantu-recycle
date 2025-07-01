@@ -206,7 +206,13 @@ const EWasteCalculatorTool = () => {
     { type: 'tablet', quantity: 0, weight: 0.5 }
   ]);
 
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<{
+    totalWeight: string;
+    co2Saved: string;
+    energySaved: string;
+    waterSaved: string;
+    estimatedValue: string;
+  } | null>(null);
 
   const calculateImpact = () => {
     const totalWeight = devices.reduce((sum, device) => sum + (device.quantity * device.weight), 0);
@@ -251,7 +257,7 @@ const EWasteCalculatorTool = () => {
                   value={device.quantity}
                   onChange={(e) => {
                     const newDevices = [...devices];
-                    newDevices[index].quantity = parseInt(e.target.value) || 0;
+                    newDevices[index].quantity = parseInt(e.target.value, 10) || 0;
                     setDevices(newDevices);
                   }}
                   className="w-20 px-3 py-2 border rounded-lg text-center"
@@ -385,7 +391,7 @@ const PickupSchedulerTool = () => {
             value={formData.address}
             onChange={(e) => setFormData({...formData, address: e.target.value})}
             className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-eco-primary outline-none"
-            rows="3"
+            rows={3}
             placeholder="Enter complete pickup address"
           ></textarea>
         </div>
@@ -396,7 +402,7 @@ const PickupSchedulerTool = () => {
             value={formData.specialInstructions}
             onChange={(e) => setFormData({...formData, specialInstructions: e.target.value})}
             className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-eco-primary outline-none"
-            rows="3"
+            rows={3}
             placeholder="Any special instructions for pickup (optional)"
           ></textarea>
         </div>
