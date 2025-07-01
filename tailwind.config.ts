@@ -19,6 +19,22 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1rem', fontWeight: '500' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '500' }],
+        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem', fontWeight: '500' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '700' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '800' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '800' }],
+        '5xl': ['3rem', { lineHeight: '1', fontWeight: '900' }],
+        '6xl': ['3.75rem', { lineHeight: '1', fontWeight: '900' }],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -53,7 +69,7 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Eco-friendly theme colors
+        // Eco-friendly theme colors with better contrast
         eco: {
           primary: "#1B7A3E",
           secondary: "#2E8B57",
@@ -66,6 +82,12 @@ export default {
       backgroundImage: {
         "eco-gradient": "linear-gradient(135deg, #1B7A3E 0%, #2E8B57 50%, #32CD32 100%)",
         "hero-gradient": "linear-gradient(135deg, #1B7A3E 0%, #4682B4 100%)",
+        "text-gradient": "linear-gradient(135deg, #1B7A3E 0%, #4682B4 100%)",
+      },
+      textShadow: {
+        'sm': '1px 1px 2px rgba(0, 0, 0, 0.1)',
+        'default': '2px 2px 4px rgba(0, 0, 0, 0.1)',
+        'lg': '4px 4px 8px rgba(0, 0, 0, 0.2)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -93,6 +115,14 @@ export default {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 5px rgba(27, 122, 62, 0.5)" },
+          "50%": { boxShadow: "0 0 20px rgba(27, 122, 62, 0.8)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -100,8 +130,30 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
         "slide-up": "slide-up 0.6s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
+        "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.text-shadow-sm': {
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.1)',
+        },
+        '.text-shadow': {
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)',
+        },
+        '.text-shadow-lg': {
+          textShadow: '4px 4px 8px rgba(0, 0, 0, 0.2)',
+        },
+        '.text-contrast': {
+          textShadow: '1px 1px 2px rgba(0, 0, 0, 0.8)',
+          fontWeight: '600',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 } satisfies Config;

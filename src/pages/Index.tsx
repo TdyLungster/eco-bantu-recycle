@@ -3,11 +3,11 @@ import Navigation from '@/components/Navigation';
 import ImmersiveHero from '@/components/ImmersiveHero';
 import Services from '@/components/Services';
 import EWasteCalculator from '@/components/EWasteCalculator';
-import GoogleMapsIntegration from '@/components/GoogleMapsIntegration';
+import EnhancedGoogleMaps from '@/components/EnhancedGoogleMaps';
 import PayFastPricingPlans from '@/components/PayFastPricingPlans';
 import ImageShowcase from '@/components/ImageShowcase';
 import DonationForm from '@/components/DonationForm';
-import Impact from '@/components/Impact';
+import ImpactDashboard from '@/components/ImpactDashboard';
 import Footer from '@/components/Footer';
 import AIChat from '@/components/AIChat';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
@@ -42,14 +42,14 @@ const Index = () => {
           <Services />
         </section>
         
-        {/* Impact Section */}
-        <section id="impact" className="relative bg-gray-50 py-16 lg:py-24">
-          <Impact />
+        {/* Enhanced Impact Section */}
+        <section id="impact" className="relative">
+          <ImpactDashboard />
         </section>
         
-        {/* Maps Integration */}
-        <section className="relative bg-white">
-          <GoogleMapsIntegration />
+        {/* Enhanced Maps Integration */}
+        <section className="relative">
+          <EnhancedGoogleMaps />
         </section>
         
         {/* Pricing Plans */}
@@ -57,7 +57,7 @@ const Index = () => {
           <PayFastPricingPlans />
         </section>
         
-        {/* Donation Form */}
+        {/* Contact Form */}
         <section id="contact" className="relative bg-white py-16 lg:py-24">
           <DonationForm />
         </section>
@@ -76,7 +76,7 @@ const Index = () => {
             borderRadius: '12px',
             padding: '16px',
             fontSize: '14px',
-            fontWeight: '500',
+            fontWeight: '600',
           },
           success: {
             iconTheme: {
