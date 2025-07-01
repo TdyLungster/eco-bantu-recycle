@@ -1,12 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Phone, Mail, MapPin, Recycle, Zap, Calculator, BookOpen, Wrench } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Recycle, Zap, Calculator, BookOpen, Wrench, User, LogIn, UserPlus } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import AuthModal from './AuthModal';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -29,8 +33,36 @@ const Navigation = () => {
 
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
-    if (href.startsWith('#')) return false; // Handle scroll links differently
+    if (href.startsWith('#')) return false;
     return location.pathname === href;
+  };
+
+  const handleServiceClick = (href: string) => {
+    if (href === '#services') {
+      const element = document.getElementById('contact');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = '/#contact';
+      }
+    } else if (href.startsWith('#')) {
+      const element = document.getElementById(href.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = href;
+    }
+  };
+
+  const handleAuthClick = (mode: 'login' | 'signup') => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    // Add logout logic here
   };
 
   return (
@@ -54,13 +86,13 @@ const Navigation = () => {
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-eco-light">🏆 ISO 14001 Certified</span>
-            <span className="text-eco-light">♻️ 536+ Tonnes Recycled</span>
+            <span className="text-eco-light">♻️ 2,847+ Tonnes Recycled</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      <nav className={`sticky top-0 z-40 transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200' 
           : 'bg-white shadow-md'
@@ -86,9 +118,9 @@ const Navigation = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  to={item.href}
+                  onClick={() => handleServiceClick(item.href)}
                   className={`group flex items-center space-x-1 px-3 py-2 rounded-lg transition-all ${
                     isActive(item.href)
                       ? 'text-eco-primary bg-eco-primary/10 font-semibold'
@@ -100,10 +132,53 @@ const Navigation = () => {
                   <div className={`h-0.5 w-0 bg-eco-primary transition-all group-hover:w-full ${
                     isActive(item.href) ? 'w-full' : ''
                   }`}></div>
-                </Link>
+                </button>
               ))}
               
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-3">
+                {isLoggedIn ? (
+                  <div className="flex items-center space-x-3">
+                    <motion.button
+                      className="flex items-center space-x-2 text-gray-700 hover:text-eco-primary transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <User className="w-4 h-4" />
+                      <span>Profile</span>
+                    </motion.button>
+                    <motion.button
+                      onClick={handleLogout}
+                      className="text-gray-500 hover:text-red-500 transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      Logout
+                    </motion.button>
+                  </div>
+                ) : (
+                  <>
+                    <motion.button
+                      onClick={() => handleAuthClick('login')}
+                      className="flex items-center space-x-2 text-gray-700 hover:text-eco-primary transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <LogIn className="w-4 h-4" />
+                      <span>Login</span>
+                    </motion.button>
+                    <motion.button
+                      onClick={() => handleAuthClick('signup')}
+                      className="flex items-center space-x-2 bg-eco-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-eco-primary/90 transition-colors"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <UserPlus className="w-4 h-4" />
+                      <span>Sign Up</span>
+                    </motion.button>
+                  </>
+                )}
+              </div>
+              
               <motion.button
+                onClick={() => handleServiceClick('#contact')}
                 className="bg-eco-gradient text-white px-6 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -134,22 +209,55 @@ const Navigation = () => {
             >
               <div className="space-y-2">
                 {navItems.map((item) => (
-                  <Link
+                  <button
                     key={item.name}
-                    to={item.href}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
+                    onClick={() => {
+                      handleServiceClick(item.href);
+                      setIsOpen(false);
+                    }}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all w-full text-left ${
                       isActive(item.href)
                         ? 'text-eco-primary bg-eco-primary/10 font-semibold'
                         : 'text-gray-700 hover:text-eco-primary hover:bg-eco-primary/5'
                     }`}
-                    onClick={() => setIsOpen(false)}
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.name}</span>
-                  </Link>
+                  </button>
                 ))}
-                <div className="px-4 pt-4">
-                  <button className="w-full bg-eco-gradient text-white py-3 rounded-full font-semibold shadow-lg">
+                
+                <div className="px-4 pt-4 space-y-3">
+                  {!isLoggedIn && (
+                    <>
+                      <button 
+                        onClick={() => {
+                          handleAuthClick('login');
+                          setIsOpen(false);
+                        }}
+                        className="w-full flex items-center justify-center space-x-2 border border-eco-primary text-eco-primary py-3 rounded-full font-semibold"
+                      >
+                        <LogIn className="w-4 h-4" />
+                        <span>Login</span>
+                      </button>
+                      <button 
+                        onClick={() => {
+                          handleAuthClick('signup');
+                          setIsOpen(false);
+                        }}
+                        className="w-full flex items-center justify-center space-x-2 bg-eco-primary text-white py-3 rounded-full font-semibold"
+                      >
+                        <UserPlus className="w-4 h-4" />
+                        <span>Sign Up</span>
+                      </button>
+                    </>
+                  )}
+                  <button 
+                    onClick={() => {
+                      handleServiceClick('#contact');
+                      setIsOpen(false);
+                    }}
+                    className="w-full bg-eco-gradient text-white py-3 rounded-full font-semibold shadow-lg"
+                  >
                     <div className="flex items-center justify-center space-x-2">
                       <Recycle className="w-4 h-4" />
                       <span>Book Pickup</span>
@@ -161,6 +269,12 @@ const Navigation = () => {
           )}
         </div>
       </nav>
+
+      <AuthModal 
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
+      />
     </>
   );
 };
