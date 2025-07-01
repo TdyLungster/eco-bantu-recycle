@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -123,7 +122,6 @@ const ImpactDashboard = () => {
               paddingAngle={5}
               dataKey="value"
               label={({ name, value }) => `${name}: ${value}%`}
-              labelStyle={{ fontSize: '11px', fontWeight: '600' }}
             >
               {impactByRegion.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
