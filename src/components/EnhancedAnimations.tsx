@@ -149,19 +149,29 @@ export const createFloatingAnimation = (selector: string) => {
 // Hook for initializing all animations
 export const useEnhancedAnimations = () => {
   useEffect(() => {
-    // Initialize common animations
-    createStaggerAnimation('.animate-stagger');
-    createSlideInAnimation('.animate-slide-left', 'left');
-    createSlideInAnimation('.animate-slide-right', 'right');
-    createRevealAnimation('.animate-reveal');
-    createFloatingAnimation('.animate-float');
-    createPulseAnimation('.animate-pulse-custom');
+    // Only animate elements that exist
+    const checkAndAnimate = (selector: string, animationFn: Function, ...args: any[]) => {
+      const elements = document.querySelectorAll(selector);
+      if (elements.length > 0) {
+        animationFn(selector, ...args);
+      }
+    };
+
+    // Initialize common animations only if elements exist
+    checkAndAnimate('.animate-stagger', createStaggerAnimation);
+    checkAndAnimate('.animate-slide-left', createSlideInAnimation, 'left');
+    checkAndAnimate('.animate-slide-right', createSlideInAnimation, 'right');
+    checkAndAnimate('.animate-reveal', createRevealAnimation);
+    checkAndAnimate('.animate-float', createFloatingAnimation);
+    checkAndAnimate('.animate-pulse-custom', createPulseAnimation);
 
     // Initialize counter animations
     const counters = document.querySelectorAll('[data-counter]');
     counters.forEach((counter) => {
       const endValue = parseInt(counter.getAttribute('data-counter') || '0');
-      createCounterAnimation(`#${counter.id}`, endValue);
+      if (counter.id) {
+        createCounterAnimation(`#${counter.id}`, endValue);
+      }
     });
 
     // Cleanup on unmount
