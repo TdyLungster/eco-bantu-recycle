@@ -17,7 +17,7 @@ const WhatsAppWidget = () => {
   const handleSendMessage = (text?: string) => {
     const messageText = text || message;
     const encodedMessage = encodeURIComponent(messageText);
-    const whatsappUrl = `https://wa.me/27XXXXXXXXX?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/27100654785?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
     setIsOpen(false);
     setMessage('');
@@ -55,7 +55,7 @@ const WhatsAppWidget = () => {
                   <MessageCircle className="w-6 h-6 text-green-500" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Bantu The People</h3>
+                  <h3 className="font-semibold">Eco Bantu Recycle</h3>
                   <p className="text-sm text-green-100">Typically replies instantly</p>
                 </div>
               </div>

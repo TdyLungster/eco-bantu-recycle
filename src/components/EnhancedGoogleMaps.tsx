@@ -13,12 +13,12 @@ const EnhancedGoogleMaps = () => {
   const locations = [
     {
       id: 1,
-      name: "Johannesburg Head Office",
-      address: "123 Recycling Street, Sandton, Johannesburg, 2196",
-      phone: "+27 11 123 4567",
-      email: "joburg@ewasterecycling.co.za",
+      name: "Eco Bantu Recycle Head Office",
+      address: "6246 Mocke Street, Daveyton, Benoni, 1507",
+      phone: "+27 10 065 4785",
+      email: "info@bantuthepeople.com",
       hours: "Mon-Fri: 8AM-5PM, Sat: 8AM-12PM",
-      coordinates: { lat: -26.1076, lng: 28.0567 },
+      coordinates: { lat: -26.1833, lng: 28.3167 },
       features: ["Corporate Pickups", "Data Destruction", "24/7 Security"],
       capacity: "5000 devices/month",
       certifications: ["ISO 14001", "R2 Certified", "SANS 10462"]

@@ -12,6 +12,8 @@ import Footer from '@/components/Footer';
 import AIChat from '@/components/AIChat';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import EnhancedAnimations from '@/components/EnhancedAnimations';
+import TeamSection from '@/components/TeamSection';
+import RealTimeCounter from '@/components/RealTimeCounter';
 import { Toaster } from 'react-hot-toast';
 
 const Index = () => {
@@ -42,9 +44,19 @@ const Index = () => {
           <Services />
         </section>
         
+        {/* Real-Time Impact Counter */}
+        <section className="relative">
+          <RealTimeCounter />
+        </section>
+        
         {/* New Impact Story Section */}
         <section id="impact" className="relative">
           <ImpactStory />
+        </section>
+        
+        {/* Team Section */}
+        <section className="relative bg-white">
+          <TeamSection />
         </section>
         
         {/* Enhanced Maps Integration */}
