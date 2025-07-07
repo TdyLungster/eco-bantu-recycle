@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +6,6 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Calendar, User, Upload } from 'lucide-react';
-
 const DonationForm = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -20,31 +18,20 @@ const DonationForm = () => {
     pickupDate: '',
     donationType: 'individual'
   });
-
-  const deviceTypes = [
-    "Laptops & Computers",
-    "Mobile Phones & Tablets",
-    "Monitors & TVs",
-    "Printers & Scanners",
-    "Gaming Consoles",
-    "Audio Equipment",
-    "Kitchen Appliances",
-    "Other Electronics"
-  ];
-
+  const deviceTypes = ["Laptops & Computers", "Mobile Phones & Tablets", "Monitors & TVs", "Printers & Scanners", "Gaming Consoles", "Audio Equipment", "Kitchen Appliances", "Other Electronics"];
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Donation form submitted:', formData);
     // Here we would typically send the data to a backend service
     alert('Thank you for your donation! We will contact you to arrange pickup.');
   };
-
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
-  return (
-    <section id="donation-form" className="section-padding bg-gradient-to-br from-eco-primary/5 to-eco-blue/5">
+  return <section id="donation-form" className="section-padding bg-gradient-to-br from-eco-primary/5 to-eco-blue/5">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -76,7 +63,7 @@ const DonationForm = () => {
                   <Label htmlFor="donationType" className="text-base font-semibold mb-3 block">
                     Donation Type
                   </Label>
-                  <Select value={formData.donationType} onValueChange={(value) => handleInputChange('donationType', value)}>
+                  <Select value={formData.donationType} onValueChange={value => handleInputChange('donationType', value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select donation type" />
                     </SelectTrigger>
@@ -91,95 +78,51 @@ const DonationForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name" className="text-base font-semibold">Name</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      placeholder="Your full name"
-                      required
-                    />
+                    <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="Your full name" required />
                   </div>
                   <div>
                     <Label htmlFor="email" className="text-base font-semibold">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      placeholder="your@email.com"
-                      required
-                    />
+                    <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="your@email.com" required />
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="phone" className="text-base font-semibold">Phone Number</Label>
-                  <Input
-                    id="phone"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder="+27 XX XXX XXXX"
-                    required
-                  />
+                  <Input id="phone" value={formData.phone} onChange={e => handleInputChange('phone', e.target.value)} placeholder="+27 XX XXX XXXX" required />
                 </div>
 
                 <div>
                   <Label htmlFor="address" className="text-base font-semibold">Pickup Address</Label>
-                  <Textarea
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => handleInputChange('address', e.target.value)}
-                    placeholder="Full address where we should collect the items"
-                    required
-                  />
+                  <Textarea id="address" value={formData.address} onChange={e => handleInputChange('address', e.target.value)} placeholder="Full address where we should collect the items" required />
                 </div>
 
                 {/* Device Information */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="deviceType" className="text-base font-semibold">Device Type</Label>
-                    <Select value={formData.deviceType} onValueChange={(value) => handleInputChange('deviceType', value)}>
+                    <Select value={formData.deviceType} onValueChange={value => handleInputChange('deviceType', value)}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select device type" />
                       </SelectTrigger>
                       <SelectContent>
-                        {deviceTypes.map((type) => (
-                          <SelectItem key={type} value={type}>{type}</SelectItem>
-                        ))}
+                        {deviceTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
                     <Label htmlFor="quantity" className="text-base font-semibold">Quantity</Label>
-                    <Input
-                      id="quantity"
-                      value={formData.quantity}
-                      onChange={(e) => handleInputChange('quantity', e.target.value)}
-                      placeholder="Number of devices"
-                      required
-                    />
+                    <Input id="quantity" value={formData.quantity} onChange={e => handleInputChange('quantity', e.target.value)} placeholder="Number of devices" required />
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="description" className="text-base font-semibold">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
-                    placeholder="Brief description of the devices (condition, brand, etc.)"
-                  />
+                  <Textarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Brief description of the devices (condition, brand, etc.)" />
                 </div>
 
                 <div>
                   <Label htmlFor="pickupDate" className="text-base font-semibold">Preferred Pickup Date</Label>
-                  <Input
-                    id="pickupDate"
-                    type="date"
-                    value={formData.pickupDate}
-                    onChange={(e) => handleInputChange('pickupDate', e.target.value)}
-                    min={new Date().toISOString().split('T')[0]}
-                  />
+                  <Input id="pickupDate" type="date" value={formData.pickupDate} onChange={e => handleInputChange('pickupDate', e.target.value)} min={new Date().toISOString().split('T')[0]} />
                 </div>
 
                 <Button type="submit" className="w-full btn-eco text-lg py-6">
@@ -222,12 +165,10 @@ const DonationForm = () => {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  {deviceTypes.slice(0, 6).map((type, index) => (
-                    <li key={index} className="flex items-center">
+                  {deviceTypes.slice(0, 6).map((type, index) => <li key={index} className="flex items-center">
                       <div className="w-2 h-2 bg-eco-primary rounded-full mr-3" />
                       <span>{type}</span>
-                    </li>
-                  ))}
+                    </li>)}
                 </ul>
               </CardContent>
             </Card>
@@ -244,15 +185,13 @@ const DonationForm = () => {
                 </div>
                 <div className="flex items-center">
                   <User className="w-5 h-5 text-eco-primary mr-3" />
-                  <span>+27 XX XXX XXXX</span>
+                  <span>+27 10 065 4785</span>
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default DonationForm;
