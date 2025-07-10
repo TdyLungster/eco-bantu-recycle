@@ -112,12 +112,8 @@ const Navigation = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <img src="/lovable-uploads/5669cbba-ee2f-4fbb-9d50-e0722c45e5bd.png" alt="Bantu The People Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
+                <img src="/lovable-uploads/0f4812bf-ca16-4b96-bfad-a7f6d00f7411.png" alt="Bantu The People Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
                 <div className="absolute inset-0 bg-primary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-primary">BANTU THE PEOPLE</h1>
-                <p className="text-xs text-accent font-medium">E-WASTE RECYCLING EXPERTS</p>
               </div>
             </Link>
 

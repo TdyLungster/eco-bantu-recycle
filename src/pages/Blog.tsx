@@ -96,11 +96,11 @@ const Blog = () => {
   const regularPosts = filteredPosts.filter(post => !post.featured);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-eco-gradient text-white py-16 lg:py-24">
+      <section className="bg-gradient-to-br from-primary/90 via-primary to-accent text-white py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -111,7 +111,7 @@ const Blog = () => {
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
               Insights & Innovation
             </h1>
-            <p className="text-xl lg:text-2xl text-eco-light mb-8">
+            <p className="text-xl lg:text-2xl text-white/90 mb-8">
               Discover the latest trends, research, and best practices in sustainable e-waste management
             </p>
             
@@ -122,7 +122,7 @@ const Blog = () => {
                 <input
                   type="text"
                   placeholder="Search articles..."
-                  className="w-full pl-10 pr-4 py-3 rounded-full text-gray-900 focus:ring-2 focus:ring-eco-accent outline-none"
+                  className="w-full pl-10 pr-4 py-3 rounded-full text-foreground bg-white focus:ring-2 focus:ring-accent outline-none"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -130,7 +130,7 @@ const Blog = () => {
               <div className="relative">
                 <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <select
-                  className="pl-10 pr-8 py-3 rounded-full text-gray-900 focus:ring-2 focus:ring-eco-accent outline-none appearance-none bg-white"
+                  className="pl-10 pr-8 py-3 rounded-full text-foreground bg-white focus:ring-2 focus:ring-accent outline-none appearance-none"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
@@ -166,7 +166,7 @@ const Blog = () => {
                 </div>
                 <div className="lg:w-1/2 p-8 lg:p-12">
                   <div className="flex items-center space-x-2 mb-4">
-                    <span className="bg-eco-primary/10 text-eco-primary px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
                       Featured
                     </span>
                     <span className="text-gray-500 text-sm">{featuredPost.readTime}</span>
@@ -188,7 +188,7 @@ const Blog = () => {
                         <span className="text-sm text-gray-600">{featuredPost.date}</span>
                       </div>
                     </div>
-                    <button className="flex items-center space-x-2 text-eco-primary hover:text-eco-secondary transition-colors">
+                    <button className="flex items-center space-x-2 text-primary hover:text-accent transition-colors">
                       <span className="font-medium">Read More</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -219,7 +219,7 @@ const Blog = () => {
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur-sm text-eco-primary px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-sm font-medium">
                       {categories.find(cat => cat.id === post.category)?.name}
                     </span>
                   </div>
@@ -232,7 +232,7 @@ const Blog = () => {
                     </div>
                     <span>{post.readTime}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-eco-primary transition-colors">
+                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-gray-600 mb-4 leading-relaxed">
@@ -243,7 +243,7 @@ const Blog = () => {
                       <User className="w-4 h-4 text-gray-400" />
                       <span className="text-sm text-gray-600">{post.author}</span>
                     </div>
-                    <button className="flex items-center space-x-1 text-eco-primary hover:text-eco-secondary transition-colors">
+                    <button className="flex items-center space-x-1 text-primary hover:text-accent transition-colors">
                       <span className="text-sm font-medium">Read</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
