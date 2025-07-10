@@ -18,7 +18,7 @@ import { Toaster } from 'react-hot-toast';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <EnhancedAnimations />
       <Navigation />
       
@@ -35,7 +35,7 @@ const Index = () => {
         </section>
         
         {/* Calculator Section */}
-        <section id="calculator" className="relative bg-gray-50 py-16 lg:py-24">
+        <section id="calculator" className="relative bg-muted/30 py-16 lg:py-24">
           <EWasteCalculator />
         </section>
         
@@ -65,7 +65,7 @@ const Index = () => {
         </section>
         
         {/* Pricing Plans */}
-        <section className="relative bg-gray-50 py-16 lg:py-24">
+        <section className="relative bg-muted/30 py-16 lg:py-24">
           <PayFastPricingPlans />
         </section>
         

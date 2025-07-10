@@ -44,12 +44,15 @@ const Tools = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-eco-gradient text-white py-16 lg:py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-eco-gradient text-white py-16 lg:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,7 +62,7 @@ const Tools = () => {
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
               Professional Tools
             </h1>
-            <p className="text-xl lg:text-2xl text-eco-light mb-8">
+            <p className="text-xl lg:text-2xl text-white/90 mb-8">
               Advanced calculators, schedulers, and tracking tools for efficient e-waste management
             </p>
           </motion.div>

@@ -111,9 +111,19 @@ const Navigation = () => {
           <div className="flex justify-between items-center py-3">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="relative">
-                <img src="/lovable-uploads/0f4812bf-ca16-4b96-bfad-a7f6d00f7411.png" alt="Bantu The People Logo" className="h-12 w-auto transition-transform group-hover:scale-110" />
-                <div className="absolute inset-0 bg-primary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
+              <div className="relative p-1 rounded-xl bg-gradient-to-r from-primary/5 to-secondary/5">
+                <img 
+                  src="/lovable-uploads/0f4812bf-ca16-4b96-bfad-a7f6d00f7411.png" 
+                  alt="Bantu The People Logo" 
+                  className="h-14 w-auto transition-all duration-300 group-hover:scale-105 drop-shadow-sm" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+              </div>
+              <div className="hidden md:block">
+                <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  Bantu The People
+                </div>
+                <div className="text-xs text-muted-foreground">E-Waste Recycling</div>
               </div>
             </Link>
 
