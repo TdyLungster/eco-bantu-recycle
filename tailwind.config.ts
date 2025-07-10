@@ -69,20 +69,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Eco-friendly theme colors with better contrast (HSL values)
+        // Logo-inspired theme colors (HSL values)
         eco: {
-          primary: "139 69% 28%",
-          secondary: "146 34% 44%", 
-          accent: "120 61% 50%",
+          primary: "127 83% 41%",
+          secondary: "45 93% 58%", 
+          accent: "0 84% 60%",
           blue: "207 44% 49%",
           light: "120 73% 75%",
           dark: "120 100% 20%",
         },
       },
       backgroundImage: {
-        "eco-gradient": "linear-gradient(135deg, hsl(139 69% 28%) 0%, hsl(146 34% 44%) 50%, hsl(120 61% 50%) 100%)",
-        "hero-gradient": "linear-gradient(135deg, hsl(139 69% 28%) 0%, hsl(207 44% 49%) 100%)",
-        "text-gradient": "linear-gradient(135deg, hsl(139 69% 28%) 0%, hsl(207 44% 49%) 100%)",
+        "eco-gradient": "linear-gradient(135deg, hsl(127 83% 41%) 0%, hsl(45 93% 58%) 50%, hsl(0 84% 60%) 100%)",
+        "hero-gradient": "linear-gradient(135deg, hsl(127 83% 41%) 0%, hsl(45 93% 58%) 100%)",
+        "text-gradient": "linear-gradient(135deg, hsl(127 83% 41%) 0%, hsl(45 93% 58%) 100%)",
       },
       textShadow: {
         'sm': '1px 1px 2px rgba(0, 0, 0, 0.1)',
