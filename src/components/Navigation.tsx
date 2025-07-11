@@ -82,7 +82,7 @@ const Navigation = () => {
   };
   return <>
       {/* Top Contact Bar */}
-      <div className="bg-primary text-primary-foreground py-2 px-4 hidden md:block">
+      <div className="bg-black text-white py-2 px-4 hidden md:block">
         <div className="container mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
@@ -99,37 +99,37 @@ const Navigation = () => {
             </div>
           </div>
             <div className="flex items-center space-x-4">
-            <span className="text-primary-foreground/80">🏆 ISO 14001 Certified</span>
-            <span className="text-primary-foreground/80">♻️ 2,847+ Tonnes Recycled</span>
+            <span className="text-white/80">🏆 ISO 14001 Certified</span>
+            <span className="text-white/80">♻️ 2,847+ Tonnes Recycled</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200' : 'bg-white shadow-md'}`}>
+      <nav className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-black/95 backdrop-blur-lg shadow-lg border-b border-gray-800' : 'bg-black shadow-md'}`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-3">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="relative p-1 rounded-xl bg-gradient-to-r from-primary/5 to-secondary/5">
+              <div className="relative p-1 rounded-xl bg-white/10">
                 <img 
                   src="/lovable-uploads/0f4812bf-ca16-4b96-bfad-a7f6d00f7411.png" 
                   alt="Bantu The People Logo" 
                   className="h-14 w-auto transition-all duration-300 group-hover:scale-105 drop-shadow-sm" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               </div>
               <div className="hidden md:block">
-                <div className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <div className="text-lg font-bold text-white">
                   Bantu The People
                 </div>
-                <div className="text-xs text-muted-foreground">E-Waste Recycling</div>
+                <div className="text-xs text-gray-300">E-Waste Recycling</div>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navItems.map(item => <button key={item.name} onClick={() => handleServiceClick(item.href)} className={`group flex items-center space-x-1 px-3 py-2 rounded-lg transition-all ${isActive(item.href) ? 'text-primary bg-primary/10 font-semibold' : 'text-gray-700 hover:text-primary hover:bg-primary/5'}`}>
+              {navItems.map(item => <button key={item.name} onClick={() => handleServiceClick(item.href)} className={`group flex items-center space-x-1 px-3 py-2 rounded-lg transition-all ${isActive(item.href) ? 'text-primary bg-primary/10 font-semibold' : 'text-white hover:text-primary hover:bg-white/10'}`}>
                   <item.icon className="w-4 h-4" />
                   <span className="font-medium">{item.name}</span>
                   <div className={`h-0.5 w-0 bg-primary transition-all group-hover:w-full ${isActive(item.href) ? 'w-full' : ''}`}></div>
@@ -138,19 +138,19 @@ const Navigation = () => {
               {/* Auth Buttons */}
               <div className="flex items-center space-x-3">
                 {isLoggedIn ? <div className="flex items-center space-x-3">
-                    <motion.button className="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors" whileHover={{
+                    <motion.button className="flex items-center space-x-2 text-white hover:text-primary transition-colors" whileHover={{
                   scale: 1.05
                 }}>
                       <User className="w-4 h-4" />
                       <span>Profile</span>
                     </motion.button>
-                    <motion.button onClick={handleLogout} className="text-gray-500 hover:text-red-500 transition-colors" whileHover={{
+                    <motion.button onClick={handleLogout} className="text-gray-300 hover:text-red-400 transition-colors" whileHover={{
                   scale: 1.05
                 }}>
                       Logout
                     </motion.button>
                   </div> : <>
-                    <motion.button onClick={() => handleAuthClick('login')} className="flex items-center space-x-2 text-gray-700 hover:text-primary transition-colors" whileHover={{
+                    <motion.button onClick={() => handleAuthClick('login')} className="flex items-center space-x-2 text-white hover:text-primary transition-colors" whileHover={{
                   scale: 1.05
                 }}>
                       <LogIn className="w-4 h-4" />
@@ -180,7 +180,7 @@ const Navigation = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="lg:hidden text-gray-700 hover:text-primary transition-colors" onClick={() => setIsOpen(!isOpen)}>
+            <button className="lg:hidden text-white hover:text-primary transition-colors" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -195,12 +195,12 @@ const Navigation = () => {
         }} exit={{
           opacity: 0,
           height: 0
-        }} className="lg:hidden py-4 border-t bg-white">
+        }} className="lg:hidden py-4 border-t bg-black">
               <div className="space-y-2">
                 {navItems.map(item => <button key={item.name} onClick={() => {
               handleServiceClick(item.href);
               setIsOpen(false);
-            }} className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all w-full text-left ${isActive(item.href) ? 'text-primary bg-primary/10 font-semibold' : 'text-gray-700 hover:text-primary hover:bg-primary/5'}`}>
+            }} className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all w-full text-left ${isActive(item.href) ? 'text-primary bg-primary/10 font-semibold' : 'text-white hover:text-primary hover:bg-white/10'}`}>
                     <item.icon className="w-5 h-5" />
                     <span>{item.name}</span>
                   </button>)}
