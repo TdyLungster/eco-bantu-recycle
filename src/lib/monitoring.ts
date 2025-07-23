@@ -4,8 +4,8 @@ import * as Sentry from '@sentry/react';
 // Initialize Sentry for error monitoring
 export const initSentry = () => {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN || '',
-    environment: process.env.NODE_ENV || 'development',
+    dsn: import.meta.env.VITE_SENTRY_DSN || '',
+    environment: import.meta.env.MODE || 'development',
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
@@ -23,7 +23,7 @@ export const initSentry = () => {
 export const logError = (error: Error, context?: any) => {
   console.error('Error logged:', error, context);
   
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.MODE === 'production') {
     Sentry.captureException(error, {
       contexts: {
         additional: context

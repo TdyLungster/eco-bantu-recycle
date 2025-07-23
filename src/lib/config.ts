@@ -6,11 +6,11 @@ export const config = {
     anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqcHJuc3Z3ZXp2bGNranVpaGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjc2MDMsImV4cCI6MjA2NjYwMzYwM30.U2PpCaiClDMggDZsIusBjBWOznVx92TSMLVrK2F8QCM"
   },
   monitoring: {
-    sentryDsn: process.env.REACT_APP_SENTRY_DSN || '',
-    honeybadgerApiKey: process.env.REACT_APP_HONEYBADGER_API_KEY || ''
+    sentryDsn: import.meta.env.VITE_SENTRY_DSN || '',
+    honeybadgerApiKey: import.meta.env.VITE_HONEYBADGER_API_KEY || ''
   },
   app: {
-    environment: process.env.NODE_ENV || 'development',
+    environment: import.meta.env.MODE || 'development',
     version: '1.0.0'
   }
 };
