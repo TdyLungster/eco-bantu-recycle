@@ -7,8 +7,11 @@ export const initSentry = () => {
     dsn: process.env.REACT_APP_SENTRY_DSN || '',
     environment: process.env.NODE_ENV || 'development',
     integrations: [
-      new Sentry.BrowserTracing(),
-      new Sentry.Replay()
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration({
+        maskAllText: false,
+        blockAllMedia: false,
+      }),
     ],
     tracesSampleRate: 1.0,
     replaysSessionSampleRate: 0.1,
@@ -31,21 +34,22 @@ export const logError = (error: Error, context?: any) => {
 
 // Performance monitoring
 export const trackPerformance = (name: string, fn: () => void | Promise<void>) => {
-  const transaction = Sentry.startTransaction({
+  return Sentry.startSpan({
     name,
     op: 'custom'
-  });
-  
-  try {
-    const result = fn();
-    if (result instanceof Promise) {
-      return result.finally(() => transaction.finish());
+  }, () => {
+    try {
+      const result = fn();
+      if (result instanceof Promise) {
+        return result.catch((error) => {
+          logError(error, { performance: name });
+          throw error;
+        });
+      }
+      return result;
+    } catch (error) {
+      logError(error as Error, { performance: name });
+      throw error;
     }
-    transaction.finish();
-    return result;
-  } catch (error) {
-    transaction.setStatus('internal_error');
-    transaction.finish();
-    throw error;
-  }
+  });
 };

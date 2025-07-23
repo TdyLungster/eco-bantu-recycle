@@ -111,29 +111,29 @@ const Blog = () => {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-contrast">
               Insights & Innovation
             </h1>
-            <p className="text-xl lg:text-2xl text-white/90 mb-8">
+            <p className="text-xl lg:text-2xl text-white/90 mb-8 text-contrast">
               Discover the latest trends, research, and best practices in sustainable e-waste management
             </p>
             
             {/* Search and Filter */}
             <div className="flex flex-col lg:flex-row gap-4 max-w-2xl mx-auto">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search articles..."
-                  className="w-full pl-10 pr-4 py-3 rounded-full text-foreground bg-white focus:ring-2 focus:ring-accent outline-none"
+                  className="w-full pl-10 pr-4 py-3 rounded-full text-foreground bg-card border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
                 <select
-                  className="pl-10 pr-8 py-3 rounded-full text-foreground bg-white focus:ring-2 focus:ring-accent outline-none appearance-none"
+                  className="pl-10 pr-8 py-3 rounded-full text-foreground bg-card border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none appearance-none min-w-[150px]"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
@@ -157,7 +157,7 @@ const Blog = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden"
+              className="glass-card rounded-2xl shadow-xl overflow-hidden"
             >
               <div className="lg:flex">
                 <div className="lg:w-1/2">
@@ -172,23 +172,23 @@ const Blog = () => {
                     <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
                       Featured
                     </span>
-                    <span className="text-gray-500 text-sm">{featuredPost.readTime}</span>
+                    <span className="text-muted-foreground text-sm">{featuredPost.readTime}</span>
                   </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-4">
                     {featuredPost.title}
                   </h2>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
                     {featuredPost.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center space-x-2">
-                        <User className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{featuredPost.author}</span>
+                        <User className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">{featuredPost.author}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm text-gray-600">{featuredPost.date}</span>
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">{featuredPost.date}</span>
                       </div>
                     </div>
                     <button className="flex items-center space-x-2 text-primary hover:text-accent transition-colors">
@@ -213,7 +213,7 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group"
+                className="glass-card rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group"
               >
                 <div className="relative overflow-hidden">
                   <img 
@@ -222,13 +222,13 @@ const Blog = () => {
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-card/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-sm font-medium border border-border">
                       {categories.find(cat => cat.id === post.category)?.name}
                     </span>
                   </div>
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center space-x-4 mb-3 text-sm text-gray-500">
+                  <div className="flex items-center space-x-4 mb-3 text-sm text-muted-foreground">
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
                       <span>{post.date}</span>
@@ -238,13 +238,13 @@ const Blog = () => {
                   <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
                     {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <User className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">{post.author}</span>
+                      <User className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">{post.author}</span>
                     </div>
                     <button className="flex items-center space-x-1 text-primary hover:text-accent transition-colors">
                       <span className="text-sm font-medium">Read</span>
@@ -258,7 +258,7 @@ const Blog = () => {
 
           {filteredPosts.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No articles found matching your criteria.</p>
+              <p className="text-muted-foreground text-lg">No articles found matching your criteria.</p>
             </div>
           )}
         </div>
