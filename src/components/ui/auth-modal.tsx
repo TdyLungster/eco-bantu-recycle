@@ -70,31 +70,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      y: 0,
-      transition: { type: 'spring', duration: 0.3, bounce: 0.25 }
-    },
-    exit: { 
-      opacity: 0, 
-      scale: 0.95, 
-      y: 20,
-      transition: { duration: 0.2 }
-    }
-  };
-
-  const formVariants = {
-    hidden: { x: mode === 'login' ? -20 : 20, opacity: 0 },
-    visible: { 
-      x: 0, 
-      opacity: 1,
-      transition: { duration: 0.3, ease: 'easeOut' }
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -111,10 +86,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         
         {/* Modal */}
         <motion.div
-          variants={modalVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1, 
+            y: 0,
+            transition: { type: "spring", duration: 0.3, bounce: 0.25 }
+          }}
+          exit={{ 
+            opacity: 0, 
+            scale: 0.95, 
+            y: 20,
+            transition: { duration: 0.2 }
+          }}
           className="relative w-full max-w-md mx-4"
         >
           <Card className="bg-gray-900/95 border-gray-700/50 shadow-2xl backdrop-blur-md">
@@ -152,9 +136,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <AnimatePresence mode="wait">
                 <motion.form
                   key={mode}
-                  variants={formVariants}
-                  initial="hidden"
-                  animate="visible"
+                  initial={{ x: mode === 'login' ? -20 : 20, opacity: 0 }}
+                  animate={{ 
+                    x: 0, 
+                    opacity: 1,
+                    transition: { duration: 0.3, ease: "easeOut" }
+                  }}
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
