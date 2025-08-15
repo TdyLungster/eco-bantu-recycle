@@ -8,48 +8,55 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { initSentry } from "@/lib/monitoring";
 import { initHoneybadger } from "@/lib/honeybadger";
 
-// Lazy load pages for better performance
+// Lazy load pages with better error handling
 import { lazy } from "react";
 
-const OptimizedIndex = lazy(() => import("./pages/OptimizedIndex"));
+const FastIndex = lazy(() => import("./pages/FastIndex"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Tools = lazy(() => import("./pages/Tools"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Create a client
+// Optimized QueryClient configuration
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 10 * 60 * 1000, // 10 minutes - increased for better caching
+      gcTime: 15 * 60 * 1000, // 15 minutes - increased
       retry: (failureCount, error) => {
-        // Don't retry on 4xx errors
         if (error && typeof error === 'object' && 'status' in error) {
           const status = (error as any).status;
           if (status >= 400 && status < 500) return false;
         }
-        return failureCount < 3;
+        return failureCount < 2; // Reduced retry attempts
       },
+      refetchOnWindowFocus: false, // Disable for better performance
+      refetchOnMount: false, // Only refetch when really needed
+    },
+    mutations: {
+      retry: 1, // Reduced retry for mutations
     },
   },
 });
 
-// Loading component
-const PageLoader = () => (
+// Faster loading component
+const FastPageLoader = () => (
   <div className="min-h-screen bg-gray-900 flex items-center justify-center">
     <div className="text-center">
-      <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-      <p className="text-gray-400">Loading...</p>
+      <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+      <p className="text-gray-400 text-sm">Loading...</p>
     </div>
   </div>
 );
 
 function App() {
   useEffect(() => {
-    // Initialize monitoring services
+    // Initialize monitoring only in production
     if (import.meta.env.MODE === 'production') {
-      initSentry();
-      initHoneybadger();
+      // Defer monitoring initialization to not block initial render
+      setTimeout(() => {
+        initSentry();
+        initHoneybadger();
+      }, 1000);
     }
   }, []);
 
@@ -59,9 +66,9 @@ function App() {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={<FastPageLoader />}>
             <Routes>
-              <Route path="/" element={<OptimizedIndex />} />
+              <Route path="/" element={<FastIndex />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="*" element={<NotFound />} />
