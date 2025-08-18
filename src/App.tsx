@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { initSentry } from "@/lib/monitoring";
 import { initHoneybadger } from "@/lib/honeybadger";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 // Lazy load pages for better performance
 import { lazy } from "react";
@@ -57,6 +58,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <GoogleAnalytics />
         <Toaster />
         <Sonner />
         <BrowserRouter>
