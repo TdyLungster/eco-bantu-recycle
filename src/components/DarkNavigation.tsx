@@ -131,11 +131,13 @@ const DarkNavigation = () => {
               {/* Partnership Logo */}
               <div className="hidden lg:flex items-center space-x-2">
                 <span className="text-gray-400 text-sm">In partnership with</span>
-                <img 
-                  src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
-                  alt="eWASA - EPR Waste Association of South Africa"
-                  className="w-20 h-10 object-contain bg-white rounded px-2"
-                />
+                <div className="bg-white rounded px-2 py-1">
+                  <img 
+                    src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
+                    alt="eWASA - EPR Waste Association of South Africa"
+                    className="w-20 h-8 object-contain"
+                  />
+                </div>
               </div>
             </motion.div>
 
@@ -229,11 +231,13 @@ const DarkNavigation = () => {
                 {/* Partnership Logo Mobile */}
                 <div className="flex items-center justify-center space-x-2 pb-4 border-b border-gray-700/50">
                   <span className="text-gray-400 text-sm">In partnership with</span>
-                  <img 
-                    src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
-                    alt="eWASA - EPR Waste Association of South Africa"
-                    className="w-16 h-8 object-contain bg-white rounded px-1"
-                  />
+                  <div className="bg-white rounded px-1 py-1">
+                    <img 
+                      src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
+                      alt="eWASA - EPR Waste Association of South Africa"
+                      className="w-16 h-6 object-contain"
+                    />
+                  </div>
                 </div>
 
                 {/* Navigation Links */}
