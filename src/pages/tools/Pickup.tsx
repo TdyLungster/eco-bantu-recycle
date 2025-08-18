@@ -48,8 +48,8 @@ const Pickup = () => {
       });
 
       // Fire GA4 event
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'pickup_submit', {
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'pickup_submit', {
           event_category: 'engagement',
           event_label: 'pickup_form'
         });
