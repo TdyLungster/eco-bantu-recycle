@@ -1,143 +1,102 @@
-import React, { Suspense, lazy } from 'react';
-import { motion } from 'framer-motion';
-import DarkNavigation from '@/components/DarkNavigation';
-import ImmersiveHero from '@/components/ImmersiveHero';
-import OptimizedImageShowcase from '@/components/OptimizedImageShowcase';
-import DarkFooter from '@/components/DarkFooter';
-import AIChat from '@/components/AIChat';
-import WhatsAppWidget from '@/components/WhatsAppWidget';
-import RealTimeCounter from '@/components/RealTimeCounter';
-import { Toaster } from 'react-hot-toast';
 
-// Lazy load heavy components for better performance
-const Services = lazy(() => import('@/components/Services'));
-const EWasteCalculator = lazy(() => import('@/components/EWasteCalculator'));
-const EnhancedGoogleMaps = lazy(() => import('@/components/EnhancedGoogleMaps'));
-const PayFastPricingPlans = lazy(() => import('@/components/PayFastPricingPlans'));
-const DonationForm = lazy(() => import('@/components/DonationForm'));
-const ImpactStory = lazy(() => import('@/components/ImpactStory'));
-const TeamSection = lazy(() => import('@/components/TeamSection'));
-const EnhancedAnimations = lazy(() => import('@/components/EnhancedAnimations'));
+import React, { Suspense, lazy } from "react";
+import { Helmet } from "react-helmet";
+import DarkNavigation from "@/components/DarkNavigation";
+import DarkFooter from "@/components/DarkFooter";
+import EnhancedAnimations from "@/components/EnhancedAnimations";
+import { Toaster } from "react-hot-toast";
 
-// Loading component for suspense
+// Lazy load components for better performance
+const ImmersiveHero = lazy(() => import("@/components/ImmersiveHero"));
+const OptimizedImageShowcase = lazy(() => import("@/components/OptimizedImageShowcase"));
+const PayFastPricingPlans = lazy(() => import("@/components/PayFastPricingPlans"));
+const Services = lazy(() => import("@/components/Services"));
+const Impact = lazy(() => import("@/components/Impact"));
+const TeamSection = lazy(() => import("@/components/TeamSection"));
+const WhatsAppWidget = lazy(() => import("@/components/WhatsAppWidget"));
+
+// Loading component
 const SectionLoader = () => (
-  <div className="flex items-center justify-center py-20">
+  <div className="min-h-[200px] bg-gray-100 animate-pulse flex items-center justify-center">
     <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
 const OptimizedIndex = () => {
   return (
-    <div className="min-h-screen bg-gray-900">
-      <Suspense fallback={<div />}>
+    <>
+      <Helmet>
+        <title>BANTU THE PEOPLE - Professional E-Waste Recycling in South Africa</title>
+        <meta name="description" content="Transform your old electronics into environmental impact. Professional e-waste recycling services in Johannesburg. Free pickup, data destruction, and compliance reporting." />
+        <meta name="keywords" content="e-waste recycling, electronic waste, Johannesburg, South Africa, data destruction, environmental impact, electronic recycling" />
+        <meta property="og:title" content="BANTU THE PEOPLE - E-Waste Recycling Solutions" />
+        <meta property="og:description" content="Professional e-waste recycling services in South Africa. Free pickup and secure data destruction." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://bantuthepeople.com" />
+      </Helmet>
+
+      <div className="min-h-screen bg-gray-900">
         <EnhancedAnimations />
-      </Suspense>
-      
-      <DarkNavigation />
-      
-      {/* Hero Section */}
-      <section id="home" className="relative">
-        <ImmersiveHero />
-      </section>
-      
-      {/* Main Content Sections */}
-      <div className="space-y-0">
-        {/* Showcase Section - Keep light background for images */}
-        <section className="relative bg-white">
-          <OptimizedImageShowcase />
-        </section>
+        <DarkNavigation />
         
-        {/* Calculator Section */}
-        <section id="calculator" className="relative bg-gray-800 py-16 lg:py-24">
+        <main>
           <Suspense fallback={<SectionLoader />}>
-            <EWasteCalculator />
+            <section className="animate-stagger">
+              <ImmersiveHero />
+            </section>
           </Suspense>
-        </section>
-        
-        {/* Services Section */}
-        <section id="services" className="relative bg-gray-900 py-16 lg:py-24">
+
           <Suspense fallback={<SectionLoader />}>
-            <Services />
+            <section className="animate-slide-left">
+              <OptimizedImageShowcase />
+            </section>
           </Suspense>
-        </section>
-        
-        {/* Real-Time Impact Counter */}
-        <section className="relative bg-gray-800">
-          <RealTimeCounter />
-        </section>
-        
-        {/* Impact Story Section */}
-        <section id="impact" className="relative bg-gray-900">
+
           <Suspense fallback={<SectionLoader />}>
-            <ImpactStory />
+            <section className="animate-reveal">
+              <PayFastPricingPlans />
+            </section>
           </Suspense>
-        </section>
-        
-        {/* Team Section */}
-        <section className="relative bg-gray-800">
+
           <Suspense fallback={<SectionLoader />}>
-            <TeamSection />
+            <section className="animate-slide-right">
+              <Services />
+            </section>
           </Suspense>
-        </section>
-        
-        {/* Enhanced Maps Integration */}
-        <section className="relative bg-gray-900">
+
           <Suspense fallback={<SectionLoader />}>
-            <EnhancedGoogleMaps />
+            <section className="animate-stagger">
+              <Impact />
+            </section>
           </Suspense>
-        </section>
-        
-        {/* Pricing Plans */}
-        <section className="relative bg-gray-800 py-16 lg:py-24">
+
           <Suspense fallback={<SectionLoader />}>
-            <PayFastPricingPlans />
+            <section className="animate-float">
+              <TeamSection />
+            </section>
           </Suspense>
-        </section>
+        </main>
+
+        <DarkFooter />
         
-        {/* Contact Form */}
-        <section id="contact" className="relative bg-gray-900 py-16 lg:py-24">
-          <Suspense fallback={<SectionLoader />}>
-            <DonationForm />
-          </Suspense>
-        </section>
+        <Suspense fallback={null}>
+          <WhatsAppWidget />
+        </Suspense>
+        
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#1f2937',
+              color: '#fff',
+              borderRadius: '8px',
+            },
+          }}
+        />
       </div>
-      
-      <DarkFooter />
-      <AIChat />
-      <WhatsAppWidget />
-      
-      <Toaster 
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: 'rgb(17 24 39)', // gray-900
-            color: '#fff',
-            borderRadius: '12px',
-            padding: '16px',
-            fontSize: '14px',
-            fontWeight: '600',
-            border: '1px solid rgb(75 85 99)', // gray-600
-          },
-          success: {
-            style: {
-              background: 'rgb(5 46 22)', // green-900
-              border: '1px solid rgb(34 197 94)', // green-500
-            },
-            iconTheme: {
-              primary: '#22c55e', // green-500
-              secondary: '#fff',
-            },
-          },
-          error: {
-            style: {
-              background: 'rgb(127 29 29)', // red-900
-              border: '1px solid rgb(239 68 68)', // red-500
-            },
-          },
-        }}
-      />
-    </div>
+    </>
   );
 };
 
