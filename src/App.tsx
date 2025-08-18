@@ -14,6 +14,7 @@ import { lazy } from "react";
 const OptimizedIndex = lazy(() => import("./pages/OptimizedIndex"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Tools = lazy(() => import("./pages/Tools"));
+const Pickup = lazy(() => import("./pages/tools/Pickup"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Create a client
@@ -64,6 +65,7 @@ function App() {
               <Route path="/" element={<OptimizedIndex />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/tools" element={<Tools />} />
+              <Route path="/tools/pickup" element={<Pickup />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

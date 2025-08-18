@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, LogOut, Settings, Recycle } from 'lucide-react';
+import { Menu, X, User, LogOut, Settings, Recycle, Phone, Mail } from 'lucide-react';
 import { Button } from './ui/button';
 import AuthModal from './ui/auth-modal';
 import { supabase } from '@/integrations/supabase/client';
@@ -83,19 +83,53 @@ const DarkNavigation = () => {
             : 'bg-transparent'
         }`}
       >
+        {/* Contact Info Bar */}
+        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 px-4">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4" />
+                <span>0100654785</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4" />
+                <span>rich@bantuthepeople.com</span>
+              </div>
+            </div>
+            <div className="hidden sm:flex items-center space-x-4">
+              <span className="text-green-100">🌍 Making South Africa Greener</span>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Logo Section */}
             <motion.div 
-              className="flex items-center space-x-3"
+              className="flex items-center space-x-6"
               whileHover={{ scale: 1.02 }}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
-                <Recycle className="w-6 h-6 text-white" />
+              {/* Main Company Logo */}
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/lovable-uploads/21466dcd-3bd2-480d-b01f-58a45152a7ba.png"
+                  alt="Bantu The People - E-Waste Recycling"
+                  className="w-12 h-12 object-contain"
+                />
+                <div className="hidden sm:block">
+                  <h1 className="text-xl font-bold text-white">BANTU THE PEOPLE</h1>
+                  <p className="text-xs text-green-400 -mt-1">Eco Recycle Solutions</p>
+                </div>
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-white">BANTU THE PEOPLE</h1>
-                <p className="text-xs text-green-400 -mt-1">Eco Recycle Solutions</p>
+
+              {/* Partnership Logo */}
+              <div className="hidden lg:flex items-center space-x-2">
+                <span className="text-gray-400 text-sm">In partnership with</span>
+                <img 
+                  src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
+                  alt="eWASA - EPR Waste Association of South Africa"
+                  className="w-20 h-10 object-contain bg-white rounded px-2"
+                />
               </div>
             </motion.div>
 
@@ -173,6 +207,16 @@ const DarkNavigation = () => {
               className="md:hidden bg-gray-900/95 backdrop-blur-md border-t border-gray-700/50"
             >
               <div className="px-4 py-6 space-y-4">
+                {/* Partnership Logo Mobile */}
+                <div className="flex items-center justify-center space-x-2 pb-4 border-b border-gray-700/50">
+                  <span className="text-gray-400 text-sm">In partnership with</span>
+                  <img 
+                    src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
+                    alt="eWASA - EPR Waste Association of South Africa"
+                    className="w-16 h-8 object-contain bg-white rounded px-1"
+                  />
+                </div>
+
                 {/* Navigation Links */}
                 {navItems.map((item, index) => (
                   <motion.button
