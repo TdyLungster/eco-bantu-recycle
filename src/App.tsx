@@ -14,8 +14,14 @@ import { lazy } from "react";
 
 const OptimizedIndex = lazy(() => import("./pages/OptimizedIndex"));
 const Blog = lazy(() => import("./pages/Blog"));
+const Directory = lazy(() => import("./pages/Directory"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Pickup = lazy(() => import("./pages/tools/Pickup"));
+const Quote = lazy(() => import("./pages/tools/Quote"));
+const Value = lazy(() => import("./pages/tools/Value"));
+const Impact = lazy(() => import("./pages/tools/Impact"));
+const Locations = lazy(() => import("./pages/tools/Locations"));
+const Certificate = lazy(() => import("./pages/tools/Certificate"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Create a client
@@ -66,8 +72,14 @@ function App() {
             <Routes>
               <Route path="/" element={<OptimizedIndex />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/directory" element={<Directory />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/pickup" element={<Pickup />} />
+              <Route path="/tools/quote" element={<Quote />} />
+              <Route path="/tools/value" element={<Value />} />
+              <Route path="/tools/impact" element={<Impact />} />
+              <Route path="/tools/locations" element={<Locations />} />
+              <Route path="/tools/certificate" element={<Certificate />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

@@ -1,73 +1,370 @@
-# Welcome to your Lovable project
 
-## Project info
+# Bantu The People - E-Waste Recycling Platform
 
-**URL**: https://lovable.dev/projects/5e1747e3-1815-475d-98d1-fb8eb49daf7b
+A comprehensive e-waste management platform built with React, Firebase, and modern web technologies.
 
-## How can I edit this code?
+## 🌍 About
 
-There are several ways of editing your application.
+Bantu The People is South Africa's leading e-waste recycling solution, helping individuals and businesses responsibly dispose of electronic waste while contributing to environmental sustainability.
 
-**Use Lovable**
+## 🚀 Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5e1747e3-1815-475d-98d1-fb8eb49daf7b) and start prompting.
+### Frontend
+- **Modern React Stack**: Built with Vite, TypeScript, Tailwind CSS, and shadcn/ui
+- **Responsive Design**: Mobile-first approach with beautiful UI components
+- **Authentication**: Firebase Auth with Google sign-in
+- **Real-time Data**: Firestore integration for live updates
+- **Progressive Web App**: Optimized for mobile and desktop
 
-Changes made via Lovable will be committed automatically to this repo.
+### Tools & Services
+- **Pickup Scheduler**: Book free e-waste collection services
+- **Quote Generator**: Get custom quotes for corporate recycling
+- **Value Estimator**: Calculate recycling value of devices
+- **Impact Calculator**: See environmental benefits of recycling
+- **Location Finder**: Find certified recycling centers
+- **Certificate Generator**: Generate data destruction certificates
 
-**Use your preferred IDE**
+### Content Management
+- **Blog System**: Dynamic blog with admin publishing
+- **Directory**: Searchable directory of recycling partners
+- **Analytics**: GA4 integration with event tracking
+- **SEO Optimized**: Meta tags, sitemap, and structured data
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for build tooling
+- **Tailwind CSS** for styling
+- **shadcn/ui** for components
+- **React Router** for navigation
+- **React Hook Form** with Zod validation
+- **Framer Motion** for animations
+- **React Query** for data fetching
 
-Follow these steps:
+### Backend
+- **Firebase Functions** with Express.js
+- **MongoDB Atlas** for database
+- **Firebase Admin SDK** for authentication
+- **PayFast** for payment processing
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Development Tools
+- **ESLint** and **Prettier** for code quality
+- **TypeScript** for type safety
+- **Vitest** for testing
+- **Honeybadger** for error monitoring
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📦 Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Firebase CLI
+- MongoDB Atlas account (for backend)
+- Doppler CLI (recommended for secrets management)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Frontend Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-org/bantu-e-waste.git
+   cd bantu-e-waste
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+   
+   Copy `.env.example` to `.env.local` and configure:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   **Using Doppler (Recommended):**
+   ```bash
+   # Install Doppler CLI
+   npm install -g @doppler/cli
+   
+   # Login and setup project
+   doppler login
+   doppler setup
+   
+   # Run with Doppler
+   doppler run -- npm run dev
+   ```
+
+   **Manual Setup:**
+   Configure the following variables in `.env.local`:
+   ```env
+   # Firebase Configuration
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   VITE_FIREBASE_MESSAGING_SENDER_ID=123456789
+   VITE_FIREBASE_APP_ID=1:123456789:web:abcd1234
+   
+   # API Configuration
+   VITE_API_BASE=https://us-central1-your_project.cloudfunctions.net/api
+   
+   # Analytics & Maps
+   VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+   VITE_GOOGLE_MAPS_API_KEY=your_maps_api_key
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+### Backend Setup (Firebase Functions)
+
+1. **Navigate to functions directory**
+   ```bash
+   cd functions
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+   
+   Set the following environment variables for Firebase Functions:
+   ```bash
+   # MongoDB
+   firebase functions:config:set mongo.uri="mongodb+srv://user:pass@cluster.mongodb.net/bantu"
+   
+   # PayFast
+   firebase functions:config:set payfast.passphrase="your_payfast_passphrase"
+   
+   # Admin Emails
+   firebase functions:config:set admin.emails="admin@company.com,owner@company.com"
+   
+   # Google Service Account (for Sheets integration)
+   firebase functions:config:set google.service_account="base64_encoded_json"
+   ```
+
+4. **Start local development**
+   ```bash
+   npm run serve
+   ```
+
+5. **Deploy to production**
+   ```bash
+   npm run deploy
+   ```
+
+## 🔧 Configuration
+
+### Firebase Setup
+
+1. **Create Firebase Project**
+   - Go to [Firebase Console](https://console.firebase.google.com)
+   - Create new project
+   - Enable Authentication, Firestore, and Functions
+
+2. **Configure Authentication**
+   - Enable Google sign-in provider
+   - Add authorized domains
+
+3. **Firestore Security Rules**
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       // Public read access to posts and directory
+       match /posts/{document} {
+         allow read: if true;
+         allow write: if isAdmin();
+       }
+       
+       match /directory/{document} {
+         allow read: if true;
+         allow write: if isAdmin();
+       }
+       
+       function isAdmin() {
+         return request.auth != null && 
+                request.auth.token.email in ['admin@company.com'];
+       }
+     }
+   }
+   ```
+
+### MongoDB Setup
+
+1. **Create MongoDB Atlas Cluster**
+   - Sign up at [MongoDB Atlas](https://cloud.mongodb.com)
+   - Create new cluster
+   - Create database user
+   - Whitelist IP addresses
+
+2. **Database Structure**
+   The application uses the following collections:
+   - `orders` - Pickup requests, quotes, and payments
+   - `posts` - Blog posts
+   - `directoryentries` - Recycling center directory
+
+### PayFast Integration
+
+1. **Create PayFast Account**
+   - Sign up at [PayFast](https://www.payfast.co.za)
+   - Get merchant credentials
+   - Configure ITN URL: `https://your-domain/api/payfast/itn`
+
+2. **Test in Sandbox**
+   - Use sandbox credentials for development
+   - Test payment flows before going live
+
+## 🚀 Deployment
+
+### Frontend Deployment
+
+**Netlify (Recommended):**
+```bash
+# Build the project
+npm run build
+
+# Deploy to Netlify
+# Connect your GitHub repo to Netlify for automatic deployments
 ```
 
-**Edit a file directly in GitHub**
+**Firebase Hosting:**
+```bash
+# Build and deploy
+npm run build
+firebase deploy --only hosting
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Backend Deployment
 
-**Use GitHub Codespaces**
+```bash
+# Deploy Functions
+cd functions
+npm run deploy
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Environment Variables in Production
 
-## What technologies are used for this project?
+Set the following in your deployment platform:
 
-This project is built with:
+**Netlify:**
+- Go to Site Settings > Environment Variables
+- Add all `VITE_*` variables
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+**Vercel:**
+```bash
+vercel env add VITE_FIREBASE_API_KEY
+# Add all other variables
+```
 
-## How can I deploy this project?
+## 📊 Analytics & Monitoring
 
-Simply open [Lovable](https://lovable.dev/projects/5e1747e3-1815-475d-98d1-fb8eb49daf7b) and click on Share -> Publish.
+### Google Analytics 4
+- Events are automatically tracked for form submissions
+- Custom events for user interactions
+- E-commerce tracking for donations/payments
 
-## Can I connect a custom domain to my Lovable project?
+### Error Monitoring
+- Honeybadger integration for error tracking
+- Real-time error alerts
+- Performance monitoring
 
-Yes, you can!
+### Performance
+- Lighthouse scores > 90 for all metrics
+- Image optimization
+- Code splitting and lazy loading
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🧪 Testing
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run E2E tests (if configured)
+npm run test:e2e
+```
+
+## 🔒 Security
+
+### Best Practices Implemented
+- **Input Validation**: Zod schemas for all forms
+- **Authentication**: Firebase Auth with secure tokens
+- **Rate Limiting**: Express rate limiting on API endpoints
+- **Data Sanitization**: Clean inputs before database storage
+- **HTTPS Only**: All production traffic over HTTPS
+- **Environment Variables**: Sensitive data in environment variables
+
+### Security Headers
+```javascript
+// Implemented in Firebase Functions
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "https://www.googletagmanager.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+}));
+```
+
+## 🤝 Contributing
+
+1. **Fork the repository**
+2. **Create feature branch**: `git checkout -b feature/amazing-feature`
+3. **Commit changes**: `git commit -m 'Add amazing feature'`
+4. **Push to branch**: `git push origin feature/amazing-feature`
+5. **Open Pull Request**
+
+### Code Style
+- Follow TypeScript best practices
+- Use Prettier for formatting
+- Write meaningful commit messages
+- Add tests for new features
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **Documentation**: Check this README and inline code comments
+- **Issues**: Report bugs via GitHub Issues
+- **Email**: technical@bantuthepeople.com
+- **Phone**: +27 10 065 4785
+
+## 📋 Roadmap
+
+### Phase 1 (Current)
+- ✅ Basic website and tools
+- ✅ Firebase integration
+- ✅ Payment processing
+- ✅ Admin dashboard
+
+### Phase 2 (Next)
+- [ ] Mobile app (React Native)
+- [ ] Advanced analytics dashboard
+- [ ] Automated email campaigns
+- [ ] Multi-language support
+
+### Phase 3 (Future)
+- [ ] AI-powered waste classification
+- [ ] IoT device integration
+- [ ] Carbon credit marketplace
+- [ ] B2B portal expansion
+
+---
+
+**Built with 💚 for a sustainable future**
+
+*Bantu The People - Making South Africa Greener, One Device at a Time*

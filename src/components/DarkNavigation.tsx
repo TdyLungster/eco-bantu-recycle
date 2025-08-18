@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, LogOut, Settings, Recycle, Phone, Mail } from 'lucide-react';
+import { Menu, X, User, LogOut, Settings, Recycle, Phone, Mail, BookOpen, MapPin } from 'lucide-react';
 import { Button } from './ui/button';
 import AuthModal from './ui/auth-modal';
 import { supabase } from '@/integrations/supabase/client';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const DarkNavigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,7 +58,10 @@ const DarkNavigation = () => {
   };
 
   const navItems = [
-    { href: '#home', label: 'Home' },
+    { href: '/', label: 'Home' },
+    { href: '/blog', label: 'Blog', icon: BookOpen },
+    { href: '/directory', label: 'Directory', icon: MapPin },
+    { href: '/tools', label: 'Tools' },
     { href: '#services', label: 'Services' },
     { href: '#calculator', label: 'Calculator' },
     { href: '#impact', label: 'Impact' },
@@ -65,9 +69,11 @@ const DarkNavigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsMenuOpen(false);
   };
@@ -110,7 +116,7 @@ const DarkNavigation = () => {
               whileHover={{ scale: 1.02 }}
             >
               {/* Main Company Logo */}
-              <div className="flex items-center space-x-3">
+              <Link to="/" className="flex items-center space-x-3">
                 <img 
                   src="/lovable-uploads/21466dcd-3bd2-480d-b01f-58a45152a7ba.png"
                   alt="Bantu The People - E-Waste Recycling"
@@ -120,7 +126,7 @@ const DarkNavigation = () => {
                   <h1 className="text-xl font-bold text-white">BANTU THE PEOPLE</h1>
                   <p className="text-xs text-green-400 -mt-1">Eco Recycle Solutions</p>
                 </div>
-              </div>
+              </Link>
 
               {/* Partnership Logo */}
               <div className="hidden lg:flex items-center space-x-2">
@@ -136,15 +142,28 @@ const DarkNavigation = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <motion.button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-gray-300 hover:text-white transition-colors font-medium"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ y: 0 }}
-                >
-                  {item.label}
-                </motion.button>
+                item.href.startsWith('#') ? (
+                  <motion.button
+                    key={item.href}
+                    onClick={() => scrollToSection(item.href)}
+                    className="text-gray-300 hover:text-white transition-colors font-medium flex items-center space-x-1"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0 }}
+                  >
+                    {item.icon && <item.icon className="w-4 h-4" />}
+                    <span>{item.label}</span>
+                  </motion.button>
+                ) : (
+                  <motion.div key={item.href}>
+                    <Link
+                      to={item.href}
+                      className="text-gray-300 hover:text-white transition-colors font-medium flex items-center space-x-1"
+                    >
+                      {item.icon && <item.icon className="w-4 h-4" />}
+                      <span>{item.label}</span>
+                    </Link>
+                  </motion.div>
+                )
               ))}
             </div>
 
@@ -219,16 +238,35 @@ const DarkNavigation = () => {
 
                 {/* Navigation Links */}
                 {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.href}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left text-gray-300 hover:text-white transition-colors py-2 font-medium"
-                  >
-                    {item.label}
-                  </motion.button>
+                  item.href.startsWith('#') ? (
+                    <motion.button
+                      key={item.href}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => scrollToSection(item.href)}
+                      className="block w-full text-left text-gray-300 hover:text-white transition-colors py-2 font-medium flex items-center space-x-2"
+                    >
+                      {item.icon && <item.icon className="w-4 h-4" />}
+                      <span>{item.label}</span>
+                    </motion.button>
+                  ) : (
+                    <motion.div
+                      key={item.href}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block w-full text-left text-gray-300 hover:text-white transition-colors py-2 font-medium flex items-center space-x-2"
+                      >
+                        {item.icon && <item.icon className="w-4 h-4" />}
+                        <span>{item.label}</span>
+                      </Link>
+                    </motion.div>
+                  )
                 ))}
 
                 {/* Auth Buttons */}
