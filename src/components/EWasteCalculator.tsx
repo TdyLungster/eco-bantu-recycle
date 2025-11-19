@@ -56,9 +56,14 @@ const EWasteCalculator = () => {
       const { error } = await supabase
         .from('pickups')
         .insert({
-          devices: devicesData,
-          estimated_value: totalValue,
-          pickup_address: 'TBD',
+          full_name: 'Calculator User',
+          email: 'calculator@example.com',
+          phone: '0000000000',
+          address: 'TBD',
+          city: 'TBD',
+          postal_code: '0000',
+          item_description: JSON.stringify(devicesData),
+          estimated_weight: totalValue,
           status: 'pending'
         });
 
