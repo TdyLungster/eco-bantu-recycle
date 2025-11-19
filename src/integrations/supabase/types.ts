@@ -14,16 +14,158 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      pickups: {
+        Row: {
+          address: string
+          city: string
+          created_at: string | null
+          email: string
+          estimated_weight: number | null
+          full_name: string
+          id: string
+          item_description: string
+          phone: string
+          postal_code: string
+          preferred_date: string | null
+          preferred_time: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string | null
+          email: string
+          estimated_weight?: number | null
+          full_name: string
+          id?: string
+          item_description: string
+          phone: string
+          postal_code: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string | null
+          email?: string
+          estimated_weight?: number | null
+          full_name?: string
+          id?: string
+          item_description?: string
+          phone?: string
+          postal_code?: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          company_name: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          trial_expires_at: string | null
+          trial_uses_remaining: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          trial_expires_at?: string | null
+          trial_uses_remaining?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          trial_expires_at?: string | null
+          trial_uses_remaining?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          payfast_payment_id: string | null
+          payment_method: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          payfast_payment_id?: string | null
+          payment_method?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          payfast_payment_id?: string | null
+          payment_method?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_trial_status: { Args: never; Returns: Json }
+      has_role: {
+        Args: { check_role: Database["public"]["Enums"]["app_role"] }
+        Returns: boolean
+      }
+      use_trial_calculation: { Args: never; Returns: Json }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "admin" | "business"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +292,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "admin", "business"],
+    },
   },
 } as const

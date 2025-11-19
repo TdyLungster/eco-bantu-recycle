@@ -31,22 +31,14 @@ const CorporateDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      // Fetch sponsorship data
-      const { data: sponsorship } = await supabase
-        .from('sponsorships')
-        .select(`
-          *,
-          companies(company_name)
-        `)
-        .eq('status', 'active')
-        .single();
-
-      if (sponsorship) {
-        setSponsorshipData({
-          ...sponsorship,
-          company_name: sponsorship.companies?.company_name || 'Your Company'
-        });
-      }
+      // Set sample sponsorship data since tables don't exist yet
+      setSponsorshipData({
+        tier: 'gold',
+        monthly_amount: 25000,
+        features: {},
+        company_name: 'Your Company',
+        status: 'active'
+      });
 
       // Generate sample impact data
       const sampleData: ImpactData[] = [

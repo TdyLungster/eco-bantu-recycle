@@ -26,12 +26,40 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`${mode === 'login' ? 'Login' : 'Sign up'} successful!`);
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      if (mode === 'login') {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password
+        });
+        
+        if (error) throw error;
+        alert('Login successful!');
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/`,
+            data: {
+              full_name: `${formData.firstName} ${formData.lastName}`,
+              company_name: formData.company
+            }
+          }
+        });
+        
+        if (error) throw error;
+        alert('Sign up successful! Please check your email for confirmation.');
+      }
+      
       onClose();
-    }, 2000);
+    } catch (error: any) {
+      alert(error.message || 'An error occurred');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
