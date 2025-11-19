@@ -2,8 +2,8 @@
 // Secure configuration management
 export const config = {
   supabase: {
-    url: "https://bjprnsvwezvlckjuihkc.supabase.co",
-    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqcHJuc3Z3ZXp2bGNranVpaGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjc2MDMsImV4cCI6MjA2NjYwMzYwM30.U2PpCaiClDMggDZsIusBjBWOznVx92TSMLVrK2F8QCM"
+    url: "https://rwfycdbfohzhvlwjjsno.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3ZnljZGJmb2h6aHZsd2pqc25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1ODQ0OTcsImV4cCI6MjA3OTE2MDQ5N30.S-r9aZqz1ZLXaGFDm-cb7zLDm0-flbaQRraHkOccACw"
   },
   monitoring: {
     sentryDsn: import.meta.env.VITE_SENTRY_DSN || '',
