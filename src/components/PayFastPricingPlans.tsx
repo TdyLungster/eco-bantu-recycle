@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.com';
 const MERCHANT_ID = import.meta.env.VITE_PAYFAST_MERCHANT_ID ?? '25955793';
 const MERCHANT_KEY = import.meta.env.VITE_PAYFAST_MERCHANT_KEY ?? '4wr6pu7retlr1';
+// IPN webhook → Supabase Edge Function (no Netlify backend needed)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? '';
+const NOTIFY_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/handle-payfast-webhook`
+  : `${SITE_URL}/api/payfast-ipn`;
 
 function getBillingDate() {
   const d = new Date();
@@ -97,7 +102,7 @@ function PayFastForm({ plan }: { plan: typeof plans[0] }) {
       <input type="hidden" name="merchant_key" value={MERCHANT_KEY} />
       <input type="hidden" name="return_url" value={`${SITE_URL}/pro/thank-you`} />
       <input type="hidden" name="cancel_url" value={`${SITE_URL}/`} />
-      <input type="hidden" name="notify_url" value={`${SITE_URL}/api/payfast-ipn`} />
+      <input type="hidden" name="notify_url" value={NOTIFY_URL} />
       <input type="hidden" name="amount" value={plan.price.toFixed(2)} />
       <input type="hidden" name="item_name" value={`Bantu The People ${plan.name} Plan`} />
       <input type="hidden" name="subscription_type" value="1" />

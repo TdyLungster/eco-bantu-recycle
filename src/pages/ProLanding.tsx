@@ -14,6 +14,10 @@ const PAYFAST_MERCHANT_ID = '25955793';
 const PAYFAST_MERCHANT_KEY = '4wr6pu7retlr1';
 const PAYFAST_PASSPHRASE = ''; // Set in PayFast dashboard if configured
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.com';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? '';
+const NOTIFY_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/handle-payfast-webhook`
+  : `${SITE_URL}/api/payfast-ipn`;
 
 // ─── PayPal — Merchant ID: PNX85WE6TKWFU (Rich Humble) ───────────────────────
 const PAYPAL_MERCHANT_ID = 'PNX85WE6TKWFU';
@@ -126,7 +130,7 @@ function PayFastButton({ plan }: { plan: PlanConfig }) {
       <input type="hidden" name="merchant_key" value={PAYFAST_MERCHANT_KEY} />
       <input type="hidden" name="return_url" value={`${SITE_URL}/pro/thank-you`} />
       <input type="hidden" name="cancel_url" value={`${SITE_URL}/pro`} />
-      <input type="hidden" name="notify_url" value={`${SITE_URL}/api/payfast-ipn`} />
+      <input type="hidden" name="notify_url" value={NOTIFY_URL} />
       <input type="hidden" name="amount" value={plan.zarPrice.toFixed(2)} />
       <input type="hidden" name="item_name" value={plan.payfastItemName} />
       <input type="hidden" name="item_description" value={`Lifetime license — ${plan.name} Plan`} />
