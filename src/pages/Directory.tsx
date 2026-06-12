@@ -118,16 +118,16 @@ const Directory = () => {
       <Helmet>
         <title>Recycling Centers Directory | Bantu The People</title>
         <meta name="description" content="Find certified e-waste recycling centers and service providers across South Africa. Search by city, service, and accepted devices." />
-        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/directory" />
+        <link rel="canonical" href="https://bantuthepeople.com/directory" />
         <meta property="og:title" content="Recycling Centers Directory | Bantu The People" />
         <meta property="og:description" content="Certified e-waste recyclers across South Africa." />
-        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/directory" />
+        <meta property="og:url" content="https://bantuthepeople.com/directory" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           "name": "E-Waste Recycling Centers Directory",
-          "url": "https://eco-bantu-recycle.lovable.app/directory",
+          "url": "https://bantuthepeople.com/directory",
           "mainEntity": {
             "@type": "ItemList",
             "itemListElement": mockDirectory.map((d: any, i: number) => ({

@@ -39,7 +39,7 @@ const OptimizedIndex = () => {
         <meta property="og:url" content="https://bantuthepeople.com" />
         <meta property="og:image" content="https://bantuthepeople.com/lovable-uploads/1d597c1b-c8b7-4bea-a6c4-25070f1172ab.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/" />
+        <link rel="canonical" href="https://bantuthepeople.com/" />
       </Helmet>
 
       <div className="min-h-screen bg-gray-900">

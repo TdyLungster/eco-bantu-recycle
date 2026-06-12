@@ -67,10 +67,10 @@ const Tools = () => {
       <Helmet>
         <title>E-Waste Tools - Pickup, Quotes & Impact | Bantu The People</title>
         <meta name="description" content="Schedule a pickup, get a quote, estimate device value, view impact, and download certificates — all in one e-waste toolkit." />
-        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/tools" />
+        <link rel="canonical" href="https://bantuthepeople.com/tools" />
         <meta property="og:title" content="E-Waste Tools | Bantu The People" />
         <meta property="og:description" content="Pickup scheduling, quotes, value estimates, and compliance certificates." />
-        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/tools" />
+        <meta property="og:url" content="https://bantuthepeople.com/tools" />
         <meta property="og:type" content="website" />
       </Helmet>
       <DarkNavigation />

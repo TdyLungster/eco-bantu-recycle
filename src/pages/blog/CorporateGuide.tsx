@@ -8,7 +8,7 @@ import DarkFooter from '@/components/DarkFooter';
 import { Button } from '@/components/ui/button';
 
 const CorporateGuide = () => {
-  const url = 'https://eco-bantu-recycle.lovable.app/blog/corporate-e-waste-management-guide';
+  const url = 'https://bantuthepeople.com/blog/corporate-e-waste-management-guide';
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -38,7 +38,7 @@ const CorporateGuide = () => {
             name: 'Bantu The People',
             logo: {
               '@type': 'ImageObject',
-              url: 'https://eco-bantu-recycle.lovable.app/lovable-uploads/5669cbba-ee2f-4fbb-9d50-e0722c45e5bd.png',
+              url: 'https://bantuthepeople.com/lovable-uploads/5669cbba-ee2f-4fbb-9d50-e0722c45e5bd.png',
             },
           },
           mainEntityOfPage: url,
