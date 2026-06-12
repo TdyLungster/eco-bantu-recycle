@@ -23,6 +23,8 @@ const Impact = lazy(() => import("./pages/tools/Impact"));
 const Locations = lazy(() => import("./pages/tools/Locations"));
 const Certificate = lazy(() => import("./pages/tools/Certificate"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const ProLanding = lazy(() => import("./pages/ProLanding"));
+const ProThankYou = lazy(() => import("./pages/ProThankYou"));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -80,6 +82,8 @@ function App() {
               <Route path="/tools/impact" element={<Impact />} />
               <Route path="/tools/locations" element={<Locations />} />
               <Route path="/tools/certificate" element={<Certificate />} />
+              <Route path="/pro" element={<ProLanding />} />
+              <Route path="/pro/thank-you" element={<ProThankYou />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
