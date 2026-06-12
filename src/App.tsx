@@ -30,6 +30,9 @@ const ProLanding = lazy(() => import("./pages/ProLanding"));
 const ProThankYou = lazy(() => import("./pages/ProThankYou"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Admin = lazy(() => import("./pages/Admin"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogList = lazy(() => import("./pages/admin/BlogList"));
+const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -80,6 +83,10 @@ function App() {
               <Route path="/" element={<OptimizedIndex />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/corporate-e-waste-management-guide" element={<CorporateGuide />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/admin/blog" element={<BlogList />} />
+              <Route path="/admin/blog/new" element={<BlogEditor />} />
+              <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
               <Route path="/directory" element={<Directory />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/pickup" element={<Pickup />} />

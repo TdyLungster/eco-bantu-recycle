@@ -223,9 +223,9 @@ export default function Admin() {
   ];
 
   const quickActions = [
+    { label: 'Blog Posts', icon: <BookOpen className="w-4 h-4" />, to: '/admin/blog' },
+    { label: 'Write New Post', icon: <FileText className="w-4 h-4" />, to: '/admin/blog/new' },
     { label: 'Book Pickup', icon: <Truck className="w-4 h-4" />, to: '/tools/pickup' },
-    { label: 'Generate Certificate', icon: <FileCheck className="w-4 h-4" />, to: '/tools/certificate' },
-    { label: 'View Blog', icon: <BookOpen className="w-4 h-4" />, to: '/blog' },
     { label: 'GreenCert Pro', icon: <Leaf className="w-4 h-4" />, to: '/pro' },
   ];
 
