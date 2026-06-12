@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Users, TrendingUp, Award, Calendar, LogOut, ExternalLink,
-  Truck, FileCheck, BookOpen, Leaf, Info, RefreshCw
+  Truck, FileCheck, BookOpen, Leaf, Info, RefreshCw,
+  Sparkles, Mail, Copy, ChevronDown, ChevronUp, BarChart3,
+  FileText, Shield, Zap
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import toast from 'react-hot-toast';
@@ -28,6 +30,13 @@ interface Stats {
 
 type AuthStatus = 'loading' | 'ok' | 'denied';
 
+interface AiInsights {
+  insights: string;
+  top_city: string;
+  total_leads: number;
+  total_devices: number;
+}
+
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
@@ -43,6 +52,11 @@ export default function Admin() {
   const [stats, setStats] = useState<Stats>({ totalLeads: 0, todayLeads: 0, totalCerts: 0 });
   const [leads, setLeads] = useState<Lead[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [aiInsights, setAiInsights] = useState<AiInsights | null>(null);
+  const [aiInsightsLoading, setAiInsightsLoading] = useState(false);
+  const [draftingEmail, setDraftingEmail] = useState<string | null>(null); // lead email
+  const [draftedEmail, setDraftedEmail] = useState('');
+  const [emailLoading, setEmailLoading] = useState(false);
 
   // Auth check
   useEffect(() => {
@@ -118,6 +132,48 @@ export default function Admin() {
     } catch {
       // certificates table may not exist yet — ignore gracefully
     }
+  };
+
+  const runAiInsights = async () => {
+    if (!leads.length) { toast.error('No leads to analyse yet'); return; }
+    setAiInsightsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-lead-insights', { body: { leads } });
+      if (error) throw error;
+      setAiInsights(data);
+    } catch {
+      toast.error('AI analysis failed — check ANTHROPIC_API_KEY in Supabase secrets');
+    } finally {
+      setAiInsightsLoading(false);
+    }
+  };
+
+  const draftEmailForLead = async (lead: Lead) => {
+    setDraftingEmail(lead.email);
+    setDraftedEmail('');
+    setEmailLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-email-drafter', {
+        body: {
+          lead_email: lead.email,
+          company_name: lead.company_name,
+          city: lead.city,
+          device_count: lead.device_count,
+          source: lead.source,
+          tone: 'professional',
+        },
+      });
+      if (error) throw error;
+      setDraftedEmail(data?.email || '');
+    } catch {
+      toast.error('Email drafting failed');
+    } finally {
+      setEmailLoading(false);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => toast.success('Copied to clipboard!'));
   };
 
   const handleSignOut = async () => {
@@ -269,7 +325,7 @@ export default function Admin() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-gray-800 text-left">
-                      {['Email', 'Company', 'City', 'Devices', 'Source', 'Date'].map(col => (
+                      {['Email', 'Company', 'City', 'Devices', 'Source', 'Date', 'Actions'].map(col => (
                         <th
                           key={col}
                           className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500"
@@ -281,8 +337,8 @@ export default function Admin() {
                   </thead>
                   <tbody>
                     {leads.map((lead, i) => (
+                      <React.Fragment key={lead.id ?? i}>
                       <motion.tr
-                        key={lead.id ?? i}
                         custom={i}
                         variants={cardVariants}
                         initial="hidden"
@@ -310,13 +366,130 @@ export default function Admin() {
                               })
                             : '—'}
                         </td>
+                        <td className="px-4 py-3">
+                          <button
+                            onClick={() => draftEmailForLead(lead)}
+                            className="flex items-center gap-1 text-xs text-green-400 hover:text-green-300 bg-green-500/10 hover:bg-green-500/20 px-2 py-1 rounded-lg transition-colors"
+                          >
+                            <Mail className="w-3 h-3" /> Draft
+                          </button>
+                        </td>
                       </motion.tr>
+                      {/* Email draft panel */}
+                      <AnimatePresence>
+                        {draftingEmail === lead.email && (
+                          <motion.tr
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            <td colSpan={7} className="px-4 py-4 bg-gray-800/50 border-b border-gray-700">
+                              {emailLoading ? (
+                                <div className="flex items-center gap-2 text-gray-400 text-sm">
+                                  <Sparkles className="w-4 h-4 animate-pulse text-green-400" />
+                                  Claude is drafting your email...
+                                </div>
+                              ) : draftedEmail ? (
+                                <div className="space-y-2">
+                                  <pre className="text-xs text-gray-300 whitespace-pre-wrap font-sans bg-gray-900 border border-gray-700 rounded-lg p-3 max-h-48 overflow-y-auto">
+                                    {draftedEmail}
+                                  </pre>
+                                  <div className="flex gap-2">
+                                    <button onClick={() => copyToClipboard(draftedEmail)}
+                                      className="flex items-center gap-1 text-xs bg-green-500 hover:bg-green-400 text-gray-900 font-bold px-3 py-1.5 rounded-lg">
+                                      <Copy className="w-3 h-3" /> Copy Email
+                                    </button>
+                                    <button onClick={() => setDraftingEmail(null)}
+                                      className="text-xs text-gray-500 hover:text-gray-300 px-3 py-1.5 rounded-lg">
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : null}
+                            </td>
+                          </motion.tr>
+                        )}
+                      </AnimatePresence>
+                      </React.Fragment>
                     ))}
                   </tbody>
                 </table>
               </div>
             )}
           </motion.div>
+        </section>
+
+        {/* ── AI Tools Row ─────────────────────────────────────────────────── */}
+        <section>
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5 text-green-400" /> AI Tools
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { label: 'AI Lead Insights', icon: BarChart3, desc: 'Analyse your leads with Claude', action: true },
+              { label: 'ESG Report', icon: FileText, to: '/tools/esg-report', desc: 'Generate investor reports' },
+              { label: 'Compliance Check', icon: Shield, to: '/tools/compliance-check', desc: 'POPIA/NEMWA gap audit' },
+              { label: 'AI Assistant', icon: Zap, to: '/', desc: 'Claude chat on live site' },
+            ].map((item) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                {item.action ? (
+                  <button
+                    onClick={runAiInsights}
+                    disabled={aiInsightsLoading}
+                    className="w-full text-left bg-gray-900 border border-gray-800 hover:border-green-500/50 rounded-xl p-4 transition-colors group"
+                  >
+                    <item.icon className="w-5 h-5 text-green-400 mb-2" />
+                    <p className="text-sm font-semibold text-white">{item.label}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{aiInsightsLoading ? 'Analysing...' : item.desc}</p>
+                  </button>
+                ) : (
+                  <Link
+                    to={item.to!}
+                    className="block bg-gray-900 border border-gray-800 hover:border-green-500/50 rounded-xl p-4 transition-colors group"
+                  >
+                    <item.icon className="w-5 h-5 text-green-400 mb-2" />
+                    <p className="text-sm font-semibold text-white">{item.label}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
+                  </Link>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* AI Insights result */}
+          <AnimatePresence>
+            {aiInsights && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mt-4 bg-gray-900 border border-green-500/30 rounded-xl p-5"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-green-400" />
+                    <span className="text-sm font-bold text-white">AI Lead Analysis</span>
+                    <span className="text-xs text-gray-500">· {aiInsights.total_leads} leads · {aiInsights.total_devices} devices · Top city: {aiInsights.top_city}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => copyToClipboard(aiInsights.insights)}
+                      className="text-xs text-gray-500 hover:text-green-400 flex items-center gap-1">
+                      <Copy className="w-3 h-3" /> Copy
+                    </button>
+                    <button onClick={() => setAiInsights(null)} className="text-gray-600 hover:text-gray-300 text-xs">✕</button>
+                  </div>
+                </div>
+                <pre className="text-sm text-gray-300 whitespace-pre-wrap font-sans leading-relaxed">
+                  {aiInsights.insights}
+                </pre>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
 
         {/* ── Bottom Grid: Quick Actions + Revenue Note ────────────────────── */}
