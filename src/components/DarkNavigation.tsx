@@ -93,20 +93,29 @@ const DarkNavigation = () => {
         }`}
       >
         {/* Contact Info Bar */}
-        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 px-4">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4" />
-                <span>0100654785</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <span>bantuthepeople@gmail.com</span>
-              </div>
+        <div className="bg-gray-900 border-b border-gray-800 text-white py-2 px-4">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div className="flex items-center gap-5 text-xs">
+              <a href="tel:+270100654785" className="flex items-center gap-1.5 text-gray-300 hover:text-green-400 transition-colors">
+                <Phone className="w-3.5 h-3.5 text-green-500" />
+                010 065 4785
+              </a>
+              <a href="mailto:bantuthepeople@gmail.com" className="hidden sm:flex items-center gap-1.5 text-gray-300 hover:text-green-400 transition-colors">
+                <Mail className="w-3.5 h-3.5 text-green-500" />
+                bantuthepeople@gmail.com
+              </a>
             </div>
-            <div className="hidden sm:flex items-center space-x-4">
-              <span className="text-green-100">🌍 Making South Africa Greener</span>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="hidden md:flex items-center gap-1 text-gray-500">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                POPIA &amp; NEMWA Certified
+              </span>
+              <Link
+                to="/tools/pickup"
+                className="bg-green-500 hover:bg-green-400 text-gray-900 font-black text-xs px-3 py-1 rounded-lg transition-colors"
+              >
+                Free Pickup →
+              </Link>
             </div>
           </div>
         </div>
