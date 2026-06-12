@@ -7,28 +7,28 @@ const TeamSection = () => {
     {
       name: "Siyabulela Prince Mangqalaza",
       role: "Managing Director",
-      email: "princem@bantuthepeople.co.za",
+      email: "bantupeople@gmail.com",
       icon: <Users className="w-6 h-6" />,
       description: "Leading sustainable transformation in South Africa's e-waste sector"
     },
     {
       name: "Sipho Johnson Mngomezulu", 
       role: "Financial Director",
-      email: "mngomezulusipho@bantuthepeople.co.za",
+      email: "bantupeople@gmail.com",
       icon: <TrendingUp className="w-6 h-6" />,
       description: "Driving financial sustainability and growth strategies"
     },
     {
       name: "Steven Muzikayise Sibiya",
       role: "Sales Director", 
-      email: "steven@bantuthepeople.co.za",
+      email: "bantupeople@gmail.com",
       icon: <BarChart3 className="w-6 h-6" />,
       description: "Building partnerships for circular economy solutions"
     },
     {
       name: "Sthembiso Jacob Ngema",
       role: "Marketing Director",
-      email: "sthembisongema@bantuthepeople.co.za", 
+      email: "bantupeople@gmail.com", 
       icon: <Globe className="w-6 h-6" />,
       description: "Amplifying our environmental impact message"
     },
