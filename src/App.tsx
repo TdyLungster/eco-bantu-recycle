@@ -14,6 +14,7 @@ import { lazy } from "react";
 
 const OptimizedIndex = lazy(() => import("./pages/OptimizedIndex"));
 const Blog = lazy(() => import("./pages/Blog"));
+const CorporateGuide = lazy(() => import("./pages/blog/CorporateGuide"));
 const Directory = lazy(() => import("./pages/Directory"));
 const Tools = lazy(() => import("./pages/Tools"));
 const Pickup = lazy(() => import("./pages/tools/Pickup"));
@@ -72,6 +73,7 @@ function App() {
             <Routes>
               <Route path="/" element={<OptimizedIndex />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/corporate-e-waste-management-guide" element={<CorporateGuide />} />
               <Route path="/directory" element={<Directory />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/pickup" element={<Pickup />} />
