@@ -1,0 +1,26 @@
+# Bantu The People
+
+> Professional e-waste recycling in South Africa. Free pickup, certified data destruction, and compliance reporting for businesses and households.
+
+Bantu The People collects, processes, and recycles electronic waste from across South Africa. ISO 14001 certified, with secure data destruction and CSR/impact reporting for corporate clients.
+
+## Pages
+
+- [Home](/): Overview of services, impact, and how to schedule a pickup.
+- [Blog](/blog): Articles on e-waste recycling, sustainability, and South African compliance.
+- [Directory](/directory): Certified recycling centers across South Africa.
+- [Tools](/tools): Pickup scheduling, quote calculator, device value estimator, impact dashboard, locations, and certificates.
+
+## Tools
+
+- [Schedule a Pickup](/tools/pickup): Book free e-waste collection.
+- [Get a Quote](/tools/quote): Pricing for collection and processing.
+- [Device Value](/tools/value): Estimate residual value of devices.
+- [Impact](/tools/impact): View environmental impact metrics.
+- [Locations](/tools/locations): Find drop-off and processing locations.
+- [Certificate](/tools/certificate): Download data destruction & recycling certificates.
+
+## Contact
+
+- Email: bantupeople@gmail.com
+- Phone: +27 10 065 4785

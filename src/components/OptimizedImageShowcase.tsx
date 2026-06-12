@@ -124,6 +124,7 @@ const OptimizedImageShowcase = () => {
             variant="ghost"
             size="icon"
             onClick={prevImage}
+            aria-label="Previous image"
             className="w-12 h-12 bg-black/30 hover:bg-black/50 text-white border border-white/20 backdrop-blur-sm"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -135,6 +136,7 @@ const OptimizedImageShowcase = () => {
             variant="ghost"
             size="icon"
             onClick={nextImage}
+            aria-label="Next image"
             className="w-12 h-12 bg-black/30 hover:bg-black/50 text-white border border-white/20 backdrop-blur-sm"
           >
             <ChevronRight className="w-6 h-6" />
@@ -147,6 +149,7 @@ const OptimizedImageShowcase = () => {
             variant="ghost"
             size="icon"
             onClick={() => setIsPlaying(!isPlaying)}
+            aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
             className="w-10 h-10 bg-black/30 hover:bg-black/50 text-white border border-white/20 backdrop-blur-sm"
           >
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
@@ -160,6 +163,7 @@ const OptimizedImageShowcase = () => {
               <button
                 key={index}
                 onClick={() => goToImage(index)}
+                aria-label={`Go to slide ${index + 1}`}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentIndex
                     ? 'bg-white scale-110'
