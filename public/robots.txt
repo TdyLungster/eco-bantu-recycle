@@ -14,3 +14,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://eco-bantu-recycle.lovable.app/sitemap.xml

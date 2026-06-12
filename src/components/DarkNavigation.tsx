@@ -123,6 +123,9 @@ const DarkNavigation = () => {
                 <img 
                   src="/lovable-uploads/21466dcd-3bd2-480d-b01f-58a45152a7ba.png"
                   alt="Bantu The People - E-Waste Recycling"
+                  width={48}
+                  height={48}
+                  fetchPriority="high"
                   className="w-12 h-12 object-contain"
                 />
                 <div className="hidden sm:block">
@@ -214,6 +217,8 @@ const DarkNavigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
               className="md:hidden text-gray-300 hover:text-white hover:bg-gray-800"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

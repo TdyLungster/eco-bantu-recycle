@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Truck, Calculator, DollarSign, BarChart3, MapPin, FileCheck, Shield } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -63,6 +64,15 @@ const tools = [
 const Tools = () => {
   return (
     <div className="min-h-screen bg-gray-900">
+      <Helmet>
+        <title>E-Waste Tools - Pickup, Quotes & Impact | Bantu The People</title>
+        <meta name="description" content="Schedule a pickup, get a quote, estimate device value, view impact, and download certificates — all in one e-waste toolkit." />
+        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/tools" />
+        <meta property="og:title" content="E-Waste Tools | Bantu The People" />
+        <meta property="og:description" content="Pickup scheduling, quotes, value estimates, and compliance certificates." />
+        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/tools" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <DarkNavigation />
       
       <main className="pt-32 pb-16">
@@ -81,6 +91,10 @@ const Tools = () => {
               Access our comprehensive suite of e-waste management tools designed to make recycling easier and more effective.
             </p>
           </motion.div>
+
+          <h2 className="sr-only">Available tools</h2>
+
+
 
           {/* Tools Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
