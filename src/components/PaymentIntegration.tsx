@@ -52,7 +52,6 @@ const PaymentIntegration = ({ amount, description, onSuccess }: {
         .from('transactions')
         .insert({
           amount: amount,
-          currency: 'ZAR',
           payment_method: selectedMethod,
           status: 'pending'
         })
