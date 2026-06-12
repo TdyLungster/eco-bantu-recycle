@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Globe, Search, Plus, Filter, ExternalLink, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -114,6 +115,34 @@ const Directory = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <Helmet>
+        <title>Recycling Centers Directory | Bantu The People</title>
+        <meta name="description" content="Find certified e-waste recycling centers and service providers across South Africa. Search by city, service, and accepted devices." />
+        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/directory" />
+        <meta property="og:title" content="Recycling Centers Directory | Bantu The People" />
+        <meta property="og:description" content="Certified e-waste recyclers across South Africa." />
+        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/directory" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "E-Waste Recycling Centers Directory",
+          "url": "https://eco-bantu-recycle.lovable.app/directory",
+          "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": mockDirectory.map((d: any, i: number) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "item": {
+                "@type": "LocalBusiness",
+                "name": d.name,
+                "address": d.address,
+                "telephone": d.phone
+              }
+            }))
+          }
+        })}</script>
+      </Helmet>
       <DarkNavigation />
       
       <main className="pt-32 pb-16">
@@ -132,6 +161,9 @@ const Directory = () => {
               Find certified e-waste recycling centers and service providers across South Africa.
             </p>
           </motion.div>
+
+          <h2 className="sr-only">Search and filter centers</h2>
+
 
           {/* Search and Filters */}
           <motion.div

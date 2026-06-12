@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Calendar, Search, User, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -51,6 +52,22 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-gray-900">
+      <Helmet>
+        <title>E-Waste Blog & Insights | Bantu The People</title>
+        <meta name="description" content="Articles on e-waste recycling, data destruction, and sustainable IT practices for South African businesses and households." />
+        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/blog" />
+        <meta property="og:title" content="E-Waste Blog & Insights | Bantu The People" />
+        <meta property="og:description" content="Stay informed about e-waste recycling and sustainability in South Africa." />
+        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/blog" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "Bantu The People Insights",
+          "url": "https://eco-bantu-recycle.lovable.app/blog",
+          "description": "Articles on e-waste recycling and sustainability in South Africa."
+        })}</script>
+      </Helmet>
       <DarkNavigation />
       
       <main className="pt-32 pb-16">
@@ -69,6 +86,10 @@ const Blog = () => {
               Stay informed about e-waste recycling, environmental impact, and sustainable practices in South Africa.
             </p>
           </motion.div>
+
+          <h2 className="sr-only">Latest articles</h2>
+
+
 
           {/* Search and Create */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
