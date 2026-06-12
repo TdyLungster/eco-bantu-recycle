@@ -16,10 +16,13 @@ declare global {
 
 const GoogleAnalytics = () => {
   useEffect(() => {
+    const GA_ID = import.meta.env.VITE_GA4_MEASUREMENT_ID as string | undefined;
+    if (!GA_ID) return;
+
     // Google Analytics 4 tracking
     const script1 = document.createElement('script');
     script1.async = true;
-    script1.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+    script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
     document.head.appendChild(script1);
 
     const script2 = document.createElement('script');
@@ -27,14 +30,14 @@ const GoogleAnalytics = () => {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
+      gtag('config', '${GA_ID}');
     `;
     document.head.appendChild(script2);
 
     // Track page views
     const trackPageView = () => {
       if (typeof window.gtag !== 'undefined') {
-        window.gtag('config', 'GA_MEASUREMENT_ID', {
+        window.gtag('config', GA_ID, {
           page_path: window.location.pathname,
         });
       }

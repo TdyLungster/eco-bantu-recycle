@@ -55,16 +55,16 @@ const Blog = () => {
       <Helmet>
         <title>E-Waste Blog & Insights | Bantu The People</title>
         <meta name="description" content="Articles on e-waste recycling, data destruction, and sustainable IT practices for South African businesses and households." />
-        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/blog" />
+        <link rel="canonical" href="https://bantuthepeople.com/blog" />
         <meta property="og:title" content="E-Waste Blog & Insights | Bantu The People" />
         <meta property="og:description" content="Stay informed about e-waste recycling and sustainability in South Africa." />
-        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/blog" />
+        <meta property="og:url" content="https://bantuthepeople.com/blog" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Blog",
           "name": "Bantu The People Insights",
-          "url": "https://eco-bantu-recycle.lovable.app/blog",
+          "url": "https://bantuthepeople.com/blog",
           "description": "Articles on e-waste recycling and sustainability in South Africa."
         })}</script>
       </Helmet>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Truck, Calculator, DollarSign, BarChart3, MapPin, FileCheck } from 'lucide-react';
+import { Truck, Calculator, DollarSign, BarChart3, MapPin, FileCheck, Shield } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import DarkNavigation from '@/components/DarkNavigation';
@@ -51,6 +51,13 @@ const tools = [
     icon: FileCheck,
     href: '/tools/certificate',
     color: 'from-indigo-500 to-indigo-600'
+  },
+  {
+    title: 'GreenCert Pro',
+    description: 'Automate POPIA data destruction certificates and NEMWA compliance reports',
+    icon: Shield,
+    href: '/pro',
+    color: 'from-green-500 to-emerald-600'
   }
 ];
 
@@ -60,10 +67,10 @@ const Tools = () => {
       <Helmet>
         <title>E-Waste Tools - Pickup, Quotes & Impact | Bantu The People</title>
         <meta name="description" content="Schedule a pickup, get a quote, estimate device value, view impact, and download certificates — all in one e-waste toolkit." />
-        <link rel="canonical" href="https://eco-bantu-recycle.lovable.app/tools" />
+        <link rel="canonical" href="https://bantuthepeople.com/tools" />
         <meta property="og:title" content="E-Waste Tools | Bantu The People" />
         <meta property="og:description" content="Pickup scheduling, quotes, value estimates, and compliance certificates." />
-        <meta property="og:url" content="https://eco-bantu-recycle.lovable.app/tools" />
+        <meta property="og:url" content="https://bantuthepeople.com/tools" />
         <meta property="og:type" content="website" />
       </Helmet>
       <DarkNavigation />
@@ -142,18 +149,20 @@ const Tools = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
+                <Button
+                  asChild
                   size="lg"
                   className="bg-green-600 hover:bg-green-700 text-white"
                 >
-                  Contact Support
+                  <a href="mailto:bantupeople@gmail.com">Contact Support</a>
                 </Button>
-                <Button 
+                <Button
+                  asChild
                   size="lg"
                   variant="outline"
                   className="border-green-500 text-green-400 hover:bg-green-500/10"
                 >
-                  View Documentation
+                  <a href="/pro" target="_blank">Upgrade to GreenCert Pro</a>
                 </Button>
               </CardContent>
             </Card>

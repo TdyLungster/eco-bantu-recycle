@@ -7,35 +7,35 @@ const TeamSection = () => {
     {
       name: "Siyabulela Prince Mangqalaza",
       role: "Managing Director",
-      email: "princem@bantuthepeople.com",
+      email: "bantupeople@gmail.com",
       icon: <Users className="w-6 h-6" />,
       description: "Leading sustainable transformation in South Africa's e-waste sector"
     },
     {
       name: "Sipho Johnson Mngomezulu", 
       role: "Financial Director",
-      email: "mngomezulusipho@bantuthepeople.com",
+      email: "bantupeople@gmail.com",
       icon: <TrendingUp className="w-6 h-6" />,
       description: "Driving financial sustainability and growth strategies"
     },
     {
       name: "Steven Muzikayise Sibiya",
       role: "Sales Director", 
-      email: "steven@bantuthepeople.com",
+      email: "bantupeople@gmail.com",
       icon: <BarChart3 className="w-6 h-6" />,
       description: "Building partnerships for circular economy solutions"
     },
     {
       name: "Sthembiso Jacob Ngema",
       role: "Marketing Director",
-      email: "sthembisongema@bantuthepeople.com", 
+      email: "bantupeople@gmail.com", 
       icon: <Globe className="w-6 h-6" />,
       description: "Amplifying our environmental impact message"
     },
     {
       name: "Digital Innovation Director",
       role: "Digital Innovation Director",
-      email: "rich@bantuthepeople.com",
+      email: "bantupeople@gmail.com",
       icon: <Globe className="w-6 h-6" />,
       description: "Transforming digital experiences for sustainable solutions"
     }
@@ -108,7 +108,7 @@ const TeamSection = () => {
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Email:</span>
-                <span className="text-gray-600">info@bantuthepeople.com</span>
+                <span className="text-gray-600">bantupeople@gmail.com</span>
               </div>
               <div className="flex justify-between">
                 <span className="font-semibold">Location:</span>

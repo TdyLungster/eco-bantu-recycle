@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, ArrowLeft, Search, Wrench } from 'lucide-react';
+import { Home, ArrowLeft, Search, Wrench, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
+import DarkNavigation from '@/components/DarkNavigation';
+import DarkFooter from '@/components/DarkFooter';
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <div className="min-h-screen bg-gray-900">
+      <DarkNavigation />
       
       {/* 404 Hero Section */}
       <section className="relative py-24 lg:py-32 overflow-hidden">
@@ -48,7 +48,7 @@ const NotFound = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-3xl lg:text-5xl font-bold text-foreground mb-6"
+              className="text-3xl lg:text-5xl font-bold text-white mb-6"
             >
               Page Not Found
             </motion.h1>
@@ -57,7 +57,7 @@ const NotFound = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl text-muted-foreground mb-8 leading-relaxed"
+              className="text-xl text-gray-400 mb-8 leading-relaxed"
             >
               Oops! It seems like this page has been recycled. 
               <br />
@@ -97,34 +97,34 @@ const NotFound = () => {
             >
               <Link
                 to="/#services"
-                className="group p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
+                className="group p-6 bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
                   <Search className="w-6 h-6" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Our Services</h3>
+                <h3 className="font-semibold text-white mb-2">Our Services</h3>
                 <p className="text-sm text-muted-foreground">Explore our e-waste recycling solutions</p>
               </Link>
 
               <Link
                 to="/tools"
-                className="group p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
+                className="group p-6 bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
               >
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors">
                   <Wrench className="w-6 h-6" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Tools</h3>
+                <h3 className="font-semibold text-white mb-2">Tools</h3>
                 <p className="text-sm text-muted-foreground">Access our professional tools</p>
               </Link>
 
               <Link
                 to="/blog"
-                className="group p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
+                className="group p-6 bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1"
               >
                 <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-white transition-colors">
-                  <Search className="w-6 h-6" />
+                  <BookOpen className="w-6 h-6" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Blog</h3>
+                <h3 className="font-semibold text-white mb-2">Blog</h3>
                 <p className="text-sm text-muted-foreground">Read our latest insights</p>
               </Link>
             </motion.div>
@@ -132,7 +132,7 @@ const NotFound = () => {
         </div>
       </section>
 
-      <Footer />
+      <DarkFooter />
     </div>
   );
 };
