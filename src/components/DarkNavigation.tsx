@@ -62,20 +62,23 @@ const DarkNavigation = () => {
     { href: '/blog', label: 'Blog', icon: BookOpen },
     { href: '/directory', label: 'Directory', icon: MapPin },
     { href: '/tools', label: 'Tools' },
-    { href: '#services', label: 'Services' },
-    { href: '#calculator', label: 'Calculator' },
-    { href: '#impact', label: 'Impact' },
-    { href: '#contact', label: 'Contact' }
+    { href: '/pro', label: 'GreenCert Pro' },
+    { href: '/#services', label: 'Services' },
+    { href: '/#calculator', label: 'Calculator' },
+    { href: '/#impact', label: 'Impact' },
+    { href: '/#contact', label: 'Contact' }
   ];
 
   const scrollToSection = (href: string) => {
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href);
+    setIsMenuOpen(false);
+    if (href.startsWith('/#')) {
+      const id = href.slice(1);
+      const element = document.querySelector(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
+        return;
       }
     }
-    setIsMenuOpen(false);
   };
 
   return (
@@ -144,7 +147,7 @@ const DarkNavigation = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                item.href.startsWith('#') ? (
+                item.href.startsWith('/#') ? (
                   <motion.button
                     key={item.href}
                     onClick={() => scrollToSection(item.href)}
@@ -242,7 +245,7 @@ const DarkNavigation = () => {
 
                 {/* Navigation Links */}
                 {navItems.map((item, index) => (
-                  item.href.startsWith('#') ? (
+                  item.href.startsWith('/#') ? (
                     <motion.button
                       key={item.href}
                       initial={{ x: -20, opacity: 0 }}

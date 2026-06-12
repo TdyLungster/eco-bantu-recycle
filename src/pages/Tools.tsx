@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Calculator, DollarSign, BarChart3, MapPin, FileCheck } from 'lucide-react';
+import { Truck, Calculator, DollarSign, BarChart3, MapPin, FileCheck, Shield } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import DarkNavigation from '@/components/DarkNavigation';
@@ -50,6 +50,13 @@ const tools = [
     icon: FileCheck,
     href: '/tools/certificate',
     color: 'from-indigo-500 to-indigo-600'
+  },
+  {
+    title: 'GreenCert Pro',
+    description: 'Automate POPIA data destruction certificates and NEMWA compliance reports',
+    icon: Shield,
+    href: '/pro',
+    color: 'from-green-500 to-emerald-600'
   }
 ];
 
@@ -128,18 +135,20 @@ const Tools = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
+                <Button
+                  asChild
                   size="lg"
                   className="bg-green-600 hover:bg-green-700 text-white"
                 >
-                  Contact Support
+                  <a href="mailto:support@banturecy.co.za">Contact Support</a>
                 </Button>
-                <Button 
+                <Button
+                  asChild
                   size="lg"
                   variant="outline"
                   className="border-green-500 text-green-400 hover:bg-green-500/10"
                 >
-                  View Documentation
+                  <a href="/pro" target="_blank">Upgrade to GreenCert Pro</a>
                 </Button>
               </CardContent>
             </Card>

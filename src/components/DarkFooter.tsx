@@ -9,29 +9,32 @@ const DarkFooter = () => {
     label: 'Email'
   }, {
     icon: Phone,
-    href: 'tel:+27123456789',
+    href: 'tel:+270100654785',
     label: 'Phone'
   }, {
     icon: Globe,
-    href: '#',
+    href: 'https://bantuthepeople.co.za',
     label: 'Website'
   }];
   const services = ['Corporate E-Waste Collection', 'Individual Device Donations', 'Secure Data Destruction', 'Material Recovery & Recycling', 'Environmental Impact Reporting', 'CSR Partnership Programs'];
   const quickLinks = [{
     label: 'About Us',
-    href: '#about'
+    href: '/#about'
   }, {
     label: 'Our Services',
-    href: '#services'
+    href: '/#services'
   }, {
     label: 'Impact Calculator',
-    href: '#calculator'
+    href: '/#calculator'
   }, {
     label: 'Environmental Impact',
-    href: '#impact'
+    href: '/#impact'
   }, {
     label: 'Get Started',
-    href: '#contact'
+    href: '/#contact'
+  }, {
+    label: 'GreenCert Pro',
+    href: '/pro'
   }];
   const certifications = [{
     icon: Shield,
@@ -143,7 +146,7 @@ const DarkFooter = () => {
             }} transition={{
               delay: index * 0.05
             }}>
-                  <a href="#services" className="text-gray-400 hover:text-green-400 transition-colors duration-200 text-sm leading-relaxed hover:translate-x-1 transform transition-transform">
+                  <a href="/#services" className="text-gray-400 hover:text-green-400 transition-colors duration-200 text-sm leading-relaxed hover:translate-x-1 transform transition-transform">
                     {service}
                   </a>
                 </motion.li>)}
@@ -197,13 +200,7 @@ const DarkFooter = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Phone className="w-5 h-5 text-green-400 flex-shrink-0" />
-                  <p className="text-gray-400 text-sm">01100654785
-
-
-
-
-
-                </p>
+                  <a href="tel:0100654785" className="text-gray-400 hover:text-green-400 text-sm transition-colors">010 065 4785</a>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-green-400 flex-shrink-0" />
