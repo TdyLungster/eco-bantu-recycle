@@ -5,7 +5,7 @@ const DarkFooter = () => {
   const currentYear = new Date().getFullYear();
   const socialIcons = [{
     icon: Mail,
-    href: 'mailto:bantupeople@gmail.com',
+    href: 'mailto:bantuthepeople@gmail.com',
     label: 'Email'
   }, {
     icon: Phone,

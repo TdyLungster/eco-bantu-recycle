@@ -19,6 +19,8 @@ const PartnersBar = lazy(() => import("@/components/PartnersBar"));
 const InlineEmailCapture = lazy(() => import("@/components/InlineEmailCapture"));
 const ExitIntentPopup = lazy(() => import("@/components/ExitIntentPopup"));
 const BackToTop = lazy(() => import("@/components/BackToTop"));
+const QuickBookingStrip = lazy(() => import("@/components/QuickBookingStrip"));
+const B2BTargeting = lazy(() => import("@/components/B2BTargeting"));
 
 const SectionLoader = () => (
   <div className="min-h-[200px] bg-gray-900 animate-pulse flex items-center justify-center">
@@ -54,6 +56,10 @@ const OptimizedIndex = () => {
           </Suspense>
 
           <Suspense fallback={null}>
+            <QuickBookingStrip />
+          </Suspense>
+
+          <Suspense fallback={null}>
             <PartnersBar />
           </Suspense>
 
@@ -73,6 +79,10 @@ const OptimizedIndex = () => {
             <section className="animate-slide-right">
               <Services />
             </section>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <B2BTargeting />
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>

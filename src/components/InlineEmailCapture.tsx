@@ -63,7 +63,7 @@ export default function InlineEmailCapture() {
               </button>
             </form>
           )}
-          <p className="text-gray-600 text-xs mt-3">bantupeople@gmail.com · No spam, ever.</p>
+          <p className="text-gray-600 text-xs mt-3">bantuthepeople@gmail.com · No spam, ever.</p>
         </div>
 
         {/* WhatsApp CTA */}
