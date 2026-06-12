@@ -27,6 +27,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const ProLanding = lazy(() => import("./pages/ProLanding"));
 const ProThankYou = lazy(() => import("./pages/ProThankYou"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -88,6 +89,7 @@ function App() {
               <Route path="/pro" element={<ProLanding />} />
               <Route path="/pro/thank-you" element={<ProThankYou />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

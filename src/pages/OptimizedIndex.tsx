@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import DarkNavigation from "@/components/DarkNavigation";
 import DarkFooter from "@/components/DarkFooter";
 import EnhancedAnimations from "@/components/EnhancedAnimations";
+import ScrollProgress from "@/components/ScrollProgress";
 import { Toaster } from "react-hot-toast";
 
 // Lazy load components for better performance
@@ -21,6 +22,8 @@ const ExitIntentPopup = lazy(() => import("@/components/ExitIntentPopup"));
 const BackToTop = lazy(() => import("@/components/BackToTop"));
 const QuickBookingStrip = lazy(() => import("@/components/QuickBookingStrip"));
 const B2BTargeting = lazy(() => import("@/components/B2BTargeting"));
+const FloatingParticles = lazy(() => import("@/components/FloatingParticles"));
+const AIAssistant = lazy(() => import("@/components/AIAssistant"));
 
 const SectionLoader = () => (
   <div className="min-h-[200px] bg-gray-900 animate-pulse flex items-center justify-center">
@@ -45,6 +48,7 @@ const OptimizedIndex = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gray-900">
+        <ScrollProgress />
         <EnhancedAnimations />
         <DarkNavigation />
 
@@ -118,6 +122,14 @@ const OptimizedIndex = () => {
 
         <Suspense fallback={null}>
           <ExitIntentPopup />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <AIAssistant />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <FloatingParticles />
         </Suspense>
 
         <Toaster

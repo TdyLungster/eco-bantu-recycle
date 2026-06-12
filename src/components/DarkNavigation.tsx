@@ -129,13 +129,14 @@ const DarkNavigation = () => {
             >
               {/* Main Company Logo */}
               <Link to="/" className="flex items-center space-x-3">
-                <img 
+                <img
                   src="/lovable-uploads/21466dcd-3bd2-480d-b01f-58a45152a7ba.png"
                   alt="Bantu The People - E-Waste Recycling"
                   width={48}
                   height={48}
                   fetchPriority="high"
-                  className="w-12 h-12 object-contain"
+                  className="w-12 h-12 object-contain rounded-xl"
+                  style={{ filter: 'drop-shadow(0 0 8px rgba(34,197,94,0.35)) brightness(1.05)', mixBlendMode: 'screen' }}
                 />
                 <div className="hidden sm:block">
                   <h1 className="text-xl font-bold text-white">BANTU THE PEOPLE</h1>
@@ -145,12 +146,13 @@ const DarkNavigation = () => {
 
               {/* Partnership Logo */}
               <div className="hidden lg:flex items-center space-x-2">
-                <span className="text-gray-400 text-sm">In partnership with</span>
-                <div className="bg-white rounded px-2 py-1">
-                  <img 
+                <span className="text-gray-500 text-xs">Partner</span>
+                <div className="bg-gray-800/80 border border-gray-700 rounded-lg px-2 py-1">
+                  <img
                     src="/lovable-uploads/de42c2f4-02a9-4424-b145-bafa3f71534e.png"
                     alt="eWASA - EPR Waste Association of South Africa"
                     className="w-20 h-8 object-contain"
+                    style={{ filter: 'brightness(1.1) contrast(0.9)' }}
                   />
                 </div>
               </div>
@@ -188,10 +190,21 @@ const DarkNavigation = () => {
             <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 text-gray-300">
+                  {user.email === 'dludlulungile08@gmail.com' && (
+                    <Link
+                      to="/admin"
+                      className="text-xs bg-green-500/20 border border-green-500/40 text-green-400 px-2.5 py-1 rounded-lg hover:bg-green-500/30 transition-colors font-semibold"
+                    >
+                      Admin ⚙
+                    </Link>
+                  )}
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
+                  >
                     <User className="w-5 h-5" />
-                    <span className="text-sm">{user.email}</span>
-                  </div>
+                    <span className="text-sm">{user.email?.split('@')[0]}</span>
+                  </Link>
                   <Button
                     variant="ghost"
                     size="sm"
