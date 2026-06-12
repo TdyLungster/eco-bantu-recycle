@@ -13,7 +13,7 @@ const DarkFooter = () => {
     label: 'Phone'
   }, {
     icon: Globe,
-    href: 'https://bantuthepeople.co.za',
+    href: 'https://bantuthepeople.com',
     label: 'Website'
   }];
   const services = ['Corporate E-Waste Collection', 'Individual Device Donations', 'Secure Data Destruction', 'Material Recovery & Recycling', 'Environmental Impact Reporting', 'CSR Partnership Programs'];

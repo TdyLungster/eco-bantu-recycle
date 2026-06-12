@@ -1,7 +1,7 @@
 # EcoBantu Recycle — E-Waste Platform + GreenCert Pro SaaS
 
 > South Africa's leading e-waste recycling and compliance platform.  
-> **Live product:** [bantuthepeople.co.za](https://bantuthepeople.co.za) · **GreenCert Pro:** `/pro`
+> **Live product:** [bantuthepeople.com](https://bantuthepeople.com) · **GreenCert Pro:** `/pro`
 
 ---
 

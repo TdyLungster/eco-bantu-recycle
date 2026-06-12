@@ -107,7 +107,7 @@ Thread on what we learned 🧵
 2/ Problem: South African companies face R10M POPIA fines for improper 
 device disposal. Most don't have any compliance documentation.
 
-3/ Our free tool at bantuthepeople.co.za was generating certificates 
+3/ Our free tool at bantuthepeople.com was generating certificates 
 manually. Companies needed more: audit trails, ESG reports, bulk upload.
 
 4/ So we built GreenCert Pro.

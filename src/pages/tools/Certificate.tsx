@@ -68,7 +68,7 @@ function CertificatePreview({ formData, certId, certDate }: {
               <h2 className="text-xl font-bold text-green-700 uppercase tracking-wide">
                 Bantu The People
               </h2>
-              <p className="text-xs text-gray-500">Eco Recycle Solutions · bantuthepeople.co.za</p>
+              <p className="text-xs text-gray-500">Eco Recycle Solutions · bantuthepeople.com</p>
             </div>
           </div>
           <h3 className="text-2xl font-bold text-gray-800 uppercase tracking-widest mt-3">

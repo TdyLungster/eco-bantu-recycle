@@ -13,7 +13,7 @@ import SocialProofTicker from '@/components/SocialProofTicker';
 const PAYFAST_MERCHANT_ID = '25955793';
 const PAYFAST_MERCHANT_KEY = '4wr6pu7retlr1';
 const PAYFAST_PASSPHRASE = ''; // Set in PayFast dashboard if configured
-const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.co.za';
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.com';
 
 // ─── PayPal — Merchant ID: PNX85WE6TKWFU (Rich Humble) ───────────────────────
 const PAYPAL_MERCHANT_ID = 'PNX85WE6TKWFU';
@@ -106,7 +106,7 @@ const faqs = [
   },
   {
     q: 'Is there a free trial?',
-    a: 'Yes — you can generate 3 free certificates at bantuthepeople.co.za/tools/certificate before purchasing. No credit card required.',
+    a: 'Yes — you can generate 3 free certificates at bantuthepeople.com/tools/certificate before purchasing. No credit card required.',
   },
   {
     q: 'What is the 30-day money-back guarantee?',

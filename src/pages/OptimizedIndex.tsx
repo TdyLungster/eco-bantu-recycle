@@ -36,10 +36,10 @@ const OptimizedIndex = () => {
         <meta property="og:title" content="BANTU THE PEOPLE - South Africa's #1 E-Waste Recyclers" />
         <meta property="og:description" content="Free pickup. POPIA-certified data destruction. NEMWA-compliant certificates. 2,000+ companies served." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bantuthepeople.co.za" />
-        <meta property="og:image" content="https://bantuthepeople.co.za/lovable-uploads/1d597c1b-c8b7-4bea-a6c4-25070f1172ab.png" />
+        <meta property="og:url" content="https://bantuthepeople.com" />
+        <meta property="og:image" content="https://bantuthepeople.com/lovable-uploads/1d597c1b-c8b7-4bea-a6c4-25070f1172ab.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://bantuthepeople.co.za" />
+        <link rel="canonical" href="https://bantuthepeople.com" />
       </Helmet>
 
       <div className="min-h-screen bg-gray-900">
