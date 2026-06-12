@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, CheckCircle, FileText, BarChart3, Truck, Award,
   AlertTriangle, Clock, Lock, Star, ChevronDown, ChevronUp,
-  ArrowRight, Zap, Globe, Users
+  ArrowRight, Zap, Globe, Users, X as XIcon
 } from 'lucide-react';
 import CountdownTimer from '@/components/landing/CountdownTimer';
+import SocialProofTicker from '@/components/SocialProofTicker';
 
 // ─── PayFast Credentials (Survivalhackmaster account) ────────────────────────
 // Move to .env in production: VITE_PAYFAST_MERCHANT_ID, VITE_PAYFAST_MERCHANT_KEY
@@ -149,14 +150,26 @@ function PayFastButton({ plan }: { plan: PlanConfig }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function ProLanding() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [stickyVisible, setStickyVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setStickyVisible(window.scrollY > 500);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };
 
+  const scrollToPricing = () => {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="bg-gray-950 text-white min-h-screen font-sans">
+      <SocialProofTicker />
 
       {/* ── ANNOUNCEMENT BAR ── */}
       <div className="bg-green-600 text-center py-2 px-4">
@@ -629,6 +642,53 @@ export default function ProLanding() {
         </div>
       </section>
 
+      {/* ── Comparison Table ── */}
+      <section className="max-w-4xl mx-auto px-6 pb-20">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="text-center mb-10"
+        >
+          <h2 className="text-2xl md:text-3xl font-black mb-3">
+            GreenCert Pro vs <span className="text-red-400">Manual Compliance</span>
+          </h2>
+          <p className="text-gray-400">The cost of doing it manually is higher than you think.</p>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden"
+        >
+          <div className="grid grid-cols-3 text-sm">
+            <div className="px-4 py-3 text-gray-500 font-bold uppercase text-xs tracking-widest border-b border-gray-800"></div>
+            <div className="px-4 py-3 text-center font-bold text-red-400 border-b border-gray-800 bg-red-900/10">Manual Process</div>
+            <div className="px-4 py-3 text-center font-bold text-green-400 border-b border-gray-800 bg-green-900/10">GreenCert Pro</div>
+            {[
+              ['Time per certificate', '3–4 hours', '60 seconds'],
+              ['Risk of human error', 'High — manual data entry', 'Zero — auto-validated'],
+              ['Audit trail', 'None / spreadsheets', 'Tamper-proof PDF chain'],
+              ['POPIA & NEMWA proof', 'Uncertain / DIY', 'Legally-accepted docs'],
+              ['ESG investor report', 'R8,000+/month consultant', 'Instant — included'],
+              ['Annual cost', 'R96,000+ in labour', 'R7,497 once-off, lifetime'],
+            ].map(([label, manual, pro], i) => (
+              <div key={label} className={`contents ${i % 2 === 0 ? '' : ''}`}>
+                <div className={`px-4 py-3 text-gray-400 text-xs border-b border-gray-800/50 ${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-800/30'}`}>{label}</div>
+                <div className={`px-4 py-3 text-center text-xs text-red-300 border-b border-gray-800/50 ${i % 2 === 0 ? 'bg-red-900/5' : 'bg-red-900/10'}`}>
+                  <XIcon className="w-3 h-3 text-red-500 inline mr-1" />{manual}
+                </div>
+                <div className={`px-4 py-3 text-center text-xs text-green-300 border-b border-gray-800/50 ${i % 2 === 0 ? 'bg-green-900/5' : 'bg-green-900/10'}`}>
+                  <CheckCircle className="w-3 h-3 text-green-500 inline mr-1" />{pro}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       {/* ── FAQ ── */}
       <section className="max-w-3xl mx-auto px-6 py-20">
         <motion.div
@@ -700,6 +760,30 @@ export default function ProLanding() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* ── STICKY MOBILE CTA BAR ── */}
+      <AnimatePresence>
+        {stickyVisible && (
+          <motion.div
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-gray-900 border-t border-gray-700 px-4 py-3 flex items-center justify-between gap-3 shadow-2xl"
+          >
+            <div>
+              <p className="text-white font-bold text-sm">GreenCert Pro</p>
+              <p className="text-green-400 text-xs">R7,497 once-off · lifetime access</p>
+            </div>
+            <button
+              onClick={scrollToPricing}
+              className="bg-green-500 hover:bg-green-400 text-gray-900 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors whitespace-nowrap"
+            >
+              Buy Now
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── FOOTER ── */}
       <footer className="border-t border-gray-800/50 py-8 px-6 text-center text-gray-600 text-xs">

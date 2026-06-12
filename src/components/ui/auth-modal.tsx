@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { X, Mail, Lock, User, Phone, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Button } from './button';
 import { Input } from './input';
@@ -19,6 +20,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
   initialMode = 'login'
 }) => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<'login' | 'signup' | 'reset'>(initialMode);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,6 +69,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         if (error) throw error;
         toast.success('Welcome back!');
         onClose();
+        navigate('/dashboard');
       }
     } catch (error: any) {
       toast.error(error.message || 'Authentication failed');

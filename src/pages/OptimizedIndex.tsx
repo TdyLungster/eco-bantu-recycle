@@ -14,10 +14,14 @@ const Services = lazy(() => import("@/components/Services"));
 const Impact = lazy(() => import("@/components/Impact"));
 const TeamSection = lazy(() => import("@/components/TeamSection"));
 const WhatsAppWidget = lazy(() => import("@/components/WhatsAppWidget"));
+const ReviewsSection = lazy(() => import("@/components/ReviewsSection"));
+const PartnersBar = lazy(() => import("@/components/PartnersBar"));
+const InlineEmailCapture = lazy(() => import("@/components/InlineEmailCapture"));
+const ExitIntentPopup = lazy(() => import("@/components/ExitIntentPopup"));
+const BackToTop = lazy(() => import("@/components/BackToTop"));
 
-// Loading component
 const SectionLoader = () => (
-  <div className="min-h-[200px] bg-gray-100 animate-pulse flex items-center justify-center">
+  <div className="min-h-[200px] bg-gray-900 animate-pulse flex items-center justify-center">
     <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
@@ -26,12 +30,14 @@ const OptimizedIndex = () => {
   return (
     <>
       <Helmet>
-        <title>BANTU THE PEOPLE - Professional E-Waste Recycling in South Africa</title>
-        <meta name="description" content="Transform your old electronics into environmental impact. Professional e-waste recycling services in Johannesburg. Free pickup, data destruction, and compliance reporting." />
-        <meta name="keywords" content="e-waste recycling, electronic waste, Johannesburg, South Africa, data destruction, environmental impact, electronic recycling" />
-        <meta property="og:title" content="BANTU THE PEOPLE - E-Waste Recycling Solutions" />
-        <meta property="og:description" content="Professional e-waste recycling services in South Africa. Free pickup and secure data destruction." />
+        <title>BANTU THE PEOPLE - South Africa's #1 E-Waste Recyclers</title>
+        <meta name="description" content="Free pickup. POPIA-certified data destruction. NEMWA-compliant certificates. 2,000+ companies served. GreenCert Pro compliance software now available." />
+        <meta name="keywords" content="e-waste recycling, electronic waste, Johannesburg, South Africa, data destruction, POPIA compliance, NEMWA, GreenCert Pro" />
+        <meta property="og:title" content="BANTU THE PEOPLE - South Africa's #1 E-Waste Recyclers" />
+        <meta property="og:description" content="Free pickup. POPIA-certified data destruction. NEMWA-compliant certificates. 2,000+ companies served." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bantuthepeople.co.za" />
+        <meta property="og:image" content="https://bantuthepeople.co.za/lovable-uploads/1d597c1b-c8b7-4bea-a6c4-25070f1172ab.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://bantuthepeople.co.za" />
       </Helmet>
@@ -39,12 +45,16 @@ const OptimizedIndex = () => {
       <div className="min-h-screen bg-gray-900">
         <EnhancedAnimations />
         <DarkNavigation />
-        
+
         <main>
           <Suspense fallback={<SectionLoader />}>
             <section className="animate-stagger">
               <ImmersiveHero />
             </section>
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <PartnersBar />
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
@@ -66,9 +76,17 @@ const OptimizedIndex = () => {
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
+            <InlineEmailCapture />
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
             <section className="animate-stagger">
               <Impact />
             </section>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <ReviewsSection />
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
@@ -79,11 +97,19 @@ const OptimizedIndex = () => {
         </main>
 
         <DarkFooter />
-        
+
         <Suspense fallback={null}>
           <WhatsAppWidget />
         </Suspense>
-        
+
+        <Suspense fallback={null}>
+          <BackToTop />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <ExitIntentPopup />
+        </Suspense>
+
         <Toaster
           position="top-right"
           toastOptions={{

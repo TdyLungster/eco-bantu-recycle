@@ -25,6 +25,7 @@ const Certificate = lazy(() => import("./pages/tools/Certificate"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ProLanding = lazy(() => import("./pages/ProLanding"));
 const ProThankYou = lazy(() => import("./pages/ProThankYou"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -84,6 +85,7 @@ function App() {
               <Route path="/tools/certificate" element={<Certificate />} />
               <Route path="/pro" element={<ProLanding />} />
               <Route path="/pro/thank-you" element={<ProThankYou />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

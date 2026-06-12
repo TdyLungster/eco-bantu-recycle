@@ -1,3 +1,5 @@
+Sitemap: https://bantuthepeople.co.za/sitemap.xml
+
 User-agent: Googlebot
 Allow: /
 
