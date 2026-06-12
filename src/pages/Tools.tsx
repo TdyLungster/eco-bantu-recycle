@@ -140,7 +140,7 @@ const Tools = () => {
                   size="lg"
                   className="bg-green-600 hover:bg-green-700 text-white"
                 >
-                  <a href="mailto:support@banturecy.co.za">Contact Support</a>
+                  <a href="mailto:bantupeople@gmail.com">Contact Support</a>
                 </Button>
                 <Button
                   asChild

@@ -14,9 +14,10 @@ const PAYFAST_MERCHANT_KEY = '4wr6pu7retlr1';
 const PAYFAST_PASSPHRASE = ''; // Set in PayFast dashboard if configured
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.co.za';
 
-// ─── PayPal links — send your PayPal.me username to update these ─────────────
-const PAYPAL_STARTER_LINK = 'https://paypal.me/YOURUSERNAME/165USD';
-const PAYPAL_BUSINESS_LINK = 'https://paypal.me/YOURUSERNAME/410USD';
+// ─── PayPal — Merchant ID: PNX85WE6TKWFU (Rich Humble) ───────────────────────
+const PAYPAL_MERCHANT_ID = 'PNX85WE6TKWFU';
+const PAYPAL_STARTER_LINK = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_MERCHANT_ID}&item_name=GreenCert+Pro+Starter+Lifetime&amount=165.00&currency_code=USD&no_shipping=1&return=${encodeURIComponent(SITE_URL + '/pro/thank-you')}&cancel_return=${encodeURIComponent(SITE_URL + '/pro')}`;
+const PAYPAL_BUSINESS_LINK = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_MERCHANT_ID}&item_name=GreenCert+Pro+Business+Lifetime&amount=410.00&currency_code=USD&no_shipping=1&return=${encodeURIComponent(SITE_URL + '/pro/thank-you')}&cancel_return=${encodeURIComponent(SITE_URL + '/pro')}`;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface PlanConfig {
@@ -100,7 +101,7 @@ const faqs = [
   },
   {
     q: 'What if my company has more than 1,000 devices per year?',
-    a: 'Contact us for an Enterprise plan with volume pricing, a dedicated account manager, and custom SLA. Email enterprise@banturecy.co.za.',
+    a: 'Contact us for an Enterprise plan with volume pricing, a dedicated account manager, and custom SLA. Email bantupeople@gmail.com.',
   },
   {
     q: 'Is there a free trial?',
@@ -108,7 +109,7 @@ const faqs = [
   },
   {
     q: 'What is the 30-day money-back guarantee?',
-    a: 'If GreenCert Pro does not save you time on compliance work within 30 days, we refund 100% — no questions asked. Just email support@banturecy.co.za.',
+    a: 'If GreenCert Pro does not save you time on compliance work within 30 days, we refund 100% — no questions asked. Just email bantupeople@gmail.com.',
   },
 ];
 
@@ -597,7 +598,7 @@ export default function ProLanding() {
 
           <motion.p variants={fadeUp} className="text-center text-gray-500 text-sm mt-6">
             Enterprise pricing available for 500+ devices/year or multi-site organisations.{' '}
-            <a href="mailto:enterprise@banturecy.co.za" className="text-green-400 hover:underline">
+            <a href="mailto:bantupeople@gmail.com" className="text-green-400 hover:underline">
               Contact us →
             </a>
           </motion.p>
@@ -621,7 +622,7 @@ export default function ProLanding() {
             </h2>
             <p className="text-gray-400 leading-relaxed">
               If GreenCert Pro does not save your team measurable time on compliance work within 30 days,
-              email <a href="mailto:support@banturecy.co.za" className="text-green-400">support@banturecy.co.za</a> for
+              email <a href="mailto:bantupeople@gmail.com" className="text-green-400">bantupeople@gmail.com</a> for
               a full refund — no questions, no waiting, no forms. We stand behind this product completely.
             </p>
           </motion.div>
@@ -704,7 +705,7 @@ export default function ProLanding() {
       <footer className="border-t border-gray-800/50 py-8 px-6 text-center text-gray-600 text-xs">
         <p>
           © 2026 EcoBantu Recycle (Pty) Ltd · GreenCert Pro ·{' '}
-          <a href="mailto:support@banturecy.co.za" className="hover:text-gray-400">support@banturecy.co.za</a>
+          <a href="mailto:bantupeople@gmail.com" className="hover:text-gray-400">bantupeople@gmail.com</a>
           {' '}· +27 10 065 4785
         </p>
         <p className="mt-1">

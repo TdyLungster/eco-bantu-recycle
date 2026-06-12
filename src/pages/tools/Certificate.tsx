@@ -126,7 +126,7 @@ function CertificatePreview({ formData, certId, certDate }: {
           <div className="text-xs text-gray-500">
             <p>Authorised by: Bantu The People</p>
             <p>Registration No: 2023/XXXXX/07</p>
-            <p>Tel: 010 065 4785 · rich@bantuthepeople.com</p>
+            <p>Tel: 010 065 4785 · bantupeople@gmail.com</p>
           </div>
           <div className="text-center">
             <div className="w-24 h-0.5 bg-gray-400 mb-1" />

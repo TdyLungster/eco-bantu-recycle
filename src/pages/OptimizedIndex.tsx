@@ -33,7 +33,7 @@ const OptimizedIndex = () => {
         <meta property="og:description" content="Professional e-waste recycling services in South Africa. Free pickup and secure data destruction." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://bantuthepeople.com" />
+        <link rel="canonical" href="https://bantuthepeople.co.za" />
       </Helmet>
 
       <div className="min-h-screen bg-gray-900">

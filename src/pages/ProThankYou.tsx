@@ -110,7 +110,7 @@ export default function ProThankYou() {
             <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="mailto:support@banturecy.co.za"
+            href="mailto:bantupeople@gmail.com"
             className="flex items-center justify-center gap-2 border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-xl text-sm transition-colors"
           >
             Contact Support
@@ -119,7 +119,7 @@ export default function ProThankYou() {
 
         <motion.p variants={fadeUp} className="text-gray-700 text-xs mt-6">
           Share GreenCert Pro with a colleague and earn R500 per referral.{' '}
-          <a href="mailto:support@banturecy.co.za?subject=Referral Program" className="text-green-600 hover:text-green-400">
+          <a href="mailto:bantupeople@gmail.com?subject=Referral Program" className="text-green-600 hover:text-green-400">
             Learn more →
           </a>
         </motion.p>
