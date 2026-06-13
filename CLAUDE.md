@@ -11,7 +11,7 @@ South Africa's #1 certified e-waste recycling micro-SaaS. Businesses book free p
 - **Backend:** Supabase (auth, database, edge functions)
 - **Payments:** PayFast (ZAR) + PayPal (USD) — both via direct HTML form POST, no backend needed
 - **Deploy:** Netlify auto-deploy from `main` branch
-- **Dev branch:** `claude/micro-saas-research-prompt-6dw6gl`
+- **Deploy branch:** `main` (push directly — no PRs needed)
 
 ## Payment Credentials (env vars preferred)
 - PayFast Merchant ID: `25955793` (env: `VITE_PAYFAST_MERCHANT_ID`)
@@ -74,5 +74,12 @@ South Africa's #1 certified e-waste recycling micro-SaaS. Businesses book free p
 Always use direct HTML form POST to PayFast. Never call Supabase functions for payment initiation.
 For subscriptions add: `subscription_type=1`, `billing_date`, `recurring_amount`, `frequency=3` (monthly), `cycles=0`.
 
-### Deploy
-Push to `claude/micro-saas-research-prompt-6dw6gl` → open PR → merge to `main` → Netlify auto-deploys.
+## Deploy
+**Work directly on `main`** — commit and push to `main`, Netlify auto-deploys in ~2 minutes. No PRs needed.
+
+```bash
+# Make changes, then:
+git add -A
+git commit -m "your message"
+git push origin main
+```
