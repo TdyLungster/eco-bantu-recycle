@@ -136,7 +136,7 @@ const HeroContent = ({ textY }: HeroContentProps) => {
 
       {/* Trust badges */}
       <motion.div
-        className="flex flex-wrap items-center justify-center gap-4 mb-12"
+        className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-8 sm:mb-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7, delay: 0.55 }}
@@ -151,7 +151,7 @@ const HeroContent = ({ textY }: HeroContentProps) => {
 
       {/* Stat counters */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 rounded-2xl px-6 py-5"
+        className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 bg-gray-900/60 backdrop-blur-sm border border-gray-700/50 rounded-2xl px-3 sm:px-6 py-4 sm:py-5"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.65 }}

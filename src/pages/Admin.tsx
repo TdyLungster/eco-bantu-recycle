@@ -5,7 +5,7 @@ import {
   Users, TrendingUp, Award, Calendar, LogOut, ExternalLink,
   Truck, FileCheck, BookOpen, Leaf, Info, RefreshCw,
   Sparkles, Mail, Copy, ChevronDown, ChevronUp, BarChart3,
-  FileText, Shield, Zap
+  FileText, Shield, Zap, Send, CheckSquare, Square, AtSign
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import toast from 'react-hot-toast';
@@ -57,6 +57,13 @@ export default function Admin() {
   const [draftingEmail, setDraftingEmail] = useState<string | null>(null); // lead email
   const [draftedEmail, setDraftedEmail] = useState('');
   const [emailLoading, setEmailLoading] = useState(false);
+  const [sendingGmail, setSendingGmail] = useState(false);
+
+  // Bulk email campaign state
+  const [selectedLeads, setSelectedLeads] = useState<Set<string>>(new Set());
+  const [bulkSubject, setBulkSubject] = useState('');
+  const [bulkBody, setBulkBody] = useState('');
+  const [bulkSending, setBulkSending] = useState(false);
 
   // Auth check
   useEffect(() => {
@@ -174,6 +181,72 @@ export default function Admin() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => toast.success('Copied to clipboard!'));
+  };
+
+  const sendEmailViaGmail = async (to: string | string[], subject: string, body: string) => {
+    setSendingGmail(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-email', {
+        body: { to, subject, body },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const sent = Array.isArray(to) ? to.length : 1;
+      toast.success(`Email sent to ${data?.sent ?? sent} recipient${sent > 1 ? 's' : ''}!`);
+    } catch (err: any) {
+      const msg = err?.message ?? 'Email send failed';
+      if (msg.includes('not configured') || msg.includes('GMAIL')) {
+        toast.error('Add GMAIL_USER + GMAIL_APP_PASSWORD to Supabase secrets first');
+      } else {
+        toast.error(msg);
+      }
+    } finally {
+      setSendingGmail(false);
+    }
+  };
+
+  const sendBulkEmail = async () => {
+    const recipients = Array.from(selectedLeads);
+    if (!recipients.length) { toast.error('Select at least one lead first'); return; }
+    if (!bulkSubject.trim()) { toast.error('Add a subject line'); return; }
+    if (!bulkBody.trim()) { toast.error('Write the email body first'); return; }
+    setBulkSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-email', {
+        body: { to: recipients, subject: bulkSubject, body: bulkBody },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      toast.success(`Sent to ${data?.sent} of ${recipients.length} leads`);
+      setSelectedLeads(new Set());
+      setBulkSubject('');
+      setBulkBody('');
+    } catch (err: any) {
+      const msg = err?.message ?? 'Bulk send failed';
+      if (msg.includes('not configured') || msg.includes('GMAIL')) {
+        toast.error('Add GMAIL_USER + GMAIL_APP_PASSWORD to Supabase secrets');
+      } else {
+        toast.error(msg);
+      }
+    } finally {
+      setBulkSending(false);
+    }
+  };
+
+  const toggleLeadSelection = (email: string) => {
+    setSelectedLeads(prev => {
+      const next = new Set(prev);
+      if (next.has(email)) next.delete(email); else next.add(email);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedLeads.size === leads.length) {
+      setSelectedLeads(new Set());
+    } else {
+      setSelectedLeads(new Set(leads.map(l => l.email)));
+    }
   };
 
   const handleSignOut = async () => {
@@ -325,6 +398,13 @@ export default function Admin() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-gray-800 text-left">
+                      <th className="px-4 py-3">
+                        <button onClick={toggleSelectAll} className="text-gray-500 hover:text-green-400">
+                          {selectedLeads.size === leads.length && leads.length > 0
+                            ? <CheckSquare className="w-4 h-4 text-green-400" />
+                            : <Square className="w-4 h-4" />}
+                        </button>
+                      </th>
                       {['Email', 'Company', 'City', 'Devices', 'Source', 'Date', 'Actions'].map(col => (
                         <th
                           key={col}
@@ -346,6 +426,13 @@ export default function Admin() {
                         viewport={{ once: true }}
                         className="border-b border-gray-800/60 last:border-0 hover:bg-gray-800/40 transition-colors"
                       >
+                        <td className="px-4 py-3">
+                          <button onClick={() => toggleLeadSelection(lead.email)} className="text-gray-500 hover:text-green-400">
+                            {selectedLeads.has(lead.email)
+                              ? <CheckSquare className="w-4 h-4 text-green-400" />
+                              : <Square className="w-4 h-4" />}
+                          </button>
+                        </td>
                         <td className="px-4 py-3 text-green-400 font-medium truncate max-w-[200px]">
                           {lead.email}
                         </td>
@@ -383,7 +470,7 @@ export default function Admin() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                           >
-                            <td colSpan={7} className="px-4 py-4 bg-gray-800/50 border-b border-gray-700">
+                            <td colSpan={8} className="px-4 py-4 bg-gray-800/50 border-b border-gray-700">
                               {emailLoading ? (
                                 <div className="flex items-center gap-2 text-gray-400 text-sm">
                                   <Sparkles className="w-4 h-4 animate-pulse text-green-400" />
@@ -394,10 +481,24 @@ export default function Admin() {
                                   <pre className="text-xs text-gray-300 whitespace-pre-wrap font-sans bg-gray-900 border border-gray-700 rounded-lg p-3 max-h-48 overflow-y-auto">
                                     {draftedEmail}
                                   </pre>
-                                  <div className="flex gap-2">
+                                  <div className="flex flex-wrap gap-2">
+                                    <button
+                                      onClick={() => {
+                                        const lines = draftedEmail.split('\n');
+                                        const subjectLine = lines.find(l => l.startsWith('Subject:'));
+                                        const subject = subjectLine ? subjectLine.replace('Subject:', '').trim() : 'Follow-up from Bantu The People';
+                                        const body = lines.filter(l => !l.startsWith('Subject:')).join('\n').trim();
+                                        sendEmailViaGmail(lead.email, subject, body);
+                                      }}
+                                      disabled={sendingGmail}
+                                      className="flex items-center gap-1 text-xs bg-green-600 hover:bg-green-500 disabled:opacity-60 text-white font-bold px-3 py-1.5 rounded-lg"
+                                    >
+                                      <Send className="w-3 h-3" />
+                                      {sendingGmail ? 'Sending...' : 'Send via Gmail'}
+                                    </button>
                                     <button onClick={() => copyToClipboard(draftedEmail)}
-                                      className="flex items-center gap-1 text-xs bg-green-500 hover:bg-green-400 text-gray-900 font-bold px-3 py-1.5 rounded-lg">
-                                      <Copy className="w-3 h-3" /> Copy Email
+                                      className="flex items-center gap-1 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold px-3 py-1.5 rounded-lg">
+                                      <Copy className="w-3 h-3" /> Copy
                                     </button>
                                     <button onClick={() => setDraftingEmail(null)}
                                       className="text-xs text-gray-500 hover:text-gray-300 px-3 py-1.5 rounded-lg">
@@ -569,6 +670,100 @@ export default function Admin() {
           </section>
 
         </div>
+
+        {/* ── Email Campaign ───────────────────────────────────────────────── */}
+        <section>
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2">
+            <AtSign className="w-3.5 h-3.5 text-green-400" /> Email Campaign
+            {selectedLeads.size > 0 && (
+              <span className="ml-1 px-2 py-0.5 bg-green-500/20 border border-green-500/30 text-green-400 rounded-full text-xs font-bold">
+                {selectedLeads.size} selected
+              </span>
+            )}
+          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4"
+          >
+            <p className="text-xs text-gray-500">
+              Select leads from the table above using the checkboxes, compose your email, then send directly from this dashboard via Gmail.
+            </p>
+
+            {selectedLeads.size === 0 ? (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-800/60 border border-dashed border-gray-700 text-gray-500 text-sm">
+                <CheckSquare className="w-4 h-4 opacity-50" />
+                Tick the checkboxes in the leads table to select recipients
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-1.5">
+                {Array.from(selectedLeads).map(email => (
+                  <span key={email} className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/10 border border-green-500/30 text-green-400 text-xs rounded-full">
+                    {email}
+                    <button onClick={() => toggleLeadSelection(email)} className="hover:text-red-400 ml-0.5">×</button>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Subject</label>
+                <input
+                  type="text"
+                  value={bulkSubject}
+                  onChange={e => setBulkSubject(e.target.value)}
+                  placeholder="Free E-Waste Pickup for Your Company"
+                  className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg px-3 py-2.5 placeholder-gray-600 focus:outline-none focus:border-green-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Message</label>
+                <textarea
+                  value={bulkBody}
+                  onChange={e => setBulkBody(e.target.value)}
+                  rows={6}
+                  placeholder="Hi there,&#10;&#10;Thank you for your interest in Bantu The People's e-waste recycling services..."
+                  className="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg px-3 py-2.5 placeholder-gray-600 focus:outline-none focus:border-green-500 resize-none font-mono"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-1">
+              <button
+                onClick={sendBulkEmail}
+                disabled={bulkSending || selectedLeads.size === 0}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 disabled:bg-gray-700 disabled:text-gray-500 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all"
+              >
+                <Send className="w-4 h-4" />
+                {bulkSending
+                  ? 'Sending...'
+                  : `Send to ${selectedLeads.size || 0} Lead${selectedLeads.size !== 1 ? 's' : ''}`}
+              </button>
+              <button
+                onClick={() => setSelectedLeads(new Set(leads.map(l => l.email)))}
+                disabled={leads.length === 0}
+                className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 text-sm px-4 py-2.5 rounded-xl transition-all disabled:opacity-50"
+              >
+                <Users className="w-4 h-4" />
+                Select All Leads
+              </button>
+            </div>
+
+            <div className="pt-2 border-t border-gray-800">
+              <p className="text-xs text-gray-600">
+                Requires <code className="text-gray-500 font-mono text-xs bg-gray-800 px-1 py-0.5 rounded">GMAIL_USER</code> and{' '}
+                <code className="text-gray-500 font-mono text-xs bg-gray-800 px-1 py-0.5 rounded">GMAIL_APP_PASSWORD</code> in{' '}
+                <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-400 underline underline-offset-2">
+                  Supabase → Edge Functions → Secrets
+                </a>
+                . Use a Gmail App Password (not your login password) — generate one at Google Account → Security → App passwords.
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
       </main>
     </div>
   );
