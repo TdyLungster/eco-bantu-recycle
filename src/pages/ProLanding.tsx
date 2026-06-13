@@ -14,6 +14,10 @@ const PAYFAST_MERCHANT_ID = '25955793';
 const PAYFAST_MERCHANT_KEY = '4wr6pu7retlr1';
 const PAYFAST_PASSPHRASE = ''; // Set in PayFast dashboard if configured
 const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.com';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? '';
+const NOTIFY_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/handle-payfast-webhook`
+  : `${SITE_URL}/api/payfast-ipn`;
 
 // ─── PayPal — Merchant ID: PNX85WE6TKWFU (Rich Humble) ───────────────────────
 const PAYPAL_MERCHANT_ID = 'PNX85WE6TKWFU';
@@ -102,7 +106,7 @@ const faqs = [
   },
   {
     q: 'What if my company has more than 1,000 devices per year?',
-    a: 'Contact us for an Enterprise plan with volume pricing, a dedicated account manager, and custom SLA. Email bantupeople@gmail.com.',
+    a: 'Contact us for an Enterprise plan with volume pricing, a dedicated account manager, and custom SLA. Email bantuthepeople@gmail.com.',
   },
   {
     q: 'Is there a free trial?',
@@ -110,7 +114,7 @@ const faqs = [
   },
   {
     q: 'What is the 30-day money-back guarantee?',
-    a: 'If GreenCert Pro does not save you time on compliance work within 30 days, we refund 100% — no questions asked. Just email bantupeople@gmail.com.',
+    a: 'If GreenCert Pro does not save you time on compliance work within 30 days, we refund 100% — no questions asked. Just email bantuthepeople@gmail.com.',
   },
 ];
 
@@ -126,7 +130,7 @@ function PayFastButton({ plan }: { plan: PlanConfig }) {
       <input type="hidden" name="merchant_key" value={PAYFAST_MERCHANT_KEY} />
       <input type="hidden" name="return_url" value={`${SITE_URL}/pro/thank-you`} />
       <input type="hidden" name="cancel_url" value={`${SITE_URL}/pro`} />
-      <input type="hidden" name="notify_url" value={`${SITE_URL}/api/payfast-ipn`} />
+      <input type="hidden" name="notify_url" value={NOTIFY_URL} />
       <input type="hidden" name="amount" value={plan.zarPrice.toFixed(2)} />
       <input type="hidden" name="item_name" value={plan.payfastItemName} />
       <input type="hidden" name="item_description" value={`Lifetime license — ${plan.name} Plan`} />
@@ -611,7 +615,7 @@ export default function ProLanding() {
 
           <motion.p variants={fadeUp} className="text-center text-gray-500 text-sm mt-6">
             Enterprise pricing available for 500+ devices/year or multi-site organisations.{' '}
-            <a href="mailto:bantupeople@gmail.com" className="text-green-400 hover:underline">
+            <a href="mailto:bantuthepeople@gmail.com" className="text-green-400 hover:underline">
               Contact us →
             </a>
           </motion.p>
@@ -635,7 +639,7 @@ export default function ProLanding() {
             </h2>
             <p className="text-gray-400 leading-relaxed">
               If GreenCert Pro does not save your team measurable time on compliance work within 30 days,
-              email <a href="mailto:bantupeople@gmail.com" className="text-green-400">bantupeople@gmail.com</a> for
+              email <a href="mailto:bantuthepeople@gmail.com" className="text-green-400">bantuthepeople@gmail.com</a> for
               a full refund — no questions, no waiting, no forms. We stand behind this product completely.
             </p>
           </motion.div>
@@ -789,7 +793,7 @@ export default function ProLanding() {
       <footer className="border-t border-gray-800/50 py-8 px-6 text-center text-gray-600 text-xs">
         <p>
           © 2026 EcoBantu Recycle (Pty) Ltd · GreenCert Pro ·{' '}
-          <a href="mailto:bantupeople@gmail.com" className="hover:text-gray-400">bantupeople@gmail.com</a>
+          <a href="mailto:bantuthepeople@gmail.com" className="hover:text-gray-400">bantuthepeople@gmail.com</a>
           {' '}· +27 10 065 4785
         </p>
         <p className="mt-1">

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import DarkNavigation from "@/components/DarkNavigation";
 import DarkFooter from "@/components/DarkFooter";
 import EnhancedAnimations from "@/components/EnhancedAnimations";
+import ScrollProgress from "@/components/ScrollProgress";
 import { Toaster } from "react-hot-toast";
 
 // Lazy load components for better performance
@@ -19,6 +20,10 @@ const PartnersBar = lazy(() => import("@/components/PartnersBar"));
 const InlineEmailCapture = lazy(() => import("@/components/InlineEmailCapture"));
 const ExitIntentPopup = lazy(() => import("@/components/ExitIntentPopup"));
 const BackToTop = lazy(() => import("@/components/BackToTop"));
+const QuickBookingStrip = lazy(() => import("@/components/QuickBookingStrip"));
+const B2BTargeting = lazy(() => import("@/components/B2BTargeting"));
+const FloatingParticles = lazy(() => import("@/components/FloatingParticles"));
+const AIAssistant = lazy(() => import("@/components/AIAssistant"));
 
 const SectionLoader = () => (
   <div className="min-h-[200px] bg-gray-900 animate-pulse flex items-center justify-center">
@@ -43,6 +48,7 @@ const OptimizedIndex = () => {
       </Helmet>
 
       <div className="min-h-screen bg-gray-900">
+        <ScrollProgress />
         <EnhancedAnimations />
         <DarkNavigation />
 
@@ -51,6 +57,10 @@ const OptimizedIndex = () => {
             <section className="animate-stagger">
               <ImmersiveHero />
             </section>
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <QuickBookingStrip />
           </Suspense>
 
           <Suspense fallback={null}>
@@ -73,6 +83,10 @@ const OptimizedIndex = () => {
             <section className="animate-slide-right">
               <Services />
             </section>
+          </Suspense>
+
+          <Suspense fallback={<SectionLoader />}>
+            <B2BTargeting />
           </Suspense>
 
           <Suspense fallback={<SectionLoader />}>
@@ -108,6 +122,14 @@ const OptimizedIndex = () => {
 
         <Suspense fallback={null}>
           <ExitIntentPopup />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <AIAssistant />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <FloatingParticles />
         </Suspense>
 
         <Toaster

@@ -23,10 +23,16 @@ const Value = lazy(() => import("./pages/tools/Value"));
 const Impact = lazy(() => import("./pages/tools/Impact"));
 const Locations = lazy(() => import("./pages/tools/Locations"));
 const Certificate = lazy(() => import("./pages/tools/Certificate"));
+const EsgReport = lazy(() => import("./pages/tools/EsgReport"));
+const ComplianceCheck = lazy(() => import("./pages/tools/ComplianceCheck"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ProLanding = lazy(() => import("./pages/ProLanding"));
 const ProThankYou = lazy(() => import("./pages/ProThankYou"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Admin = lazy(() => import("./pages/Admin"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogList = lazy(() => import("./pages/admin/BlogList"));
+const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -77,6 +83,10 @@ function App() {
               <Route path="/" element={<OptimizedIndex />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/corporate-e-waste-management-guide" element={<CorporateGuide />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/admin/blog" element={<BlogList />} />
+              <Route path="/admin/blog/new" element={<BlogEditor />} />
+              <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
               <Route path="/directory" element={<Directory />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/pickup" element={<Pickup />} />
@@ -85,9 +95,12 @@ function App() {
               <Route path="/tools/impact" element={<Impact />} />
               <Route path="/tools/locations" element={<Locations />} />
               <Route path="/tools/certificate" element={<Certificate />} />
+              <Route path="/tools/esg-report" element={<EsgReport />} />
+              <Route path="/tools/compliance-check" element={<ComplianceCheck />} />
               <Route path="/pro" element={<ProLanding />} />
               <Route path="/pro/thank-you" element={<ProThankYou />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Star, Zap, Shield, ArrowRight } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'react-hot-toast';
+import { Check, Star, Zap, Shield, ArrowRight, Lock, RotateCcw, HeadphonesIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const SITE_URL = import.meta.env.VITE_SITE_URL ?? 'https://bantuthepeople.com';
+const MERCHANT_ID = import.meta.env.VITE_PAYFAST_MERCHANT_ID ?? '25955793';
+const MERCHANT_KEY = import.meta.env.VITE_PAYFAST_MERCHANT_KEY ?? '4wr6pu7retlr1';
+// IPN webhook → Supabase Edge Function (no Netlify backend needed)
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? '';
+const NOTIFY_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/handle-payfast-webhook`
+  : `${SITE_URL}/api/payfast-ipn`;
+
+function getBillingDate() {
+  const d = new Date();
+  d.setMonth(d.getMonth() + 1, 1);
+  return d.toISOString().split('T')[0];
+}
 
 const plans = [
   {
     id: 'basic',
     name: 'Basic',
     price: 99,
-    period: 'month',
     description: 'For individuals and small teams',
     icon: Zap,
-    color: 'blue',
+    accent: 'from-blue-500 to-cyan-500',
+    borderIdle: 'border-gray-700',
+    borderHover: 'hover:border-blue-500/60',
+    btnClass: 'bg-blue-600 hover:bg-blue-500',
     popular: false,
     features: [
       'Unlimited e-waste calculations',
       'Monthly pickup scheduling',
-      'Data destruction certificates (3/month)',
+      'Data destruction certificates (3/mo)',
       'Basic impact reports',
       'Email support',
     ],
@@ -27,10 +42,12 @@ const plans = [
     id: 'premium',
     name: 'Premium',
     price: 199,
-    period: 'month',
     description: 'Most popular for growing businesses',
     icon: Shield,
-    color: 'green',
+    accent: 'from-green-500 to-emerald-500',
+    borderIdle: 'border-green-500/60',
+    borderHover: 'hover:border-green-400',
+    btnClass: 'bg-green-600 hover:bg-green-500',
     popular: true,
     features: [
       'Everything in Basic',
@@ -47,10 +64,12 @@ const plans = [
     id: 'enterprise',
     name: 'Enterprise',
     price: 499,
-    period: 'month',
     description: 'For large organisations',
     icon: Star,
-    color: 'purple',
+    accent: 'from-purple-500 to-violet-500',
+    borderIdle: 'border-gray-700',
+    borderHover: 'hover:border-purple-500/60',
+    btnClass: 'bg-purple-600 hover:bg-purple-500',
     popular: false,
     features: [
       'Everything in Premium',
@@ -65,61 +84,48 @@ const plans = [
   },
 ];
 
+const TRUST = [
+  { icon: Lock, label: '256-bit SSL encryption' },
+  { icon: RotateCcw, label: 'Cancel anytime' },
+  { icon: HeadphonesIcon, label: 'Setup assistance included' },
+];
+
+function PayFastForm({ plan }: { plan: typeof plans[0] }) {
+  const billingDate = getBillingDate();
+  return (
+    <form
+      action="https://www.payfast.co.za/eng/process"
+      method="POST"
+      className="w-full"
+    >
+      <input type="hidden" name="merchant_id" value={MERCHANT_ID} />
+      <input type="hidden" name="merchant_key" value={MERCHANT_KEY} />
+      <input type="hidden" name="return_url" value={`${SITE_URL}/pro/thank-you`} />
+      <input type="hidden" name="cancel_url" value={`${SITE_URL}/`} />
+      <input type="hidden" name="notify_url" value={NOTIFY_URL} />
+      <input type="hidden" name="amount" value={plan.price.toFixed(2)} />
+      <input type="hidden" name="item_name" value={`Bantu The People ${plan.name} Plan`} />
+      <input type="hidden" name="subscription_type" value="1" />
+      <input type="hidden" name="billing_date" value={billingDate} />
+      <input type="hidden" name="recurring_amount" value={plan.price.toFixed(2)} />
+      <input type="hidden" name="frequency" value="3" />
+      <input type="hidden" name="cycles" value="0" />
+      <button
+        type="submit"
+        className={`w-full py-3.5 px-4 rounded-xl text-white font-bold text-sm transition-all ${plan.btnClass} flex items-center justify-center gap-2 shadow-lg`}
+      >
+        <Lock className="w-3.5 h-3.5 opacity-70" />
+        Get Started — R{plan.price}/mo
+      </button>
+    </form>
+  );
+}
+
 const PayFastPricingPlans = () => {
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-
-  const handleSubscription = async (planId: string) => {
-    setLoadingPlan(planId);
-    try {
-      const plan = plans.find(p => p.id === planId);
-      if (!plan) return;
-
-      const { data, error } = await supabase.functions.invoke('create-payfast-subscription', {
-        body: {
-          plan_id: planId,
-          amount: plan.price * 100,
-          item_name: `EcoBantu ${plan.name} Plan`,
-          subscription_type: 1,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data?.payment_url) {
-        window.location.href = data.payment_url;
-      } else {
-        throw new Error('No payment URL returned');
-      }
-    } catch {
-      toast.error('Could not start payment. Please try again or contact support.');
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
-
-  const colorMap: Record<string, { border: string; bg: string; btn: string; badge: string }> = {
-    blue: {
-      border: 'border-blue-500/50',
-      bg: 'bg-blue-500/10',
-      btn: 'bg-blue-600 hover:bg-blue-700',
-      badge: 'bg-blue-500',
-    },
-    green: {
-      border: 'border-green-500',
-      bg: 'bg-green-500/10',
-      btn: 'bg-green-600 hover:bg-green-700',
-      badge: 'bg-green-500',
-    },
-    purple: {
-      border: 'border-purple-500/50',
-      bg: 'bg-purple-500/10',
-      btn: 'bg-purple-600 hover:bg-purple-700',
-      badge: 'bg-purple-500',
-    },
-  };
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20 px-4" id="pricing">
+    <section className="bg-gray-950 py-20 px-4" id="pricing">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -127,54 +133,63 @@ const PayFastPricingPlans = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-14"
         >
-          <span className="bg-green-900/50 border border-green-500/40 text-green-300 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">
-            Simple Pricing
+          <span className="inline-flex items-center gap-1.5 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+            Monthly Plans
           </span>
           <h2 className="text-4xl font-black text-white mt-4 mb-3">
             Plans That Grow With You
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto text-lg">
-            From individual recyclers to enterprise compliance — pay monthly, cancel anytime.
+          <p className="text-gray-400 max-w-xl mx-auto">
+            From individual recyclers to enterprise compliance — pay monthly, cancel anytime. Billed in ZAR via PayFast.
           </p>
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
           {plans.map((plan, i) => {
-            const c = colorMap[plan.color];
             const Icon = plan.icon;
             return (
               <motion.div
                 key={plan.id}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`relative rounded-2xl border-2 ${c.border} ${plan.popular ? 'ring-2 ring-green-500/30' : ''} bg-gray-900 p-6 flex flex-col`}
+                onMouseEnter={() => setHovered(plan.id)}
+                onMouseLeave={() => setHovered(null)}
+                className={`relative rounded-2xl border-2 ${plan.borderIdle} ${plan.borderHover} bg-gray-900 p-6 flex flex-col gap-4 transition-all duration-300 ${hovered === plan.id ? 'shadow-xl -translate-y-1' : ''}`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className={`${c.badge} text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg`}>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                    <span className="bg-green-500 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg shadow-green-500/30">
                       Most Popular
                     </span>
                   </div>
                 )}
 
-                <div className={`w-12 h-12 ${c.bg} rounded-xl flex items-center justify-center mb-4`}>
-                  <Icon className={`w-6 h-6 text-${plan.color}-400`} />
+                {/* Icon + gradient accent */}
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${plan.accent} p-0.5`}>
+                  <div className="w-full h-full bg-gray-900 rounded-[10px] flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
                 </div>
 
-                <h3 className="text-xl font-black text-white mb-1">{plan.name}</h3>
-                <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
-
-                <div className="flex items-end gap-1 mb-5">
-                  <span className="text-4xl font-black text-white">R{plan.price}</span>
-                  <span className="text-gray-400 text-sm mb-1.5">/{plan.period}</span>
+                <div>
+                  <h3 className="text-xl font-black text-white">{plan.name}</h3>
+                  <p className="text-gray-400 text-xs mt-0.5">{plan.description}</p>
                 </div>
 
-                <ul className="space-y-2.5 mb-6 flex-1">
+                {/* Price */}
+                <div className="flex items-end gap-1.5 pb-1 border-b border-gray-800">
+                  <span className={`text-4xl font-black bg-gradient-to-r ${plan.accent} bg-clip-text text-transparent`}>R{plan.price}</span>
+                  <span className="text-gray-500 text-sm mb-1.5">/month</span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-2 flex-1">
                   {plan.features.map(f => (
                     <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
                       <Check className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -183,23 +198,21 @@ const PayFastPricingPlans = () => {
                   ))}
                 </ul>
 
-                <button
-                  onClick={() => handleSubscription(plan.id)}
-                  disabled={loadingPlan !== null}
-                  className={`w-full py-3 px-4 rounded-xl text-white font-bold text-sm transition-all ${c.btn} disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
-                >
-                  {loadingPlan === plan.id ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>Get Started — R{plan.price}/mo</>
-                  )}
-                </button>
+                {/* PayFast direct form — no backend needed */}
+                <PayFastForm plan={plan} />
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Trust strip */}
+        <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
+          {TRUST.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex items-center gap-2 text-gray-500 text-xs">
+              <Icon className="w-3.5 h-3.5 text-green-500" />
+              {label}
+            </div>
+          ))}
         </div>
 
         {/* GreenCert Pro CTA */}
@@ -207,23 +220,27 @@ const PayFastPricingPlans = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-green-950/60 to-gray-900 border border-green-500/40 rounded-2xl p-8 text-center"
+          className="relative overflow-hidden bg-gray-900 border border-green-500/30 rounded-2xl p-8 text-center"
         >
+          {/* Background glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-green-500/5 pointer-events-none" />
           <Shield className="w-10 h-10 text-green-400 mx-auto mb-3" />
           <h3 className="text-2xl font-black text-white mb-2">
             Need Full POPIA + NEMWA Compliance?
           </h3>
-          <p className="text-gray-400 max-w-lg mx-auto mb-5">
+          <p className="text-gray-400 max-w-lg mx-auto mb-5 text-sm leading-relaxed">
             GreenCert Pro gives you unlimited compliance certificates, ESG reports,
-            7-year audit archives, and a white-label PDF — all for a one-time lifetime fee.
+            7-year audit archives, and a white-label PDF — all for a <strong className="text-white">one-time lifetime fee</strong>.
+            No monthly billing, no surprises.
           </p>
           <Link
             to="/pro"
-            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-gray-900 font-black px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-green-500/20"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-gray-900 font-black px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-green-500/25"
           >
             See GreenCert Pro — From R2,997 Lifetime
             <ArrowRight className="w-4 h-4" />
           </Link>
+          <p className="text-gray-600 text-xs mt-3">One-time payment · Instant delivery · 7-day money-back guarantee</p>
         </motion.div>
       </div>
     </section>
